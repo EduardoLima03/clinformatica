@@ -11,16 +11,17 @@ import java.util.Properties;
 
 /**
  *
- * @author eduar
+ * @author Carlos Lima
  */
 public class Db {
 
     private static Connection conn = null;
 
     /**
-     * Metodo responsavel por cria uma nova conexao com o banco
+     * Método responsável por cria uma nova conexão com o banco
      *
-     * @return conecxao com o banco de dados
+     * Method responsible for creating a new connection to the bank
+     * @return conexao com o banco de dados
      */
     public static Connection getConnection() {
 
@@ -52,10 +53,13 @@ public class Db {
     }
 
     /**
-     * Fecha a conexao com o banco de dados
-     * Deve ser execultado a pos os fechamento do ResultSet e Statement,
-     * closeResultSet(), @closeStatement
-     * 
+     * Fecha a conexão com o banco de dados
+     * Deve ser executado pôs o fechamento do ResultSet e Statement,
+     * closeResultSet(), @closeStatement
+     *
+     * Closes the connection to the database
+     * Must be executed put the closing of the ResultSet and Statement,
+     * closeResultSet(), @closeStatement
      */
     public static void closeConnection() {
         if (conn != null) {
@@ -69,6 +73,8 @@ public class Db {
 
     /**
      * Fecha a conexao do ResltSet
+     *
+     * Closes the Resultset connection
      * @param rs 
      */
     public static void closeResultSet(ResultSet rs) {
@@ -83,6 +89,8 @@ public class Db {
     
     /**
      * Fecha a conexao do Statement
+     *
+     * Closes the Statement connection
      * @param st 
      */
     public static void closeStatement(Statement st) {

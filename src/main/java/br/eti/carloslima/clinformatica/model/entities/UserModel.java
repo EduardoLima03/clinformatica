@@ -7,7 +7,7 @@ import java.util.Objects;
 
 /**
  *
- * @author eduar
+ * @author Carlos Lima
  */
 public class UserModel implements  Serializable{
     private Integer id;

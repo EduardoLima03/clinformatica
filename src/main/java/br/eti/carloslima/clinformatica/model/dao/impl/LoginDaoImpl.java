@@ -32,7 +32,7 @@ public class LoginDaoImpl implements LoginDao{
         
         try{
             st = conn.prepareStatement(
-                    "SELECT username, password, perfil FROM users WHERE username = ?"
+                    "SELECT username, password, profile FROM APP.USERS WHERE username = ?"
             );
             
             st.setString(1, userName);
