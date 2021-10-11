@@ -5,9 +5,9 @@
  */
 package br.eti.carloslima.clinformatica.gui;
 
-import br.eti.carloslima.clinformatica.model.dto.LoginDTO;
 import br.eti.carloslima.clinformatica.model.entities.UserModel;
 import br.eti.carloslima.clinformatica.model.services.LoginService;
+import br.eti.carloslima.clinformatica.model.utils.Criptografia;
 import javax.swing.JOptionPane;
 
 /**
@@ -154,14 +154,16 @@ public class LoginPage extends javax.swing.JFrame {
         }else{
             login();
         }
+        
     }
-    
+        
     private void login(){
         if(service == null){
-            JOptionPane.showMessageDialog(null, "Erro na conexão", "Banco de Dados", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Erro na conexão",
+                    "Banco de Dados", JOptionPane.ERROR_MESSAGE);
         }
         String username = txtUserName.getText();
-        String password = new String(txtPassword.getPassword());
+        String password = Criptografia.criptografiar(new String(txtPassword.getPassword()));
         
         
         UserModel login = null;
