@@ -1,7 +1,7 @@
 
 package br.eti.carloslima.clinformatica.model.dao;
 
-import br.eti.carloslima.clinformatica.model.dto.LoginDTO;
+import br.eti.carloslima.clinformatica.model.entities.UserModel;
 
 /**
  *
@@ -9,5 +9,5 @@ import br.eti.carloslima.clinformatica.model.dto.LoginDTO;
  */
 public interface LoginDao {
     
-    LoginDTO findByUsername(String userName);
+    UserModel findByUsername(String userName);
 }

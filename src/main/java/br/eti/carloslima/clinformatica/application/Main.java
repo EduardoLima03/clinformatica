@@ -5,8 +5,7 @@
  */
 package br.eti.carloslima.clinformatica.application;
 
-import br.eti.carloslima.clinformatica.model.dto.LoginDTO;
-import br.eti.carloslima.clinformatica.model.services.LoginService;
+import br.eti.carloslima.clinformatica.gui.LoginPage;
 
 /**
  *
@@ -14,19 +13,7 @@ import br.eti.carloslima.clinformatica.model.services.LoginService;
  */
 public class Main {
     public static void main(String[] args){
-        System.out.println("login");
-        String userName = "lima";
-        LoginService instance = new LoginService();
-        LoginDTO expResult = new LoginDTO("lima", "1234", 1);
-        LoginDTO result = instance.login(userName);
-        
-        //Compra se as class sao igual
-        //se o dado do banco é o mesmo
-        if(result.equals(expResult)){
-            System.out.println("Dados igual, banco funcionando");
-        }else{
-            System.out.println("Deu erro");
-        }
+        LoginPage.main(args);
     }
 
 }

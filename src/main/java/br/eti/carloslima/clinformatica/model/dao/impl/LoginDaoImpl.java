@@ -2,14 +2,13 @@
 package br.eti.carloslima.clinformatica.model.dao.impl;
 
 import br.eti.carloslima.clinformatica.db.Db;
+import br.eti.carloslima.clinformatica.db.DbException;
 import br.eti.carloslima.clinformatica.model.dao.LoginDao;
-import br.eti.carloslima.clinformatica.model.dto.LoginDTO;
+import br.eti.carloslima.clinformatica.model.entities.UserModel;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -24,15 +23,15 @@ public class LoginDaoImpl implements LoginDao{
     }
 
     @Override
-    public LoginDTO findByUsername(String userName) {
+    public UserModel findByUsername(String userName) {
         PreparedStatement st = null;
         ResultSet rs = null;
         
-        LoginDTO obj = new LoginDTO();
+        UserModel obj = new UserModel();
         
         try{
             st = conn.prepareStatement(
-                    "SELECT username, password, profile FROM APP.USERS WHERE username = ?"
+                    "SELECT * FROM APP.USERS WHERE username = ?"
             );
             
             st.setString(1, userName);
@@ -42,19 +41,19 @@ public class LoginDaoImpl implements LoginDao{
             //criando um dto com a tabela retornada
             // da consulta
             if(rs.next()){
-                obj.setUserName(rs.getString(1));
-                obj.setPassword(rs.getString(2));
-                obj.setPerfil(rs.getInt(3));
+                obj.setId(rs.getInt("id"));
+                obj.setName(rs.getString("name"));
+                obj.setUserName(rs.getString("username"));
+                obj.setPassword(rs.getString("password"));
+                obj.setPerfil(rs.getInt("profile"));
             }
             return obj;
         } catch (SQLException ex) {
-            Logger.getLogger(LoginDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+            throw new DbException(ex.getMessage());
         }finally{
             Db.closeResultSet(rs);
             Db.closeStatement(st);
-            Db.closeConnection();
         }
-        return null;
     }
     
 }

@@ -14,12 +14,12 @@ public class UserModel implements  Serializable{
     private String name;
     private String userName;
     private String password;
-    private Integer perfil;
+    private Perfil perfil;
 
     public UserModel() {
     }
 
-    public UserModel(Integer id, String name, String userName, String password, Perfil perfil) {
+    public UserModel(Integer id, String name, String userName, String password, Integer perfil) {
         this.id = id;
         this.name = name;
         this.userName = userName;
@@ -59,12 +59,12 @@ public class UserModel implements  Serializable{
         this.password = password;
     }
 
-    public Perfil getPerfil() {
-        return Perfil.valueOf(perfil);
+    public int getPerfil() {
+        return perfil.getCode();
     }
 
-    public void setPerfil(Perfil perfil) {
-        this.perfil = perfil.getCode();
+    public void setPerfil(int perfil) {
+        this.perfil = Perfil.valueOf(perfil);
     }
 
     @Override

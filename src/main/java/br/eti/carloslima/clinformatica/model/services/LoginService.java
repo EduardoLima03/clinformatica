@@ -3,7 +3,7 @@ package br.eti.carloslima.clinformatica.model.services;
 
 import br.eti.carloslima.clinformatica.model.dao.DaoFactory;
 import br.eti.carloslima.clinformatica.model.dao.LoginDao;
-import br.eti.carloslima.clinformatica.model.dto.LoginDTO;
+import br.eti.carloslima.clinformatica.model.entities.UserModel;
 
 /**
  *
@@ -18,7 +18,7 @@ public class LoginService {
      * @param userName
      * @return LoginDTO
      */
-    public LoginDTO login(String userName){
+    public UserModel login(String userName){
         return dao.findByUsername(userName);
     }
 }
