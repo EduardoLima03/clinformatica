@@ -7,8 +7,7 @@ package br.eti.carloslima.clinformatica.model.entities.enums;
  */
 public enum Perfil {
     ADMINISTRADOR(1),
-    GERENTE(2),
-    TECNICO(3);
+    TECNICO(2);
 
     private int code;
 

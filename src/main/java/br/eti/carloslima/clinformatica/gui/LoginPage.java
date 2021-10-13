@@ -178,7 +178,7 @@ public class LoginPage extends javax.swing.JFrame {
             main.lblName.setText(login.getName());
             if(login.getPerfil() == 1){
                 main.mnRelatorio.setEnabled(true);
-                main.mniUsuario.setEnabled(true);
+                main.mniFuncionarios.setEnabled(true);
             }
             main.setVisible(true);
             this.dispose();
