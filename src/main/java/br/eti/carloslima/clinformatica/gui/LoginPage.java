@@ -176,6 +176,10 @@ public class LoginPage extends javax.swing.JFrame {
         if(username.equals(login.getUserName()) && password.equals(login.getPassword())){
             MainPage main = new MainPage();
             main.lblName.setText(login.getName());
+            if(login.getPerfil() == 1){
+                main.mnRelatorio.setEnabled(true);
+                main.mniUsuario.setEnabled(true);
+            }
             main.setVisible(true);
             this.dispose();
         }else{
