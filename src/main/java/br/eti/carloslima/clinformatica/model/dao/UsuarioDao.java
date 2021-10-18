@@ -16,6 +16,6 @@ public interface UsuarioDao {
     UserModel findById(int id);
     List<UserModel> findAll();
     int insert(UserModel obj);
-    void update(UserModel obj);
+    int update(UserModel obj);
     void delete(int id);
 }

@@ -24,8 +24,9 @@ public class FuncionarioPage extends javax.swing.JInternalFrame {
     /**
      * Creates new form FuncionarioPage
      */
-    
     private DefaultTableModel model;
+    UserModel user = null;
+
     public FuncionarioPage() {
         initComponents();
         service = new UserService();
@@ -55,8 +56,8 @@ public class FuncionarioPage extends javax.swing.JInternalFrame {
         cbPerfil = new javax.swing.JComboBox<>();
         btnEditar = new javax.swing.JButton();
         btnSalvar = new javax.swing.JButton();
-        btnBusca = new javax.swing.JButton();
-        bntDeleta = new javax.swing.JButton();
+        btnLimpa = new javax.swing.JButton();
+        btnDeleta = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabela = new javax.swing.JTable();
@@ -94,6 +95,12 @@ public class FuncionarioPage extends javax.swing.JInternalFrame {
         cbPerfil.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Administrador", "Tecníco" }));
 
         btnEditar.setText("Editar");
+        btnEditar.setEnabled(false);
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         btnSalvar.setText("Salvar");
         btnSalvar.addActionListener(new java.awt.event.ActionListener() {
@@ -102,12 +109,18 @@ public class FuncionarioPage extends javax.swing.JInternalFrame {
             }
         });
 
-        btnBusca.setText("Busca");
-
-        bntDeleta.setText("Deleta");
-        bntDeleta.addActionListener(new java.awt.event.ActionListener() {
+        btnLimpa.setText("Limpar");
+        btnLimpa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bntDeletaActionPerformed(evt);
+                btnLimpaActionPerformed(evt);
+            }
+        });
+
+        btnDeleta.setText("Deleta");
+        btnDeleta.setEnabled(false);
+        btnDeleta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeletaActionPerformed(evt);
             }
         });
 
@@ -131,6 +144,11 @@ public class FuncionarioPage extends javax.swing.JInternalFrame {
             }
         ));
         tabela.getTableHeader().setReorderingAllowed(false);
+        tabela.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelaMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tabela);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -172,9 +190,9 @@ public class FuncionarioPage extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 111, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(btnSalvar)
-                    .addComponent(btnBusca)
+                    .addComponent(btnLimpa)
                     .addComponent(btnEditar)
-                    .addComponent(bntDeleta))
+                    .addComponent(btnDeleta))
                 .addGap(227, 227, 227))
         );
         layout.setVerticalGroup(
@@ -204,9 +222,9 @@ public class FuncionarioPage extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnBusca, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnLimpa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(bntDeleta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnDeleta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(92, 92, 92)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(59, 59, 59))
@@ -215,24 +233,72 @@ public class FuncionarioPage extends javax.swing.JInternalFrame {
         setBounds(0, 0, 1000, 641);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void bntDeletaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntDeletaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_bntDeletaActionPerformed
+    private void btnDeletaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletaActionPerformed
+        if (txtId.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Campo Id Vazio");
+        } else {
+            // recupera a acao do usuario
+            int a = JOptionPane.showConfirmDialog(null, "Quer mesmo deleta?");
+
+            if (a == JOptionPane.YES_OPTION) {
+                service.Apagar(user.getId());
+            }
+        }
+
+        clearsFields();
+        initTable();
+    }//GEN-LAST:event_btnDeletaActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         filledFiellds();
     }//GEN-LAST:event_btnSalvarActionPerformed
 
-    private int convertProfile() {
-        var item = 0;
-        switch (cbPerfil.getSelectedIndex()) {
-            case 0:
-                item = Perfil.ADMINISTRADOR.getCode();
-                break;
-            case 1:
-                item = Perfil.TECNICO.getCode();
-                break;
+    private void tabelaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaMouseClicked
+        setFields();
+    }//GEN-LAST:event_tabelaMouseClicked
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        System.out.println(user.getName() + " id: " + user.getId());
+
+        user.setName(txtName.getText());
+        user.setUserName(txtUserName.getText());
+        user.setPassword(Criptografia.criptografiar(
+                new String(txtPassword.getPassword())));
+        user.setPerfil(convertProfile(null));
+
+        var retorno = service.Atualiza(user);
+        if (retorno > 0) {
+            JOptionPane.showMessageDialog(null, "Atualizado com Sucesso!");
+            clearsFields();
+            initTable();
         }
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnLimpaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpaActionPerformed
+       clearsFields();
+    }//GEN-LAST:event_btnLimpaActionPerformed
+
+    private int convertProfile(String perfil) {
+        var item = 0;
+        if (perfil == null) {
+            switch (cbPerfil.getSelectedIndex()) {
+                case 0:
+                    item = Perfil.ADMINISTRADOR.getCode();
+                    break;
+                case 1:
+                    item = Perfil.TECNICO.getCode();
+                    break;
+            }
+        } else {
+            switch (perfil) {
+                case "ADMINISTRADOR":
+                    item = 0;
+                    break;
+                case "TECNICO":
+                    item = 1;
+            }
+        }
+
         return item;
     }
 
@@ -248,8 +314,9 @@ public class FuncionarioPage extends javax.swing.JInternalFrame {
             obj.setUserName(txtUserName.getText());
             obj.setPassword(Criptografia.criptografiar(
                     new String(txtPassword.getPassword())));
-            obj.setPerfil(convertProfile());
+            obj.setPerfil(convertProfile(null));
 
+            System.out.println(obj.getPerfil());
             int rows = service.salvar(obj);
 
             if (rows > 0) {
@@ -262,9 +329,9 @@ public class FuncionarioPage extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton bntDeleta;
-    private javax.swing.JButton btnBusca;
+    private javax.swing.JButton btnDeleta;
     private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnLimpa;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JComboBox<String> cbPerfil;
     private javax.swing.JLabel jLabel1;
@@ -284,7 +351,7 @@ public class FuncionarioPage extends javax.swing.JInternalFrame {
 
     /**
      * Metodo responsavel por inicializa a tabela
-     * 
+     *
      * Realizar a cosulta do usuarios no banco de dados exibe od dados na tabela
      */
     private void initTable() {
@@ -308,5 +375,24 @@ public class FuncionarioPage extends javax.swing.JInternalFrame {
         txtName.setText("");
         txtUserName.setText("");
         txtPassword.setText("");
+
+        user = null;
+    }
+
+    private void setFields() {
+        int row = tabela.getSelectedRow();
+
+        user = service.SelecaoUnica((int) tabela.getModel().getValueAt(row, 0));
+
+        txtId.setText(user.getId().toString());
+        txtName.setText(user.getName());
+        txtUserName.setText(user.getUserName());
+        cbPerfil.setSelectedIndex(convertProfile(tabela.getModel().getValueAt(row, 3).toString()));
+        txtPassword.setText(user.getPassword());
+
+        // liberando os butoes de função
+        btnEditar.setEnabled(true);
+        btnDeleta.setEnabled(true);
+        
     }
 }

@@ -128,8 +128,26 @@ public class UsuarioDaoImpl implements UsuarioDao{
     }
 
     @Override
-    public void update(UserModel obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public int update(UserModel obj) {
+        int rows = 0;
+        PreparedStatement st = null;
+        
+        try {
+            st = conn.prepareStatement("UPDATE APP.USERS"
+                    + " SET name = ?, username = ?, password = ?, profile = ?"
+                    + " WHERE id = ?");
+            
+            st.setString(1, obj.getName());
+            st.setString(2, obj.getUserName());
+            st.setString(3, obj.getPassword());
+            st.setInt(4, obj.getPerfil());
+            st.setInt(5, obj.getId());
+            
+            rows = st.executeUpdate();
+        } catch (SQLException ex) {
+           throw new DbException(ex.getMessage());
+        }
+        return rows;
     }
 
     @Override
