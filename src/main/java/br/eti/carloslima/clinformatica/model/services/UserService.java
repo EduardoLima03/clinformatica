@@ -8,6 +8,7 @@ package br.eti.carloslima.clinformatica.model.services;
 import br.eti.carloslima.clinformatica.model.dao.DaoFactory;
 import br.eti.carloslima.clinformatica.model.dao.UsuarioDao;
 import br.eti.carloslima.clinformatica.model.entities.UserModel;
+import java.util.List;
 
 /**
  * Classe Responsavel por fazer o controle em acesso ao banco de dados
@@ -34,5 +35,13 @@ public class UserService {
      */
     public void Apagar(int id){
         dao.delete(id);
+    }
+    
+    /**
+     * Metodo por recupera todos os Usuarios do banco
+     * @return Uma lista de Usuarios
+     */
+    public List<UserModel> SelecionarTudo(){
+        return dao.findAll();
     }
 }

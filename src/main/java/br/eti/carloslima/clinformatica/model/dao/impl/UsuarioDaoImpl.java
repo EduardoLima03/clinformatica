@@ -11,7 +11,10 @@ import br.eti.carloslima.clinformatica.model.dao.UsuarioDao;
 import br.eti.carloslima.clinformatica.model.entities.UserModel;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,14 +31,74 @@ public class UsuarioDaoImpl implements UsuarioDao{
         this.conn = conn;
     }
 
+    /**
+     * Responsavel por fazer a seleção de um Usuario.
+     * @param id
+     * @return 
+     *  Retorna um Usuario vindo do banco de dados
+     */
     @Override
     public UserModel findById(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        
+        try {
+            st = conn.prepareStatement("SELECT * FROM APP.USERS WHERE id = ?");
+            st.setInt(1, id);
+            
+            rs = st.executeQuery();
+            UserModel obj = new UserModel();
+            
+            if(rs.next()){
+                
+                obj.setId(rs.getInt("id"));
+                obj.setName(rs.getString("name"));
+                obj.setUserName(rs.getString("username"));
+                obj.setPassword(rs.getString("password"));
+                obj.setPerfil(rs.getInt("profile"));
+                
+            }
+            return obj;
+        } catch (SQLException ex) {
+            throw new DbException(ex.getMessage());
+        }finally{
+            Db.closeStatement(st);
+            Db.closeResultSet(rs);
+        }
     }
 
+    /**
+     * Metodo para todos os usuarios do banco
+     * @return 
+     *  Retorna uma lista de Usuario
+     */
     @Override
     public List<UserModel> findAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Statement st = null;
+        ResultSet rs = null;
+        
+        try {
+            st = conn.createStatement();
+            rs = st.executeQuery("SELECT * FROM APP.USERS");
+            
+            List<UserModel> list = new ArrayList<>();
+            
+            while (rs.next()) {                
+                UserModel obj = new UserModel();
+                obj.setId(rs.getInt("id"));
+                obj.setName(rs.getString("name"));
+                obj.setUserName(rs.getString("username"));
+                obj.setPassword(rs.getString("password"));
+                obj.setPerfil(rs.getInt("profile"));
+                list.add(obj);
+            }
+            return list;
+        } catch (SQLException ex) {
+            throw new DbException(ex.getMessage());
+        }finally{
+            Db.closeStatement(st);
+            Db.closeResultSet(rs);
+        }
     }
 
     /**
