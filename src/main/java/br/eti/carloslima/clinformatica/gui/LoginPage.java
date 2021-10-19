@@ -8,6 +8,7 @@ package br.eti.carloslima.clinformatica.gui;
 import br.eti.carloslima.clinformatica.model.entities.UserModel;
 import br.eti.carloslima.clinformatica.model.services.LoginService;
 import br.eti.carloslima.clinformatica.model.utils.Criptografia;
+import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 
 /**
@@ -59,9 +60,20 @@ public class LoginPage extends javax.swing.JFrame {
                 txtUserNameActionPerformed(evt);
             }
         });
+        txtUserName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtUserNameKeyPressed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel2.setText("Password");
+
+        txtPassword.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtPasswordKeyPressed(evt);
+            }
+        });
 
         btnLogin.setBackground(new java.awt.Color(153, 200, 240));
         btnLogin.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -147,6 +159,24 @@ public class LoginPage extends javax.swing.JFrame {
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         filledFiellds();
     }//GEN-LAST:event_btnLoginActionPerformed
+
+    private void txtUserNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUserNameKeyPressed
+        /**
+         * Atalho de teclado para dispara a função do butao login
+         * para isso não da para ter essa função no Frame, para funcionar 
+         * colocamos nos JTextField, quando ele esta em foco a fução de KeyBord
+         * é abilitada
+         */
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            filledFiellds();
+        }
+    }//GEN-LAST:event_txtUserNameKeyPressed
+
+    private void txtPasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswordKeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            filledFiellds();
+        }
+    }//GEN-LAST:event_txtPasswordKeyPressed
 
     private void filledFiellds() {
         if (txtUserName.getText().isEmpty() || new String(txtPassword.getPassword()).isEmpty()) {
