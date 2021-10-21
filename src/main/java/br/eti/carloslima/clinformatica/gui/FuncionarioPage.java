@@ -241,7 +241,7 @@ public class FuncionarioPage extends javax.swing.JInternalFrame {
             int a = JOptionPane.showConfirmDialog(null, "Quer mesmo deleta?");
 
             if (a == JOptionPane.YES_OPTION) {
-                service.Apagar(user.getId());
+                service.Apagar(user.getRegistro());
             }
         }
 
@@ -258,9 +258,9 @@ public class FuncionarioPage extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tabelaMouseClicked
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        System.out.println(user.getName() + " id: " + user.getId());
+        System.out.println(user.getNome() + " id: " + user.getRegistro());
 
-        user.setName(txtName.getText());
+        user.setNome(txtName.getText());
         user.setUserName(txtUserName.getText());
         user.setPassword(Criptografia.criptografiar(
                 new String(txtPassword.getPassword())));
@@ -310,7 +310,7 @@ public class FuncionarioPage extends javax.swing.JInternalFrame {
                     "Validação de Campos", JOptionPane.ERROR_MESSAGE);
         } else {
             var obj = new UserModel();
-            obj.setName(txtName.getText());
+            obj.setNome(txtName.getText());
             obj.setUserName(txtUserName.getText());
             obj.setPassword(Criptografia.criptografiar(
                     new String(txtPassword.getPassword())));
@@ -362,7 +362,7 @@ public class FuncionarioPage extends javax.swing.JInternalFrame {
         model.setNumRows(0);
         for (UserModel c : objs) {
             model.insertRow(model.getRowCount(), new Object[]{
-                c.getId(), c.getName(), c.getUserName(), Perfil.valueOf(c.getPerfil())
+                c.getRegistro(), c.getNome(), c.getUserName(), Perfil.valueOf(c.getPerfil())
             });
         }
     }
@@ -384,8 +384,8 @@ public class FuncionarioPage extends javax.swing.JInternalFrame {
 
         user = service.SelecaoUnica((int) tabela.getModel().getValueAt(row, 0));
 
-        txtId.setText(user.getId().toString());
-        txtName.setText(user.getName());
+        txtId.setText(user.getRegistro().toString());
+        txtName.setText(user.getNome());
         txtUserName.setText(user.getUserName());
         cbPerfil.setSelectedIndex(convertProfile(tabela.getModel().getValueAt(row, 3).toString()));
         txtPassword.setText(user.getPassword());

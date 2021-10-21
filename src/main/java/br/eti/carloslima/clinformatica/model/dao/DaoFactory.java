@@ -29,4 +29,5 @@ public class DaoFactory {
     public static UsuarioDao createUsuarioDao(){
         return new UsuarioDaoImpl(Db.getConnection());
     }
+    
 }

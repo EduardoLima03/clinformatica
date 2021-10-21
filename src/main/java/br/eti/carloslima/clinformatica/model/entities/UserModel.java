@@ -1,46 +1,29 @@
-
 package br.eti.carloslima.clinformatica.model.entities;
 
 import br.eti.carloslima.clinformatica.model.entities.enums.Perfil;
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Carlos Lima
  */
-public class UserModel implements  Serializable{
-    private Integer id;
-    private String name;
+public class UserModel extends People implements Serializable {
+
     private String userName;
     private String password;
     private Perfil perfil;
 
     public UserModel() {
+        super();
     }
 
     public UserModel(Integer id, String name, String userName, String password, Integer perfil) {
-        this.id = id;
-        this.name = name;
+        super(id, name);
         this.userName = userName;
         this.password = password;
         setPerfil(perfil);
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getUserName() {
@@ -69,7 +52,10 @@ public class UserModel implements  Serializable{
 
     @Override
     public int hashCode() {
-        int hash = 5;
+        int hash = 7;
+        hash = 97 * hash + Objects.hashCode(this.userName);
+        hash = 97 * hash + Objects.hashCode(this.password);
+        hash = 97 * hash + Objects.hashCode(this.perfil);
         return hash;
     }
 
@@ -85,14 +71,16 @@ public class UserModel implements  Serializable{
             return false;
         }
         final UserModel other = (UserModel) obj;
-        if (!Objects.equals(this.name, other.name)) {
+        if (!Objects.equals(this.userName, other.userName)) {
             return false;
         }
-        if (!Objects.equals(this.id, other.id)) {
+        if (!Objects.equals(this.password, other.password)) {
+            return false;
+        }
+        if (this.perfil != other.perfil) {
             return false;
         }
         return true;
     }
-    
-    
+
 }

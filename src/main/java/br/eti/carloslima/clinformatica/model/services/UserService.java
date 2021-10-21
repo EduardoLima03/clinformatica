@@ -66,7 +66,7 @@ public class UserService {
         //impede de tenta atualiza um usuario que nao tenha id ou nao teja no
         // banco
         var linhas = 0;
-        if(obj.getId() > 0){
+        if(obj.getRegistro() > 0){
           linhas =  dao.update(obj); 
         }else{
             JOptionPane.showMessageDialog(null, "Não pode modifica Usuario que nao existe! ID nulo.", "", JOptionPane.ERROR_MESSAGE);

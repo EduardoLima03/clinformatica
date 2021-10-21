@@ -41,8 +41,8 @@ public class LoginDaoImpl implements LoginDao{
             //criando um dto com a tabela retornada
             // da consulta
             if(rs.next()){
-                obj.setId(rs.getInt("id"));
-                obj.setName(rs.getString("name"));
+                obj.setRegistro(rs.getInt("id"));
+                obj.setNome(rs.getString("name"));
                 obj.setUserName(rs.getString("username"));
                 obj.setPassword(rs.getString("password"));
                 obj.setPerfil(rs.getInt("profile"));

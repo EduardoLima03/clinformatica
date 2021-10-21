@@ -51,8 +51,8 @@ public class UsuarioDaoImpl implements UsuarioDao{
             
             if(rs.next()){
                 
-                obj.setId(rs.getInt("id"));
-                obj.setName(rs.getString("name"));
+                obj.setRegistro(rs.getInt("id"));
+                obj.setNome(rs.getString("name"));
                 obj.setUserName(rs.getString("username"));
                 obj.setPassword(rs.getString("password"));
                 obj.setPerfil(rs.getInt("profile"));
@@ -85,8 +85,8 @@ public class UsuarioDaoImpl implements UsuarioDao{
             
             while (rs.next()) {                
                 UserModel obj = new UserModel();
-                obj.setId(rs.getInt("id"));
-                obj.setName(rs.getString("name"));
+                obj.setRegistro(rs.getInt("id"));
+                obj.setNome(rs.getString("name"));
                 obj.setUserName(rs.getString("username"));
                 obj.setPassword(rs.getString("password"));
                 obj.setPerfil(rs.getInt("profile"));
@@ -115,7 +115,7 @@ public class UsuarioDaoImpl implements UsuarioDao{
             st = conn.prepareStatement(
                     "INSERT INTO APP.USERS(name, username, "
                             + "password, profile) VALUES(?, ?, ?, ?)");
-            st.setString(1, obj.getName());
+            st.setString(1, obj.getNome());
             st.setString(2, obj.getUserName());
             st.setString(3, obj.getPassword());
             st.setInt(4, obj.getPerfil());
@@ -137,11 +137,11 @@ public class UsuarioDaoImpl implements UsuarioDao{
                     + " SET name = ?, username = ?, password = ?, profile = ?"
                     + " WHERE id = ?");
             
-            st.setString(1, obj.getName());
+            st.setString(1, obj.getNome());
             st.setString(2, obj.getUserName());
             st.setString(3, obj.getPassword());
             st.setInt(4, obj.getPerfil());
-            st.setInt(5, obj.getId());
+            st.setInt(5, obj.getRegistro());
             
             rows = st.executeUpdate();
         } catch (SQLException ex) {
