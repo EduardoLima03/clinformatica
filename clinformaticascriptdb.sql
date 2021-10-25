@@ -258,7 +258,7 @@ INSERT INTO APP.BAIRRO (NOME)
 CREATE TABLE endereco(
     id_endereco INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY(START WITH 1, INCREMENT BY 1),
     logradouro VARCHAR(25) NOT NULL,
-    numero VARCHAR(5) UNIQUE NOT NULL,
+    numero VARCHAR(5) NOT NULL,
     complemento VARCHAR(20),
     bairro VARCHAR(25),
     cep VARCHAR(10)
@@ -266,7 +266,7 @@ CREATE TABLE endereco(
 
 CREATE TABLE Cliente (
   idCliente INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY(START WITH 1, INCREMENT BY 1),
-  endereco_idendereco INTEGER UNIQUE NOT NULL,
+  endereco_idendereco INTEGER NOT NULL,
   nome VARCHAR(20) NOT NULL,
   sobre_nome VARCHAR(20),
   cpf VARCHAR(15) UNIQUE,
@@ -314,3 +314,6 @@ CREATE TABLE equipamento (
 );
 
 
+# Consultas
+
+SELECT c.IDCLIENTE, c.NOME, c.SOBRE_NOME, c.CPF, c.FONE, e.* FROM cliente as c JOIN endereco as e on e.ID_ENDERECO = c.ENDERECO_IDENDERECO WHERE c.IDCLIENTE = 1;
