@@ -255,31 +255,24 @@ INSERT INTO APP.BAIRRO (NOME)
 INSERT INTO APP.BAIRRO (NOME) 
 	VALUES ('Vila Velha')
 
-CREATE TABLE endereco (
-  idendereco INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
-  bairro_idbairro INTEGER UNSIGNED NOT NULL,
-  rua VARCHAR(20) NOT NULL,
-  numero INTEGER UNSIGNED NOT NULL,
-  cep VARCHAR(9) NULL,
-  PRIMARY KEY(idendereco),
-  INDEX endereco_FKIndex1(bairro_idbairro),
-  FOREIGN KEY(bairro_idbairro)
-    REFERENCES bairro(idbairro)
-      ON DELETE NO ACTION
-      ON UPDATE NO ACTION
+CREATE TABLE endereco(
+    id_endereco INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY(START WITH 1, INCREMENT BY 1),
+    logradouro VARCHAR(25) NOT NULL,
+    numero VARCHAR(5) UNIQUE NOT NULL,
+    complemento VARCHAR(20),
+    bairro VARCHAR(25),
+    cep VARCHAR(10)
 );
 
 CREATE TABLE Cliente (
-  idCliente INTEGER UNSIGNED NOT NULL,
-  endereco_idendereco INTEGER UNSIGNED NOT NULL,
+  idCliente INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY(START WITH 1, INCREMENT BY 1),
+  endereco_idendereco INTEGER UNIQUE NOT NULL,
   nome VARCHAR(20) NOT NULL,
-  email VARCHAR(32) NOT NULL,
-  PRIMARY KEY(idCliente),
-  INDEX Cliente_FKIndex1(endereco_idendereco),
-  FOREIGN KEY(endereco_idendereco)
-    REFERENCES endereco(idendereco)
-      ON DELETE NO ACTION
-      ON UPDATE NO ACTION
+  sobre_nome VARCHAR(20),
+  cpf VARCHAR(15) UNIQUE,
+  fone VARCHAR(15) NOT NULL,
+  CONSTRAINT endereco_id_ref FOREIGN KEY(endereco_idendereco)
+    REFERENCES endereco(id_endereco)
 );
 
 CREATE TABLE ordem_servico (
