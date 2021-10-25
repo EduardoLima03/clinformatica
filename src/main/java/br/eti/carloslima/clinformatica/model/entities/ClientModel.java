@@ -18,7 +18,7 @@ public class ClientModel extends People implements Serializable {
     private String telefone;
 
     //Dependeicia
-    private Addres residencia;
+    private AddresModel residencia;
 
     public ClientModel() {
         super();
@@ -37,7 +37,7 @@ public class ClientModel extends People implements Serializable {
         this.telefone = telefone;
     }
 
-    public ClientModel(String cpf, String telefone, Addres residencia,
+    public ClientModel(String cpf, String telefone, AddresModel residencia,
             Integer registro, String nome, String sobreNome) {
         super(registro, nome, sobreNome);
         this.cpf = cpf;
@@ -61,11 +61,11 @@ public class ClientModel extends People implements Serializable {
         this.telefone = telefone;
     }
 
-    public Addres getResidencia() {
+    public AddresModel getResidencia() {
         return residencia;
     }
 
-    public void setResidencia(Addres residencia) {
+    public void setResidencia(AddresModel residencia) {
         this.residencia = residencia;
     }
 
@@ -96,6 +96,11 @@ public class ClientModel extends People implements Serializable {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "ClientModel{"+ "Registro= " + super.getRegistro()+ " cpf=" + cpf + ", telefone=" + telefone + ", residencia=" + residencia + '}';
     }
 
 }

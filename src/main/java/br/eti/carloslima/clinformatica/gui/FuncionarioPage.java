@@ -9,10 +9,8 @@ import br.eti.carloslima.clinformatica.model.entities.UserModel;
 import br.eti.carloslima.clinformatica.model.entities.enums.Perfil;
 import br.eti.carloslima.clinformatica.model.services.UserService;
 import br.eti.carloslima.clinformatica.model.utils.Criptografia;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**

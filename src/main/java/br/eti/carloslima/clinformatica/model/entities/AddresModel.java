@@ -13,23 +13,25 @@ import java.util.Objects;
  *
  * @author eduar
  */
-public class Addres {
+public class AddresModel {
     private Integer id;
     private String logradouro;
     private String numero;
+    private String complemento;
     private String bairro;
     private String cep;
     
     //Depedencia
     private List<ClientModel> moradores = new ArrayList<ClientModel>();
 
-    public Addres() {
+    public AddresModel() {
     }
 
-    public Addres(Integer id, String logradouro, String numero, String bairro, String cep) {
+    public AddresModel(Integer id, String logradouro, String numero, String complemento, String bairro, String cep) {
         this.id = id;
         this.logradouro = logradouro;
         this.numero = numero;
+        this.complemento = complemento;
         this.bairro = bairro;
         this.cep = cep;
     }
@@ -56,6 +58,14 @@ public class Addres {
 
     public void setNumero(String numero) {
         this.numero = numero;
+    }
+
+    public String getComplemento() {
+        return complemento;
+    }
+
+    public void setComplemento(String complemento) {
+        this.complemento = complemento;
     }
 
     public String getBairro() {
@@ -105,7 +115,7 @@ public class Addres {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Addres other = (Addres) obj;
+        final AddresModel other = (AddresModel) obj;
         if (!Objects.equals(this.logradouro, other.logradouro)) {
             return false;
         }
@@ -123,6 +133,12 @@ public class Addres {
         }
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "AddresModel{" + "id=" + id + ", logradouro=" + logradouro + ", numero=" + numero + ", complemento=" + complemento + ", bairro=" + bairro + ", cep=" + cep + '}';
+    }
+
     
     
 }

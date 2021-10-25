@@ -2,6 +2,8 @@
 package br.eti.carloslima.clinformatica.model.dao;
 
 import br.eti.carloslima.clinformatica.db.Db;
+import br.eti.carloslima.clinformatica.model.dao.impl.AddresDaoImpl;
+import br.eti.carloslima.clinformatica.model.dao.impl.ClientDaoImpl;
 import br.eti.carloslima.clinformatica.model.dao.impl.LoginDaoImpl;
 import br.eti.carloslima.clinformatica.model.dao.impl.UsuarioDaoImpl;
 
@@ -30,4 +32,11 @@ public class DaoFactory {
         return new UsuarioDaoImpl(Db.getConnection());
     }
     
+    public static AddresDao createAddresDao(){
+        return new AddresDaoImpl(Db.getConnection());
+    }
+    
+    public static ClientDao createClientDao(){
+        return new ClientDaoImpl(Db.getConnection());
+    }
 }
