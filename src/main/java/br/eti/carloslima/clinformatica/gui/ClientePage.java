@@ -81,12 +81,6 @@ public class ClientePage extends javax.swing.JInternalFrame {
 
         jLabel2.setText("* Nome");
 
-        txtNome.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNomeActionPerformed(evt);
-            }
-        });
-
         jLabel3.setText("Sobre nome");
 
         jLabel4.setText("* CPF");
@@ -109,12 +103,6 @@ public class ClientePage extends javax.swing.JInternalFrame {
 
         jLabel6.setText("* Logradouro");
 
-        txtLogradouro.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtLogradouroActionPerformed(evt);
-            }
-        });
-
         jLabel7.setText("* Numero");
 
         jLabel11.setText("Complemento");
@@ -131,11 +119,6 @@ public class ClientePage extends javax.swing.JInternalFrame {
             ex.printStackTrace();
         }
         ftxtCep.setText("00000-000");
-        ftxtCep.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ftxtCepActionPerformed(evt);
-            }
-        });
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel10.setText("Dados de Endereço");
