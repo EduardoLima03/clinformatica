@@ -117,7 +117,7 @@ public class ClientDaoImpl implements ClientDao {
             st.setInt(1, id);
 
             //execulta
-            rs = st.executeQuery(sql);
+            rs = st.executeQuery();
 
             while (rs.next()) {
                 AddresModel addres = new AddresModel();
@@ -157,7 +157,7 @@ public class ClientDaoImpl implements ClientDao {
     public int delete(int id) {
         int row = 0;
 
-        String sql = "DELETE FROM APP.CLIENTE WHERE id = ?";
+        String sql = "DELETE FROM APP.CLIENTE WHERE idcliente = ?";
 
         PreparedStatement st = null;
         try {

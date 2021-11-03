@@ -32,4 +32,8 @@ public class AddresService {
     public AddresModel buscaPorNome(String rua){
         return dao.selectByLogradouro(rua);
     }
+    
+    public int deleta(int id){
+        return dao.delete(id);
+    }
 }

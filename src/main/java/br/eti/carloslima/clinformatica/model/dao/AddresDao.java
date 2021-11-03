@@ -17,4 +17,5 @@ public interface AddresDao {
     int update(AddresModel obj);
     AddresModel select(int id);
     AddresModel selectByLogradouro(String rua);
+    int delete(int id);
 }

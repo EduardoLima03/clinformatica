@@ -27,6 +27,8 @@ public class ClientePage extends javax.swing.JInternalFrame {
 
     private DefaultTableModel model;
 
+    private int delCliId = 0, delEndId = 0;
+
     public ClientePage() {
         initComponents();
         aService = new AddresService();
@@ -131,6 +133,11 @@ public class ClientePage extends javax.swing.JInternalFrame {
         });
 
         BtnDeletar.setText("Deletar");
+        BtnDeletar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnDeletarActionPerformed(evt);
+            }
+        });
 
         btnSalvar.setText("Salvar");
         btnSalvar.addActionListener(new java.awt.event.ActionListener() {
@@ -154,6 +161,11 @@ public class ClientePage extends javax.swing.JInternalFrame {
         ));
         tbClientes.setFocusable(false);
         tbClientes.getTableHeader().setReorderingAllowed(false);
+        tbClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbClientesMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tbClientes);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -271,6 +283,47 @@ public class ClientePage extends javax.swing.JInternalFrame {
         limpar();
     }//GEN-LAST:event_btnLimparActionPerformed
 
+    private void tbClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbClientesMouseClicked
+        setFields();
+    }//GEN-LAST:event_tbClientesMouseClicked
+
+    private void BtnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnDeletarActionPerformed
+        delete();
+    }//GEN-LAST:event_BtnDeletarActionPerformed
+//parei aqui. fazer deleta
+
+    private void delete() {
+        if (delCliId > 0) {
+            if (cService.apagar(delCliId) > 0) {
+                aService.deleta(delEndId);
+                JOptionPane.showMessageDialog(null, "Cliente deletado com sucesso");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Cliente não selecionado!");
+        }
+        initTable();
+    }
+
+    private void setFields() {
+        int row = tbClientes.getSelectedRow();
+
+        int id = Integer.parseInt(tbClientes.getModel().getValueAt(row, 0).toString());
+        ClientModel client = cService.buscaById(id);
+
+        txtNome.setText(client.getNome());
+        txtSobreNome.setText(client.getSobreNome());
+        ftxtCpf.setText(client.getCpf());
+        ftxtTelefone.setText(client.getTelefone());
+        txtLogradouro.setText(client.getResidencia().getLogradouro());
+        txtNumero.setText(client.getResidencia().getNumero());
+        txtComplemento.setText(client.getResidencia().getComplemento());
+        cbBairro.setSelectedItem(client.getResidencia().getBairro());
+        ftxtCep.setText(client.getResidencia().getCep());
+
+        delCliId = client.getRegistro();
+        delEndId = client.getResidencia().getId();
+    }
+
     private void validateFields() {
         if (txtNome.getText().isEmpty() || ftxtCpf.getText().isEmpty()
                 || ftxtTelefone.getText().isEmpty()
@@ -278,7 +331,12 @@ public class ClientePage extends javax.swing.JInternalFrame {
                 || txtNumero.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Deve preencher todos os campos obrigatorios");
         } else {
+            if(ftxtCpf.getText().equals("000.000.000-00")){
+                JOptionPane.showMessageDialog(null, "CPF invalido");
+            }else{
+                
             salvar();
+            }
         }
     }
 
@@ -312,20 +370,18 @@ public class ClientePage extends javax.swing.JInternalFrame {
         }
 
         addres.setMoradores(client);
-        
-        System.out.println(ftxtTelefone.getText());
 
         //salcando o cliente
-       /* if (client.getResidencia() != null) {
+        if (client.getResidencia() != null) {
             if (cService.salva(client) > 0) {
                 JOptionPane.showMessageDialog(null, "Cliente Salvo com Sucesso!");
             }
-        }*/
+        }
         limpar();
         addres = null;
         client = null;
         initTable();
-       
+
     }
 
     private void initTable() {
@@ -344,7 +400,7 @@ public class ClientePage extends javax.swing.JInternalFrame {
         }
     }
 
-    private void limpar(){
+    private void limpar() {
         txtComplemento.setText("");
         txtLogradouro.setText("");
         txtNome.setText("");

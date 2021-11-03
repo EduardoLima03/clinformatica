@@ -34,5 +34,9 @@ public class ClientService {
     public List<ClientModel> buscaTodos(){
         return dao.selectAll();
     }
+    
+    public ClientModel buscaById(int id){
+        return dao.selectByRegistro(id);
+    }
         
 }

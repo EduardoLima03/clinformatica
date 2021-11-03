@@ -149,4 +149,21 @@ public class AddresDaoImpl implements AddresDao {
         return null;
     }
 
+    @Override
+    public int delete(int id) {
+        PreparedStatement st = null;
+        int row = 0;
+        String sql = "DELETE FROM APP.ENDERECO WHERE id_endereco = ?";
+        
+        try {
+            st = conn.prepareStatement(sql);
+            st.setInt(1, id);
+            
+            row = st.executeUpdate();
+        } catch (SQLException ex) {
+            throw new DbException(ex.getMessage());
+        }
+        return row;
+    }
+
 }
