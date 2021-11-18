@@ -148,9 +148,58 @@ public class ClientDaoImpl implements ClientDao {
         return client;
     }
 
+    /**
+     * Função não funciona: em algum momento a query é execultada mais nao retorna registro
+     * igual do teste no banco de dados. While não execulta.
+     * @param nome
+     * @return returno uma lista de Cliente que atente o caracter passado
+     */
     @Override
-    public ClientModel selectByName(String rua) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<ClientModel> selectByName(String nome) {
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        String sql = "SELECT * FROM APP.CLIENTE WHERE nome LIKE '?%'";
+        List<ClientModel> obj = new ArrayList<>();
+                
+        try {
+            System.out.println(sql+nome);
+            st = conn.prepareStatement(sql);
+            st.setString(1, nome);
+           
+            rs = st.executeQuery();
+                        
+            while (rs.next()) {
+                ClientModel cli = new ClientModel();
+                AddresModel addres = new AddresModel();
+
+                cli.setRegistro(rs.getInt(1));
+                cli.setNome(rs.getString(2));
+                cli.setSobreNome(rs.getString(3));
+                cli.setCpf(rs.getString(4));
+                cli.setTelefone(rs.getString(5));
+
+                addres.setId(rs.getInt(6));
+                addres.setLogradouro(rs.getString(7));
+                addres.setNumero(rs.getString(8));
+                addres.setComplemento(rs.getString(9));
+                addres.setBairro(rs.getString(10));
+                addres.setCep(rs.getString(11));
+
+                cli.setResidencia(addres);
+                addres.setMoradores(cli);
+
+                obj.add(cli);
+                System.out.println(cli);
+            }
+            
+        } catch (SQLException ex) {
+            throw  new DbException(ex.getMessage());
+        }finally{
+            Db.closeStatement(st);
+            Db.closeResultSet(rs);
+        }
+        
+        return obj;
     }
 
     @Override

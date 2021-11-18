@@ -202,6 +202,7 @@ public class ClientePage extends javax.swing.JInternalFrame {
                         .addGap(210, 246, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 892, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(btnLimpar)
                                 .addGap(18, 18, 18)
@@ -209,7 +210,6 @@ public class ClientePage extends javax.swing.JInternalFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(btnSalvar))
                             .addComponent(jLabel10)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 892, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -267,9 +267,9 @@ public class ClientePage extends javax.swing.JInternalFrame {
                     .addComponent(btnLimpar)
                     .addComponent(BtnDeletar)
                     .addComponent(btnSalvar))
-                .addGap(27, 27, 27)
+                .addGap(33, 33, 33)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24))
+                .addGap(46, 46, 46))
         );
 
         setBounds(0, 0, 988, 634);
@@ -304,6 +304,9 @@ public class ClientePage extends javax.swing.JInternalFrame {
         initTable();
     }
 
+    /**
+     * Apresenta ao usuario os dados da linha selecionda na tabela
+     */
     private void setFields() {
         int row = tbClientes.getSelectedRow();
 
@@ -320,6 +323,7 @@ public class ClientePage extends javax.swing.JInternalFrame {
         cbBairro.setSelectedItem(client.getResidencia().getBairro());
         ftxtCep.setText(client.getResidencia().getCep());
 
+        
         delCliId = client.getRegistro();
         delEndId = client.getResidencia().getId();
     }
@@ -331,11 +335,11 @@ public class ClientePage extends javax.swing.JInternalFrame {
                 || txtNumero.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Deve preencher todos os campos obrigatorios");
         } else {
-            if(ftxtCpf.getText().equals("000.000.000-00")){
+            if (ftxtCpf.getText().equals("000.000.000-00")) {
                 JOptionPane.showMessageDialog(null, "CPF invalido");
-            }else{
-                
-            salvar();
+            } else {
+
+                salvar();
             }
         }
     }

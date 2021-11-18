@@ -35,6 +35,22 @@ public class ClientService {
         return dao.selectAll();
     }
     
+    /**
+     * Pesquisa no banco se existe clientes que o nome inici com o a letra 
+     * informada
+     *  --- Metodo descontinuado ---
+     * @param caract
+     * @return retorna uma lista de Clentes que atende os caracteres pasado
+     */
+    public List<ClientModel> pesquisaespecial(String caract){
+        if(caract.contains("%")){
+            System.out.println("+++++"+caract+"++++++");
+            return dao.selectByName(caract);
+        }
+        
+        return null;
+    }
+    
     public ClientModel buscaById(int id){
         return dao.selectByRegistro(id);
     }

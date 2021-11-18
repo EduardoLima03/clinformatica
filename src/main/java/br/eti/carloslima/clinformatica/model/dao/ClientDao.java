@@ -18,6 +18,6 @@ public interface ClientDao {
     int update(ClientModel obj);
     int delete(int id);
     ClientModel selectByRegistro(int id);
-    ClientModel selectByName(String rua);
+    List<ClientModel> selectByName(String nome);
     List<ClientModel> selectAll();
 }
