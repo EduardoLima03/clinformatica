@@ -301,7 +301,10 @@ public class ClientePage extends javax.swing.JInternalFrame {
         } else {
             JOptionPane.showMessageDialog(null, "Cliente não selecionado!");
         }
+        limpar();
         initTable();
+        
+        
     }
 
     /**
@@ -323,7 +326,6 @@ public class ClientePage extends javax.swing.JInternalFrame {
         cbBairro.setSelectedItem(client.getResidencia().getBairro());
         ftxtCep.setText(client.getResidencia().getCep());
 
-        
         delCliId = client.getRegistro();
         delEndId = client.getResidencia().getId();
     }
@@ -344,6 +346,9 @@ public class ClientePage extends javax.swing.JInternalFrame {
         }
     }
 
+    /**
+     * Responsavel de Salva e Atualizar os dados no banco
+     */
     private void salvar() {
         ClientModel client = new ClientModel();
         AddresModel addres = new AddresModel();
@@ -354,11 +359,21 @@ public class ClientePage extends javax.swing.JInternalFrame {
         addres.setCep(ftxtCep.getText());
         addres.setBairro(cbBairro.getSelectedItem().toString());
 
-        //salvando o endereço
-        int id = aService.salvar(addres);
-        if (id > 0) {
-            //coloca o id do endereço vindo do banco 
-            addres.setId(id);
+        if (delEndId > 0) {
+            //se maior que zero é porque ja existe: atualiza
+            addres.setId(delEndId);
+
+            //atualizando o endereco
+            aService.atualiza(addres);
+        } else {
+            //se nao for maior é uma novo endereço: salva
+
+            //salvando o endereço
+            int id = aService.salvar(addres);
+            if (id > 0) {
+                //coloca o id do endereço vindo do banco 
+                addres.setId(id);
+            }
         }
 
         client.setNome(txtNome.getText());
@@ -366,21 +381,35 @@ public class ClientePage extends javax.swing.JInternalFrame {
         client.setCpf(ftxtCpf.getText());
         client.setTelefone(ftxtTelefone.getText());
 
+        if (addres.getId() != null && client.getRegistro() == null) {
+            /*se o entedereço tive salvo e o cliente nao tiva realação de endereço
+            o endereço em questão selá atribudo ao cliente*/
+
+            client.setResidencia(addres);
+        }
+
         //adicioando o enderaço ao cliente
         //so pode ser adicionado se o enderaço tive id
-        if (addres.getId() != null) {
+        /*if (addres.getId() != null) {
             client.setResidencia(addres);
 
-        }
-
+        }*/
         addres.setMoradores(client);
 
-        //salcando o cliente
-        if (client.getResidencia() != null) {
-            if (cService.salva(client) > 0) {
-                JOptionPane.showMessageDialog(null, "Cliente Salvo com Sucesso!");
+        if (delCliId > 0) {
+            //se maior que zero é porque ja existe: atualiza
+            client.setRegistro(delCliId);
+            //atualizando o cliente
+            cService.atualizar(client);
+        } else {
+            //salcando o cliente
+            if (client.getResidencia() != null) {
+                if (cService.salva(client) > 0) {
+                    JOptionPane.showMessageDialog(null, "Cliente Salvo com Sucesso!");
+                }
             }
         }
+
         limpar();
         addres = null;
         client = null;
@@ -413,6 +442,9 @@ public class ClientePage extends javax.swing.JInternalFrame {
         ftxtCep.setText("");
         ftxtCpf.setText("");
         ftxtTelefone.setText("");
+        
+        delCliId = 0;
+        delEndId = 0;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

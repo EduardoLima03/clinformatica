@@ -21,6 +21,11 @@ public class AddresService {
         return dao.insert(obj);
     }
     
+    /**
+     * Motodo que ira atualizar os endereço existente
+     * @param obj
+     * @return retorna o numero de linhas modificadas
+     */
     public int atualiza(AddresModel obj){
         return dao.update(obj);
     }
