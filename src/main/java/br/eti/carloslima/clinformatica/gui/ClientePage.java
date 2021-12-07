@@ -71,6 +71,8 @@ public class ClientePage extends javax.swing.JInternalFrame {
         btnSalvar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbClientes = new javax.swing.JTable();
+        lblPesquisa = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
@@ -168,6 +170,14 @@ public class ClientePage extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(tbClientes);
 
+        lblPesquisa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                lblPesquisaKeyReleased(evt);
+            }
+        });
+
+        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/search.png"))); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -203,12 +213,6 @@ public class ClientePage extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 892, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnLimpar)
-                                .addGap(18, 18, 18)
-                                .addComponent(BtnDeletar)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnSalvar))
                             .addComponent(jLabel10)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel7)
@@ -225,7 +229,18 @@ public class ClientePage extends javax.swing.JInternalFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel9)
                                 .addGap(18, 18, 18)
-                                .addComponent(ftxtCep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(ftxtCep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(lblPesquisa, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(btnLimpar)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(BtnDeletar)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnSalvar)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel12)))
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
@@ -268,8 +283,12 @@ public class ClientePage extends javax.swing.JInternalFrame {
                     .addComponent(BtnDeletar)
                     .addComponent(btnSalvar))
                 .addGap(33, 33, 33)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jLabel12)
+                    .addComponent(lblPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46))
+                .addContainerGap())
         );
 
         setBounds(0, 0, 988, 634);
@@ -290,6 +309,12 @@ public class ClientePage extends javax.swing.JInternalFrame {
     private void BtnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnDeletarActionPerformed
         delete();
     }//GEN-LAST:event_BtnDeletarActionPerformed
+
+    private void lblPesquisaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_lblPesquisaKeyReleased
+        // TODO add your handling code here:
+        var letra = lblPesquisa.getText().toString();
+        researchTable(letra);
+    }//GEN-LAST:event_lblPesquisaKeyReleased
 //parei aqui. fazer deleta
 
     private void delete() {
@@ -432,6 +457,22 @@ public class ClientePage extends javax.swing.JInternalFrame {
             });
         }
     }
+    
+    private void researchTable(String letra){
+        model = (DefaultTableModel) tbClientes.getModel();
+        List<ClientModel> objs = cService.pesquisaespecial(letra);
+
+        model.setNumRows(0);
+        for (ClientModel c : objs) {
+
+            model.insertRow(model.getRowCount(), new Object[]{
+                c.getRegistro(), c.getNome(), c.getSobreNome(), c.getCpf(),
+                c.getTelefone(), c.getResidencia().getLogradouro(),
+                c.getResidencia().getNumero(), c.getResidencia().getComplemento(),
+                c.getResidencia().getBairro(), c.getResidencia().getCep()
+            });
+        }
+    }
 
     private void limpar() {
         txtComplemento.setText("");
@@ -458,6 +499,7 @@ public class ClientePage extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -467,6 +509,7 @@ public class ClientePage extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField lblPesquisa;
     private javax.swing.JTable tbClientes;
     private javax.swing.JTextField txtComplemento;
     private javax.swing.JTextField txtLogradouro;

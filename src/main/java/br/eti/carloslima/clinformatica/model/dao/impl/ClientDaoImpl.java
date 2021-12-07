@@ -38,7 +38,8 @@ public class ClientDaoImpl implements ClientDao {
      */
     @Override
     public int insert(ClientModel obj) {
-        String sql = "INSERT INTO APP.CLIENTE(nome, sobre_nome, cpf, fone, endereco_idendereco) VALUES(?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO APP.CLIENTE(nome, sobre_nome, cpf, fone, "
+                + "endereco_idendereco) VALUES(?, ?, ?, ?, ?)";
         PreparedStatement st = null;
         ResultSet rs = null;
         int row = 0;
@@ -156,16 +157,26 @@ public class ClientDaoImpl implements ClientDao {
      */
     @Override
     public List<ClientModel> selectByName(String nome) {
+                
         PreparedStatement st = null;
         ResultSet rs = null;
-        String sql = "SELECT * FROM APP.CLIENTE WHERE nome LIKE '?%'";
+        /**
+         * SQL base para a consulta
+         * SELECT c.*, e.* FROM cliente as c JOIN endereco as e 
+         * on e.ID_ENDERECO = c.ENDERECO_IDENDERECO WHERE c.NOME LIKE 'E%';
+         */
+        
+        String sql = "SELECT c.*, e.* FROM cliente as c JOIN endereco as e on "
+                + "e.ID_ENDERECO = c.ENDERECO_IDENDERECO WHERE c.NOME LIKE ?";
+        
         List<ClientModel> obj = new ArrayList<>();
                 
         try {
-            System.out.println(sql+nome);
+            
             st = conn.prepareStatement(sql);
-            st.setString(1, nome);
+            st.setString(1, nome + "%");
            
+            
             rs = st.executeQuery();
                         
             while (rs.next()) {
@@ -173,23 +184,22 @@ public class ClientDaoImpl implements ClientDao {
                 AddresModel addres = new AddresModel();
 
                 cli.setRegistro(rs.getInt(1));
-                cli.setNome(rs.getString(2));
-                cli.setSobreNome(rs.getString(3));
-                cli.setCpf(rs.getString(4));
-                cli.setTelefone(rs.getString(5));
+                cli.setNome(rs.getString(3));
+                cli.setSobreNome(rs.getString(4));
+                cli.setCpf(rs.getString(5));
+                cli.setTelefone(rs.getString(6));
 
-                addres.setId(rs.getInt(6));
-                addres.setLogradouro(rs.getString(7));
-                addres.setNumero(rs.getString(8));
-                addres.setComplemento(rs.getString(9));
-                addres.setBairro(rs.getString(10));
-                addres.setCep(rs.getString(11));
+                addres.setId(rs.getInt(7));
+                addres.setLogradouro(rs.getString(8));
+                addres.setNumero(rs.getString(9));
+                addres.setComplemento(rs.getString(10));
+                addres.setBairro(rs.getString(11));
+                addres.setCep(rs.getString(12));
 
                 cli.setResidencia(addres);
                 addres.setMoradores(cli);
 
                 obj.add(cli);
-                System.out.println(cli);
             }
             
         } catch (SQLException ex) {

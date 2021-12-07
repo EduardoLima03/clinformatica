@@ -43,12 +43,7 @@ public class ClientService {
      * @return retorna uma lista de Clentes que atende os caracteres pasado
      */
     public List<ClientModel> pesquisaespecial(String caract){
-        if(caract.contains("%")){
-            System.out.println("+++++"+caract+"++++++");
-            return dao.selectByName(caract);
-        }
-        
-        return null;
+        return dao.selectByName(caract);
     }
     
     public ClientModel buscaById(int id){
