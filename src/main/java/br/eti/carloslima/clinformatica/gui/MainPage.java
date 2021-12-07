@@ -39,6 +39,7 @@ public class MainPage extends javax.swing.JFrame {
         mnCadastro = new javax.swing.JMenu();
         mniFuncionarios = new javax.swing.JMenuItem();
         mniCliente = new javax.swing.JMenuItem();
+        mmiOrdem = new javax.swing.JMenuItem();
         mnRelatorio = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -96,7 +97,6 @@ public class MainPage extends javax.swing.JFrame {
         mniFuncionarios.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.ALT_DOWN_MASK));
         mniFuncionarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon-user.png"))); // NOI18N
         mniFuncionarios.setText("Funcionarios");
-        mniFuncionarios.setActionCommand("Funcionarios");
         mniFuncionarios.setEnabled(false);
         mniFuncionarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -114,6 +114,16 @@ public class MainPage extends javax.swing.JFrame {
             }
         });
         mnCadastro.add(mniCliente);
+
+        mmiOrdem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.ALT_DOWN_MASK));
+        mmiOrdem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/document.png"))); // NOI18N
+        mmiOrdem.setText("Ordem de Ser.");
+        mmiOrdem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mmiOrdemActionPerformed(evt);
+            }
+        });
+        mnCadastro.add(mmiOrdem);
 
         jMenuBar1.add(mnCadastro);
 
@@ -157,6 +167,13 @@ public class MainPage extends javax.swing.JFrame {
         desktop.add(cliente);
     }//GEN-LAST:event_mniClienteActionPerformed
 
+    private void mmiOrdemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mmiOrdemActionPerformed
+        // TODO add your handling code here:
+        OSPage os = new OSPage();
+        os.setVisible(true);
+        desktop.add(os);
+    }//GEN-LAST:event_mmiOrdemActionPerformed
+
     
     //Date
     private LocalDate date;
@@ -173,6 +190,7 @@ public class MainPage extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblDate;
     public javax.swing.JLabel lblName;
+    private javax.swing.JMenuItem mmiOrdem;
     private javax.swing.JMenu mnCadastro;
     public javax.swing.JMenu mnRelatorio;
     private javax.swing.JMenuItem mniCliente;

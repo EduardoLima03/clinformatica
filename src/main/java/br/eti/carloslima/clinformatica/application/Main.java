@@ -6,7 +6,6 @@
 package br.eti.carloslima.clinformatica.application;
 
 import br.eti.carloslima.clinformatica.gui.LoginPage;
-import br.eti.carloslima.clinformatica.gui.Pesquisa;
 
 /**
  *
@@ -14,7 +13,7 @@ import br.eti.carloslima.clinformatica.gui.Pesquisa;
  */
 public class Main {
     public static void main(String[] args){
-        //LoginPage.main(args);
+        
         LoginPage.main(args);
     }
 
