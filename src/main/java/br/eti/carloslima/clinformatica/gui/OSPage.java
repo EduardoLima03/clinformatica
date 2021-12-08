@@ -5,6 +5,13 @@
  */
 package br.eti.carloslima.clinformatica.gui;
 
+import br.eti.carloslima.clinformatica.model.entities.ClientModel;
+import br.eti.carloslima.clinformatica.model.services.ClientService;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author eduar
@@ -14,8 +21,12 @@ public class OSPage extends javax.swing.JInternalFrame {
     /**
      * Creates new form OSPage
      */
+    
+    private ClientService cService = new ClientService();
+    
     public OSPage() {
         initComponents();
+        getDate();
     }
 
     /**
@@ -111,10 +122,10 @@ public class OSPage extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtNumService, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtDateService, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtDateService, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNumService, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(rbOrcamento)
@@ -128,10 +139,18 @@ public class OSPage extends javax.swing.JInternalFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Cliente"));
 
+        txtPesquisaCliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtPesquisaClienteKeyReleased(evt);
+            }
+        });
+
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/search.png"))); // NOI18N
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel5.setText("* Id:");
+
+        txtIdCliente.setEditable(false);
 
         tblCliente.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -144,6 +163,11 @@ public class OSPage extends javax.swing.JInternalFrame {
                 "Id", "Nome", "Telefone"
             }
         ));
+        tblCliente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblClienteMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblCliente);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -301,6 +325,56 @@ public class OSPage extends javax.swing.JInternalFrame {
 
         setBounds(0, 0, 1072, 650);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void txtPesquisaClienteKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisaClienteKeyReleased
+        // Faz a pesquisa assim que é digitada alguma letra.
+        researchTable(txtPesquisaCliente.getText().toString());
+    }//GEN-LAST:event_txtPesquisaClienteKeyReleased
+
+    private void tblClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblClienteMouseClicked
+        // TODO add your handling code here:
+        setFieldIdClient();
+    }//GEN-LAST:event_tblClienteMouseClicked
+
+    private void setFieldIdClient(){
+        int row = tblCliente.getSelectedRow(); //recupera a linha selecionada da tabela
+
+        var id = tblCliente.getModel().getValueAt(row, 0).toString();
+        
+        txtIdCliente.setText(id);
+        
+    }
+    
+    /**
+     * Preence a tabela de clientes para realiza a seleção
+     * @param letra 
+     */
+    private void researchTable(String letra){
+        DefaultTableModel model = (DefaultTableModel) tblCliente.getModel();
+        
+        //resaliza a pesquisa e salva em uma lista de clientes
+        List<ClientModel> objs = cService.pesquisaespecial(letra);
+
+        model.setNumRows(0);
+        for (ClientModel c : objs) {
+            /*
+                Adiciona uma linha para cada cliente contido na lista
+            */
+            model.insertRow(model.getRowCount(), new Object[]{
+                c.getRegistro(), c.getNome(), c.getTelefone()
+            });
+        }
+    }
+    
+    
+    /**
+     * Responsavel de carregar a data no campo corespondete 
+     */
+    private void getDate(){
+        LocalDate date = LocalDate.now();
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        txtDateService.setText(date.format(format));
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

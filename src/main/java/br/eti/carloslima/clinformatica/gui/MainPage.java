@@ -6,6 +6,7 @@
 package br.eti.carloslima.clinformatica.gui;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 /**
  *
@@ -180,7 +181,8 @@ public class MainPage extends javax.swing.JFrame {
     
     private void getDate(){
         date = LocalDate.now();
-        lblDate.setText(date.toString());
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        lblDate.setText(date.format(format));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
