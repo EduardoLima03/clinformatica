@@ -276,25 +276,20 @@ CREATE TABLE Cliente (
 );
 
 CREATE TABLE ordem_servico (
-  idordem_servico INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
-  Cliente_idCliente INTEGER UNSIGNED NOT NULL,
-  usuario_idusuario INTEGER UNSIGNED NOT NULL,
-  date_os DATETIME NOT NULL,
+  id_servico INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY(START WITH 1, INCREMENT BY 1),
+  cliente_idCliente INTEGER NOT NULL,
+  usuario_idusuario INTEGER NOT NULL,
+  date_os TIMESTAMP default current_timestamp,
+  tipo_service INTEGER(1) NOT NULL,
+  equipamento VARCHAR(150) NOT NULL,
   defeito VARCHAR(150) NOT NULL,
   servico VARCHAR(150) NOT NULL,
-  valor DOUBLE PRECISION NULL,
-  status_2 INTEGER UNSIGNED NOT NULL,
-  PRIMARY KEY(idordem_servico),
-  INDEX ordem_servico_FKIndex1(usuario_idusuario),
-  INDEX ordem_servico_FKIndex2(Cliente_idCliente),
-  FOREIGN KEY(usuario_idusuario)
-    REFERENCES usuario(idusuario)
-      ON DELETE NO ACTION
-      ON UPDATE NO ACTION,
-  FOREIGN KEY(Cliente_idCliente)
-    REFERENCES Cliente(idCliente)
-      ON DELETE NO ACTION
-      ON UPDATE NO ACTION
+  valor_total DECIMAL,
+  status INTEGER NOT NULL,
+  CONSTRAINT cliente_id_ref FOREIGN KEY (cliente_idCliente)
+  	REFERENCES cliente(idcliente),
+  CONSTRAINT user_id_ref FOREIGN KEY (usuario_idusuario)
+	REFERENCES users(id)
 );
 
 CREATE TABLE equipamento (
