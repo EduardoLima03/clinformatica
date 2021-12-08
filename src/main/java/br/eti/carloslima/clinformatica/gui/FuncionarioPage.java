@@ -228,7 +228,7 @@ public class FuncionarioPage extends javax.swing.JInternalFrame {
                 .addGap(59, 59, 59))
         );
 
-        setBounds(0, 0, 1000, 641);
+        setBounds(0, 0, 1072, 650);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDeletaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletaActionPerformed

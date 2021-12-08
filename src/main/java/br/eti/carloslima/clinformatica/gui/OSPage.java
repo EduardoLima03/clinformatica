@@ -42,7 +42,7 @@ public class OSPage extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setMaximizable(true);
         setTitle("Ordem de Serviço");
-        setPreferredSize(new java.awt.Dimension(640, 307));
+        setPreferredSize(new java.awt.Dimension(1072, 307));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -51,6 +51,7 @@ public class OSPage extends javax.swing.JInternalFrame {
         jLabel2.setText("Data");
 
         txtNumService.setEditable(false);
+        txtNumService.setPreferredSize(new java.awt.Dimension(80, 22));
 
         txtDateService.setEditable(false);
 
@@ -115,20 +116,21 @@ public class OSPage extends javax.swing.JInternalFrame {
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(351, Short.MAX_VALUE))
+                .addContainerGap(826, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
-                .addGap(0, 263, Short.MAX_VALUE))
+                .addContainerGap(470, Short.MAX_VALUE))
         );
 
-        setBounds(0, 0, 597, 437);
+        setBounds(0, 0, 1072, 650);
     }// </editor-fold>//GEN-END:initComponents
 
 

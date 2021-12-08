@@ -175,6 +175,9 @@
       </SubComponents>
     </Container>
     <Container class="javax.swing.JDesktopPane" name="desktop">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="MainPage_desktop"/>
+      </AuxValues>
 
       <Layout>
         <DimensionLayout dim="0">
