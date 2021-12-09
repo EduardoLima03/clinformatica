@@ -5,6 +5,7 @@ import br.eti.carloslima.clinformatica.db.Db;
 import br.eti.carloslima.clinformatica.model.dao.impl.AddresDaoImpl;
 import br.eti.carloslima.clinformatica.model.dao.impl.ClientDaoImpl;
 import br.eti.carloslima.clinformatica.model.dao.impl.LoginDaoImpl;
+import br.eti.carloslima.clinformatica.model.dao.impl.ServiceOrderDaoImpl;
 import br.eti.carloslima.clinformatica.model.dao.impl.UsuarioDaoImpl;
 
 /**
@@ -38,5 +39,9 @@ public class DaoFactory {
     
     public static ClientDao createClientDao(){
         return new ClientDaoImpl(Db.getConnection());
+    }
+    
+    public static ServiceOrderDao createServiceOrderDao(){
+        return new ServiceOrderDaoImpl(Db.getConnection());
     }
 }

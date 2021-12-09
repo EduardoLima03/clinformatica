@@ -9,24 +9,22 @@ package br.eti.carloslima.clinformatica.model.entities.enums;
  *
  * @author eduar
  */
-public enum StatusService {
+public enum TypeOfService {
     ORÇAMENTO(1),
-    APROVADO(2),
-    EM_SERVICO(3),
-    CONCLUIDO(4);
-    
+    ORDEM_DE_SERVIÇO(2);
+
     private int code;
 
-    private StatusService(int code) {
+    private TypeOfService(int code) {
         this.code = code;
     }
 
     public int getCode() {
         return code;
     }
-    
-    public static StatusService valueOf(int code){
-        for (StatusService value : StatusService.values()) {
+
+    public static TypeOfService valueOf(int code) {
+        for (TypeOfService value : TypeOfService.values()) {
             if (value.getCode() == code) {
                 return value;
             }

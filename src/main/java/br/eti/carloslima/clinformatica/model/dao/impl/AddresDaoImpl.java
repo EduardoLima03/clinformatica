@@ -54,6 +54,7 @@ public class AddresDaoImpl implements AddresDao {
             throw new DbException(ex.getMessage());
         } finally {
             Db.closeStatement(st);
+            Db.closeResultSet(rs);
         }
 
         return row;
