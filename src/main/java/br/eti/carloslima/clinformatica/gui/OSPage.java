@@ -6,10 +6,14 @@
 package br.eti.carloslima.clinformatica.gui;
 
 import br.eti.carloslima.clinformatica.model.entities.ClientModel;
+import br.eti.carloslima.clinformatica.model.entities.ServiceOrderModel;
+import br.eti.carloslima.clinformatica.model.entities.UserModel;
 import br.eti.carloslima.clinformatica.model.services.ClientService;
+import br.eti.carloslima.clinformatica.model.services.ServiceOrderService;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -23,10 +27,24 @@ public class OSPage extends javax.swing.JInternalFrame {
      */
     
     private ClientService cService = new ClientService();
+    private ServiceOrderService oService = new ServiceOrderService();
+    
+    private ServiceOrderModel order = null;
+    
+    //recupera o tecnico para ser salvo na ordem
+    private UserModel user = LoginPage.user;
+    
+    //recupera o cliente para salva na ordem
+    private ClientModel client;
+    private List<ClientModel> objs;
     
     public OSPage() {
         initComponents();
         getDate();
+        //obrigação de o tipo ja iniciar selecionado
+        rbOrcamento.setSelected(true);
+        
+        txtNomeTecnico.setText(user.getNome());
     }
 
     /**
@@ -47,7 +65,7 @@ public class OSPage extends javax.swing.JInternalFrame {
         rbOrcamento = new javax.swing.JRadioButton();
         rbOS = new javax.swing.JRadioButton();
         jLabel3 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cbStatus = new javax.swing.JComboBox<>();
         jPanel2 = new javax.swing.JPanel();
         txtPesquisaCliente = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
@@ -64,12 +82,13 @@ public class OSPage extends javax.swing.JInternalFrame {
         jLabel9 = new javax.swing.JLabel();
         txtNomeTecnico = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        txtValorTotal = new javax.swing.JFormattedTextField();
         btnSave = new javax.swing.JButton();
         btnPesquisa = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         btnDeletar = new javax.swing.JButton();
         btnImprimir = new javax.swing.JButton();
+        txtValorTotal = new javax.swing.JTextField();
+        btnNovo = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -135,7 +154,7 @@ public class OSPage extends javax.swing.JInternalFrame {
 
         jLabel3.setText("Situação:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Entraga", "Orçamento Reprovado", "Aguardando Aprovação", "Aguardando Peças", "Abandonado Pelo Cliente", "Na Bancada", "Retornou" }));
+        cbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Orçamento", "Aprovado", "Em_Serviço", "Concluido" }));
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Cliente"));
 
@@ -213,11 +232,14 @@ public class OSPage extends javax.swing.JInternalFrame {
 
         jLabel10.setText("*Valor Total:");
 
-        txtValorTotal.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getCurrencyInstance())));
-
         btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/save.png"))); // NOI18N
         btnSave.setToolTipText("Salvar");
         btnSave.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
 
         btnPesquisa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/search2.png"))); // NOI18N
         btnPesquisa.setToolTipText("pesquisar");
@@ -235,6 +257,17 @@ public class OSPage extends javax.swing.JInternalFrame {
         btnImprimir.setToolTipText("Imprimir");
         btnImprimir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
+        txtValorTotal.setText("0");
+
+        btnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/new_page_document.png"))); // NOI18N
+        btnNovo.setToolTipText("Nova Ordem de Serviço");
+        btnNovo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnNovo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNovoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -243,12 +276,13 @@ public class OSPage extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(cbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
@@ -268,7 +302,7 @@ public class OSPage extends javax.swing.JInternalFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel10)
                                 .addGap(18, 18, 18)
-                                .addComponent(txtValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(btnSave)
                                 .addGap(18, 18, 18)
@@ -278,7 +312,9 @@ public class OSPage extends javax.swing.JInternalFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(btnDeletar)
                                 .addGap(18, 18, 18)
-                                .addComponent(btnImprimir)))
+                                .addComponent(btnImprimir)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnNovo)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -290,9 +326,9 @@ public class OSPage extends javax.swing.JInternalFrame {
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3))))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -319,7 +355,8 @@ public class OSPage extends javax.swing.JInternalFrame {
                     .addComponent(btnPesquisa)
                     .addComponent(btnEditar)
                     .addComponent(btnDeletar)
-                    .addComponent(btnImprimir))
+                    .addComponent(btnImprimir)
+                    .addComponent(btnNovo))
                 .addContainerGap(209, Short.MAX_VALUE))
         );
 
@@ -336,12 +373,51 @@ public class OSPage extends javax.swing.JInternalFrame {
         setFieldIdClient();
     }//GEN-LAST:event_tblClienteMouseClicked
 
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+       salva();
+    }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
+        // TODO add your handling code here:
+        cleanFields();
+    }//GEN-LAST:event_btnNovoActionPerformed
+        
+    /**
+         * Limpa os campos de texto e os objetos.
+         */
+    private void cleanFields(){
+        txtNumService.setText("");
+        txtIdCliente.setText("");
+        txtEquipamento.setText("");
+        txtDefeito.setText("");
+        txtServico.setText("");
+        txtValorTotal.setText("0");
+        
+        client = null;
+        order = null;
+        
+    }
+    
     private void setFieldIdClient(){
         int row = tblCliente.getSelectedRow(); //recupera a linha selecionada da tabela
 
         var id = tblCliente.getModel().getValueAt(row, 0).toString();
         
         txtIdCliente.setText(id);
+        
+        /*
+            Quero pega o cliente contido na lista de cliente que vem da consulta
+            para popular a tabala. com isso não precisso fazer uma nova consulta
+            para salva o cliente
+        */
+        for (ClientModel cm : objs) {
+            /*
+                procura o Cliente selecionado e salva no cliente geral para salvar
+            */
+            if(cm.getRegistro() == Integer.parseInt(id)){
+                client = cm; 
+            }
+        }
         
     }
     
@@ -353,7 +429,7 @@ public class OSPage extends javax.swing.JInternalFrame {
         DefaultTableModel model = (DefaultTableModel) tblCliente.getModel();
         
         //resaliza a pesquisa e salva em uma lista de clientes
-        List<ClientModel> objs = cService.pesquisaespecial(letra);
+        objs = cService.pesquisaespecial(letra);
 
         model.setNumRows(0);
         for (ClientModel c : objs) {
@@ -375,15 +451,82 @@ public class OSPage extends javax.swing.JInternalFrame {
         DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         txtDateService.setText(date.format(format));
     }
-
+    
+    private void validationfields(){
+        if(txtIdCliente.getText().isEmpty() || txtEquipamento.getText().isEmpty()
+                || txtDefeito.getText().isEmpty() || txtValorTotal.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Deve preencher todos os campos obrigatorios");
+        }
+    }
+    
+    private void salva(){
+        if(txtIdCliente.getText().isEmpty() || txtEquipamento.getText().isEmpty()
+                || txtDefeito.getText().isEmpty() || txtValorTotal.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Deve preencher todos os campos obrigatorios");
+        }else if(user == null || client == null){
+            JOptionPane.showMessageDialog(null, "Dados do cliente ou Tecnico não encontrado");
+        } else {
+            populateOrder();
+            
+            int id = oService.salvar(order);
+            if(id > 0 ){
+                JOptionPane.showMessageDialog(null, "Ordem de serviço salvo com sucesso!");
+                order.setNumSerOrder(id);
+                client.setContratos(order);
+                user.setManuntecoes(order);
+                txtNumService.setText(String.valueOf(id));
+            }
+        }
+    }
+    
+    private void populateOrder(){
+        this.order = new ServiceOrderModel();
+        
+        this.order.setEquipamento(txtEquipamento.getText().toString());
+        this.order.setDefeito(txtDefeito.getText().toString());
+        this.order.setServicoRealizado(txtServico.getText().toString());
+        this.order.setValor(Double.parseDouble(txtValorTotal.getText().toString()));
+        this.order.setStatus(statusSelected());
+        this.order.setType(typeSelected());
+        
+        //criando as depedencia dos outros objetos
+        this.order.setCliente(client);
+        this.order.setTecnico(user);
+    }
+    
+    private int statusSelected(){
+        switch(cbStatus.getSelectedItem().toString()){
+            case "Orçamento":
+                    return 1;
+            case "Aprovado":
+                return 2;
+            case "Em_Serviço":
+                return 3;
+            case "Concluido":
+                return 4;
+            default:
+                return 1;
+        }
+    }
+    private int typeSelected(){
+        var numero = 0;
+        if(rbOrcamento.isSelected()){
+            numero = 1;
+        }
+        if(rbOS.isSelected()){
+            numero = 2;
+        }
+        return numero;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDeletar;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnImprimir;
+    private javax.swing.JButton btnNovo;
     private javax.swing.JButton btnPesquisa;
     private javax.swing.JButton btnSave;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> cbStatus;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -408,7 +551,7 @@ public class OSPage extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtNumService;
     private javax.swing.JTextField txtPesquisaCliente;
     private javax.swing.JTextField txtServico;
-    private javax.swing.JFormattedTextField txtValorTotal;
+    private javax.swing.JTextField txtValorTotal;
     private javax.swing.ButtonGroup typeServiceGroup;
     // End of variables declaration//GEN-END:variables
 }

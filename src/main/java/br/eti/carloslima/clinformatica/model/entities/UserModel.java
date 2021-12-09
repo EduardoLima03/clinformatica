@@ -2,6 +2,8 @@ package br.eti.carloslima.clinformatica.model.entities;
 
 import br.eti.carloslima.clinformatica.model.entities.enums.Perfil;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.logging.Logger;
 
@@ -14,6 +16,9 @@ public class UserModel extends People implements Serializable {
     private String userName;
     private String password;
     private Perfil perfil;
+    
+    //depedencias
+    private List<ServiceOrderModel> manuntecoes = new ArrayList<>();
 
     public UserModel() {
         super();
@@ -49,6 +54,15 @@ public class UserModel extends People implements Serializable {
     public void setPerfil(int perfil) {
         this.perfil = Perfil.valueOf(perfil);
     }
+
+    public List<ServiceOrderModel> getManuntecoes() {
+        return manuntecoes;
+    }
+
+    public void setManuntecoes(ServiceOrderModel manuntecoes) {
+        this.manuntecoes.add(manuntecoes);
+    }
+    
 
     @Override
     public int hashCode() {

@@ -13,6 +13,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -39,7 +40,7 @@ public class ServiceOrderDaoImpl implements ServiceOrderDao{
         var row =0;
         
         try {
-            st = conn.prepareStatement(sql);
+            st = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             st.setInt(1, order.getCliente().getRegistro());
             st.setInt(2, order.getTecnico().getRegistro());
             st.setInt(3, order.getType());

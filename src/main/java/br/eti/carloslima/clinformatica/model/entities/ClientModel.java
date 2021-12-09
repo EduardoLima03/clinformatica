@@ -6,6 +6,8 @@
 package br.eti.carloslima.clinformatica.model.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -19,6 +21,7 @@ public class ClientModel extends People implements Serializable {
 
     //Dependeicia
     private AddresModel residencia;
+    private List<ServiceOrderModel> contratos = new ArrayList<>();
 
     public ClientModel() {
         super();
@@ -69,6 +72,14 @@ public class ClientModel extends People implements Serializable {
         this.residencia = residencia;
     }
 
+    public List<ServiceOrderModel> getContratos() {
+        return contratos;
+    }
+
+    public void setContratos(ServiceOrderModel contratos) {
+        this.contratos.add(contratos);
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
@@ -100,7 +111,7 @@ public class ClientModel extends People implements Serializable {
 
     @Override
     public String toString() {
-        return "ClientModel{"+ "Registro= " + super.getRegistro()+ " cpf=" + cpf + ", telefone=" + telefone + ", residencia=" + residencia + '}';
+        return "ClientModel{" + "Registro= " + super.getRegistro() + " cpf=" + cpf + ", telefone=" + telefone + ", residencia=" + residencia + '}';
     }
 
 }

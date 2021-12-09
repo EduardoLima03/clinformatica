@@ -24,7 +24,8 @@ public class LoginPage extends javax.swing.JFrame {
         initComponents();
         service = new LoginService();
     }
-
+    
+        public static UserModel user;
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -200,6 +201,7 @@ public class LoginPage extends javax.swing.JFrame {
         if(login == null){
             login = service.login(username);
         }
+        user = login;
         /**
          * Compara as senha e usuario de acesso
          */
