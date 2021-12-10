@@ -95,7 +95,7 @@ public class MainPage extends javax.swing.JFrame {
 
         mnCadastro.setText("Cadastro");
 
-        mniFuncionarios.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.ALT_DOWN_MASK));
+        mniFuncionarios.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_1, java.awt.event.InputEvent.ALT_DOWN_MASK));
         mniFuncionarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon-user.png"))); // NOI18N
         mniFuncionarios.setText("Funcionarios");
         mniFuncionarios.setEnabled(false);
@@ -106,7 +106,7 @@ public class MainPage extends javax.swing.JFrame {
         });
         mnCadastro.add(mniFuncionarios);
 
-        mniCliente.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.ALT_DOWN_MASK));
+        mniCliente.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_2, java.awt.event.InputEvent.ALT_DOWN_MASK));
         mniCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon-client.png"))); // NOI18N
         mniCliente.setText("Clientes");
         mniCliente.addActionListener(new java.awt.event.ActionListener() {
@@ -116,7 +116,7 @@ public class MainPage extends javax.swing.JFrame {
         });
         mnCadastro.add(mniCliente);
 
-        mmiOrdem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.ALT_DOWN_MASK));
+        mmiOrdem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_3, java.awt.event.InputEvent.ALT_DOWN_MASK));
         mmiOrdem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/document.png"))); // NOI18N
         mmiOrdem.setText("Ordem de Ser.");
         mmiOrdem.addActionListener(new java.awt.event.ActionListener() {

@@ -24,4 +24,13 @@ public class ServiceOrderService {
     public int salvar(ServiceOrderModel order){
         return dao.insert(order);
     }
+    
+    /**
+     * Realiza a consulta por uma ordem especifica
+     * @param id
+     * @return Retorna uma Ordem de servico
+     */
+    public ServiceOrderModel buscaPorId(int id){
+        return dao.selectById(id);
+    }
 }

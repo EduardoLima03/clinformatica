@@ -8,6 +8,7 @@ package br.eti.carloslima.clinformatica.gui;
 import br.eti.carloslima.clinformatica.model.entities.ClientModel;
 import br.eti.carloslima.clinformatica.model.entities.ServiceOrderModel;
 import br.eti.carloslima.clinformatica.model.entities.UserModel;
+import br.eti.carloslima.clinformatica.model.entities.enums.ServiceSituation;
 import br.eti.carloslima.clinformatica.model.services.ClientService;
 import br.eti.carloslima.clinformatica.model.services.ServiceOrderService;
 import java.time.LocalDate;
@@ -37,6 +38,8 @@ public class OSPage extends javax.swing.JInternalFrame {
     //recupera o cliente para salva na ordem
     private ClientModel client;
     private List<ClientModel> objs;
+    
+    DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     
     public OSPage() {
         initComponents();
@@ -244,6 +247,11 @@ public class OSPage extends javax.swing.JInternalFrame {
         btnPesquisa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/search2.png"))); // NOI18N
         btnPesquisa.setToolTipText("pesquisar");
         btnPesquisa.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnPesquisa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPesquisaActionPerformed(evt);
+            }
+        });
 
         btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit.png"))); // NOI18N
         btnEditar.setToolTipText("Editar");
@@ -381,6 +389,11 @@ public class OSPage extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         cleanFields();
     }//GEN-LAST:event_btnNovoActionPerformed
+
+    private void btnPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisaActionPerformed
+        // TODO add your handling code here:
+        pesquisaOrder();
+    }//GEN-LAST:event_btnPesquisaActionPerformed
         
     /**
          * Limpa os campos de texto e os objetos.
@@ -448,7 +461,6 @@ public class OSPage extends javax.swing.JInternalFrame {
      */
     private void getDate(){
         LocalDate date = LocalDate.now();
-        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         txtDateService.setText(date.format(format));
     }
     
@@ -459,6 +471,9 @@ public class OSPage extends javax.swing.JInternalFrame {
         }
     }
     
+    /**
+     * Metodo que salva uma nova ordem de serviço
+     */
     private void salva(){
         if(txtIdCliente.getText().isEmpty() || txtEquipamento.getText().isEmpty()
                 || txtDefeito.getText().isEmpty() || txtValorTotal.getText().isEmpty()){
@@ -517,6 +532,30 @@ public class OSPage extends javax.swing.JInternalFrame {
             numero = 2;
         }
         return numero;
+    }
+    
+    private void pesquisaOrder(){
+        var registro = JOptionPane.showInputDialog("Digite o Registro buscado");
+        
+        order = oService.buscaPorId(Integer.parseInt(registro));
+        
+        txtNumService.setText(order.getNumSerOrder().toString());
+        txtDateService.setText(order.getDataSerOrder().format(format));
+        txtIdCliente.setText(order.getCliente().getRegistro().toString());
+        txtEquipamento.setText(order.getEquipamento());
+        txtDefeito.setText(order.getDefeito());
+        txtServico.setText(order.getServicoRealizado());
+        txtNomeTecnico.setText(order.getTecnico().getNome());
+        txtValorTotal.setText(order.getValor().toString());
+        
+        cbStatus.setSelectedItem(ServiceSituation.valueOf(order.getStatus()));
+        switch (order.getType()){
+            case 1:
+                rbOrcamento.setSelected(true);
+                break;
+            case 2:
+                rbOS.setSelected(true);
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

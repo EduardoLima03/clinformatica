@@ -12,7 +12,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="mniFuncionarios">
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="Alt+U"/>
+                  <KeyStroke key="Alt+1"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/images/icon-user.png"/>
@@ -30,7 +30,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="mniCliente">
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="Alt+C"/>
+                  <KeyStroke key="Alt+2"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/images/icon-client.png"/>
@@ -44,7 +44,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="mmiOrdem">
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="Alt+O"/>
+                  <KeyStroke key="Alt+3"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/images/document.png"/>
