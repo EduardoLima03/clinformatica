@@ -75,7 +75,21 @@ public class ServiceOrderDaoImpl implements ServiceOrderDao{
 
     @Override
     public int delete(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        var sql = "DELETE FROM APP.ORDEM_SERVICO WHERE id_servico = ?";
+        int modifiedLines = 0;
+        
+        PreparedStatement st = null;
+        
+        try {
+            st = conn.prepareStatement(sql);
+            st.setInt(1, id);
+            
+            modifiedLines = st.executeUpdate();
+        } catch (SQLException ex) {
+            throw new DbException(ex.getMessage());
+        }
+        
+        return modifiedLines;
     }
 
     @Override

@@ -12,12 +12,12 @@ import java.time.format.DateTimeFormatter;
  *
  * @author eduar
  */
-public class MainPage extends javax.swing.JFrame {
+public class MainScreen extends javax.swing.JFrame {
 
     /**
      * Creates new form MainPage
      */
-    public MainPage() {
+    public MainScreen() {
         initComponents();
         getDate();
     }
@@ -155,7 +155,7 @@ public class MainPage extends javax.swing.JFrame {
 
     private void mniFuncionariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniFuncionariosActionPerformed
         // chamando a tela de funcionarios
-        FuncionarioPage funcionario = new FuncionarioPage();
+        EmployeeRegistrationScreen funcionario = new EmployeeRegistrationScreen();
         funcionario.setVisible(true);
         //fazendo que a tela seja colocada dentro do desktop
         desktop.add(funcionario);
@@ -163,14 +163,14 @@ public class MainPage extends javax.swing.JFrame {
 
     private void mniClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniClienteActionPerformed
         
-        ClientePage cliente = new ClientePage();
+        CustomerRegistrationScreen cliente = new CustomerRegistrationScreen();
         cliente.setVisible(true);
         desktop.add(cliente);
     }//GEN-LAST:event_mniClienteActionPerformed
 
     private void mmiOrdemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mmiOrdemActionPerformed
         // TODO add your handling code here:
-        OSPage os = new OSPage();
+        ServiceOrderScreen os = new ServiceOrderScreen();
         os.setVisible(true);
         desktop.add(os);
     }//GEN-LAST:event_mmiOrdemActionPerformed

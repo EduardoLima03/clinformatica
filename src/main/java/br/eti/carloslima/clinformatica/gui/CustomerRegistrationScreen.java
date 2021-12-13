@@ -17,10 +17,10 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author eduar
  */
-public class ClientePage extends javax.swing.JInternalFrame {
+public class CustomerRegistrationScreen extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form ClientePage
+     * Creates new form CustomerRegistrationScreen
      */
     private AddresService aService;
     private ClientService cService;
@@ -29,7 +29,7 @@ public class ClientePage extends javax.swing.JInternalFrame {
 
     private int delCliId = 0, delEndId = 0;
 
-    public ClientePage() {
+    public CustomerRegistrationScreen() {
         initComponents();
         aService = new AddresService();
         cService = new ClientService();

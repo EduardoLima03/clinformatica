@@ -17,15 +17,15 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author eduar
  */
-public class FuncionarioPage extends javax.swing.JInternalFrame {
+public class EmployeeRegistrationScreen extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form FuncionarioPage
+     * Creates new form EmployeeRegistrationScreen
      */
     private DefaultTableModel model;
     UserModel user = null;
 
-    public FuncionarioPage() {
+    public EmployeeRegistrationScreen() {
         initComponents();
         service = new UserService();
 

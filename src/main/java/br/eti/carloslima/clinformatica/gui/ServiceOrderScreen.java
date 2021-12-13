@@ -21,10 +21,10 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author eduar
  */
-public class OSPage extends javax.swing.JInternalFrame {
+public class ServiceOrderScreen extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form OSPage
+     * Creates new form ServiceOrderScreen
      */
     
     private ClientService cService = new ClientService();
@@ -33,7 +33,7 @@ public class OSPage extends javax.swing.JInternalFrame {
     private ServiceOrderModel order = null;
     
     //recupera o tecnico para ser salvo na ordem
-    private UserModel user = LoginPage.user;
+    private UserModel user = LoginScreen.user;
     
     //recupera o cliente para salva na ordem
     private ClientModel client;
@@ -41,7 +41,7 @@ public class OSPage extends javax.swing.JInternalFrame {
     
     DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     
-    public OSPage() {
+    public ServiceOrderScreen() {
         initComponents();
         getDate();
         //obrigação de o tipo ja iniciar selecionado
@@ -260,6 +260,11 @@ public class OSPage extends javax.swing.JInternalFrame {
         btnDeletar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/delete.png"))); // NOI18N
         btnDeletar.setToolTipText("Deletar");
         btnDeletar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnDeletar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeletarActionPerformed(evt);
+            }
+        });
 
         btnImprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Print.png"))); // NOI18N
         btnImprimir.setToolTipText("Imprimir");
@@ -394,6 +399,10 @@ public class OSPage extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         pesquisaOrder();
     }//GEN-LAST:event_btnPesquisaActionPerformed
+
+    private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
+        deleteServiceOrder();
+    }//GEN-LAST:event_btnDeletarActionPerformed
         
     /**
          * Limpa os campos de texto e os objetos.
@@ -557,6 +566,18 @@ public class OSPage extends javax.swing.JInternalFrame {
                 rbOS.setSelected(true);
         }
     }
+    
+    private void deleteServiceOrder() {
+        if(txtNumService.getText().toString().isEmpty()){
+           JOptionPane.showMessageDialog(rootPane, "Campo de numero de registro vazio");
+        }else{
+            var confirmacao = oService.erasingServiceOrder(Integer.parseInt(txtNumService.getText().toString()));
+            
+            if(confirmacao > 0)
+                JOptionPane.showMessageDialog(null, "Ordem deletado com sucesso!");
+                cleanFields();
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDeletar;
@@ -593,4 +614,6 @@ public class OSPage extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtValorTotal;
     private javax.swing.ButtonGroup typeServiceGroup;
     // End of variables declaration//GEN-END:variables
+
+    
 }
