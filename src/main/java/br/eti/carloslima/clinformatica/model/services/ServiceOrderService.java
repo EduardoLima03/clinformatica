@@ -38,6 +38,11 @@ public class ServiceOrderService {
         return dao.selectById(id);
     }
 
+    /**
+     * Deleta uma ordem de serviço
+     * @param id
+     * @return a confirmação se foi deletado com sucesso
+     */
     public int erasingServiceOrder(int id) {
         if (id != 0) {
             return dao.delete(id);
@@ -45,5 +50,14 @@ public class ServiceOrderService {
             JOptionPane.showMessageDialog(null, "Registro não localizado", "Erro ao deleta", JOptionPane.ERROR_MESSAGE);
             return 0;
         }
+    }
+    
+    /**
+     * Metodo que ira atualizar uma ordem de serviço
+     * @param order
+     * @return 1 se atualizou com sucesso e 2 se não for salvo
+     */
+    public int atualizarOrdemServico(ServiceOrderModel order){
+        return dao.update(order);
     }
 }

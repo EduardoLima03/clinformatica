@@ -26,27 +26,26 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
     /**
      * Creates new form ServiceOrderScreen
      */
-    
     private ClientService cService = new ClientService();
     private ServiceOrderService oService = new ServiceOrderService();
-    
+
     private ServiceOrderModel order = null;
-    
+
     //recupera o tecnico para ser salvo na ordem
     private UserModel user = LoginScreen.user;
-    
+
     //recupera o cliente para salva na ordem
     private ClientModel client;
     private List<ClientModel> objs;
-    
+
     DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-    
+
     public ServiceOrderScreen() {
         initComponents();
         getDate();
         //obrigação de o tipo ja iniciar selecionado
         rbOrcamento.setSelected(true);
-        
+
         txtNomeTecnico.setText(user.getNome());
     }
 
@@ -256,6 +255,11 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
         btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit.png"))); // NOI18N
         btnEditar.setToolTipText("Editar");
         btnEditar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         btnDeletar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/delete.png"))); // NOI18N
         btnDeletar.setToolTipText("Deletar");
@@ -387,7 +391,7 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tblClienteMouseClicked
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-       salva();
+        salva();
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
@@ -403,53 +407,59 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
     private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
         deleteServiceOrder();
     }//GEN-LAST:event_btnDeletarActionPerformed
-        
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        // TODO add your handling code here:
+        UpdateOrderService();
+    }//GEN-LAST:event_btnEditarActionPerformed
+
     /**
-         * Limpa os campos de texto e os objetos.
-         */
-    private void cleanFields(){
+     * Limpa os campos de texto e os objetos.
+     */
+    private void cleanFields() {
         txtNumService.setText("");
         txtIdCliente.setText("");
         txtEquipamento.setText("");
         txtDefeito.setText("");
         txtServico.setText("");
         txtValorTotal.setText("0");
-        
+
         client = null;
         order = null;
-        
+
     }
-    
-    private void setFieldIdClient(){
+
+    private void setFieldIdClient() {
         int row = tblCliente.getSelectedRow(); //recupera a linha selecionada da tabela
 
         var id = tblCliente.getModel().getValueAt(row, 0).toString();
-        
+
         txtIdCliente.setText(id);
-        
+
         /*
             Quero pega o cliente contido na lista de cliente que vem da consulta
             para popular a tabala. com isso não precisso fazer uma nova consulta
             para salva o cliente
-        */
+         */
         for (ClientModel cm : objs) {
             /*
                 procura o Cliente selecionado e salva no cliente geral para salvar
-            */
-            if(cm.getRegistro() == Integer.parseInt(id)){
-                client = cm; 
+             */
+            if (cm.getRegistro() == Integer.parseInt(id)) {
+                client = cm;
             }
         }
-        
+
     }
-    
+
     /**
      * Preence a tabela de clientes para realiza a seleção
-     * @param letra 
+     *
+     * @param letra
      */
-    private void researchTable(String letra){
+    private void researchTable(String letra) {
         DefaultTableModel model = (DefaultTableModel) tblCliente.getModel();
-        
+
         //resaliza a pesquisa e salva em uma lista de clientes
         objs = cService.pesquisaespecial(letra);
 
@@ -457,43 +467,42 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
         for (ClientModel c : objs) {
             /*
                 Adiciona uma linha para cada cliente contido na lista
-            */
+             */
             model.insertRow(model.getRowCount(), new Object[]{
                 c.getRegistro(), c.getNome(), c.getTelefone()
             });
         }
     }
-    
-    
+
     /**
-     * Responsavel de carregar a data no campo corespondete 
+     * Responsavel de carregar a data no campo corespondete
      */
-    private void getDate(){
+    private void getDate() {
         LocalDate date = LocalDate.now();
         txtDateService.setText(date.format(format));
     }
-    
-    private void validationfields(){
-        if(txtIdCliente.getText().isEmpty() || txtEquipamento.getText().isEmpty()
-                || txtDefeito.getText().isEmpty() || txtValorTotal.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "Deve preencher todos os campos obrigatorios");
+
+    private boolean validationfields() {
+        if (txtIdCliente.getText().isEmpty() || txtEquipamento.getText().isEmpty()
+                || txtDefeito.getText().isEmpty() || txtValorTotal.getText().isEmpty()) {
+            return false;
         }
+        return true;
     }
-    
+
     /**
      * Metodo que salva uma nova ordem de serviço
      */
-    private void salva(){
-        if(txtIdCliente.getText().isEmpty() || txtEquipamento.getText().isEmpty()
-                || txtDefeito.getText().isEmpty() || txtValorTotal.getText().isEmpty()){
+    private void salva() {
+        if (!validationfields()) {
             JOptionPane.showMessageDialog(null, "Deve preencher todos os campos obrigatorios");
-        }else if(user == null || client == null){
+        } else if (user == null || client == null) {
             JOptionPane.showMessageDialog(null, "Dados do cliente ou Tecnico não encontrado");
         } else {
             populateOrder();
-            
+
             int id = oService.salvar(order);
-            if(id > 0 ){
+            if (id > 0) {
                 JOptionPane.showMessageDialog(null, "Ordem de serviço salvo com sucesso!");
                 order.setNumSerOrder(id);
                 client.setContratos(order);
@@ -502,26 +511,57 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
             }
         }
     }
-    
-    private void populateOrder(){
-        this.order = new ServiceOrderModel();
-        
-        this.order.setEquipamento(txtEquipamento.getText().toString());
-        this.order.setDefeito(txtDefeito.getText().toString());
-        this.order.setServicoRealizado(txtServico.getText().toString());
-        this.order.setValor(Double.parseDouble(txtValorTotal.getText().toString()));
-        this.order.setStatus(statusSelected());
-        this.order.setType(typeSelected());
-        
-        //criando as depedencia dos outros objetos
-        this.order.setCliente(client);
-        this.order.setTecnico(user);
+
+    private void UpdateOrderService() {
+        if (!validationfields()) {
+            JOptionPane.showMessageDialog(null, "Deve preencher todos os campos "
+                    + "obrigatorios");
+        } else {
+            populateOrder();
+            var confirmação = oService.atualizarOrdemServico(order);
+            
+            if(confirmação == 1){
+                JOptionPane.showMessageDialog(null, "Atualizado com sucesso!");
+            }else{
+                JOptionPane.showMessageDialog(null, "Não foi possivel atualizar!",
+                        null, JOptionPane.ERROR_MESSAGE);
+            }
+            
+        }
     }
-    
-    private int statusSelected(){
-        switch(cbStatus.getSelectedItem().toString()){
+
+    private void populateOrder() {
+        if (order == null) {
+
+            this.order = new ServiceOrderModel();
+
+            this.order.setEquipamento(txtEquipamento.getText().toString());
+            this.order.setDefeito(txtDefeito.getText().toString());
+            this.order.setServicoRealizado(txtServico.getText().toString());
+            this.order.setValor(Double.parseDouble(txtValorTotal.getText().toString()));
+            this.order.setStatus(statusSelected());
+            this.order.setType(typeSelected());
+
+            //criando as depedencia dos outros objetos
+            this.order.setCliente(client);
+            this.order.setTecnico(user);
+
+        } else {
+            this.order.setEquipamento(txtEquipamento.getText().toString());
+            this.order.setDefeito(txtDefeito.getText().toString());
+            this.order.setServicoRealizado(txtServico.getText().toString());
+            this.order.setValor(Double.parseDouble(txtValorTotal.getText().toString()));
+            this.order.setStatus(statusSelected());
+            this.order.setType(typeSelected());
+
+        }
+
+    }
+
+    private int statusSelected() {
+        switch (cbStatus.getSelectedItem().toString()) {
             case "Orçamento":
-                    return 1;
+                return 1;
             case "Aprovado":
                 return 2;
             case "Em_Serviço":
@@ -532,22 +572,23 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
                 return 1;
         }
     }
-    private int typeSelected(){
+
+    private int typeSelected() {
         var numero = 0;
-        if(rbOrcamento.isSelected()){
+        if (rbOrcamento.isSelected()) {
             numero = 1;
         }
-        if(rbOS.isSelected()){
+        if (rbOS.isSelected()) {
             numero = 2;
         }
         return numero;
     }
-    
-    private void pesquisaOrder(){
+
+    private void pesquisaOrder() {
         var registro = JOptionPane.showInputDialog("Digite o Registro buscado");
-        
+
         order = oService.buscaPorId(Integer.parseInt(registro));
-        
+
         txtNumService.setText(order.getNumSerOrder().toString());
         txtDateService.setText(order.getDataSerOrder().format(format));
         txtIdCliente.setText(order.getCliente().getRegistro().toString());
@@ -556,9 +597,9 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
         txtServico.setText(order.getServicoRealizado());
         txtNomeTecnico.setText(order.getTecnico().getNome());
         txtValorTotal.setText(order.getValor().toString());
-        
+
         cbStatus.setSelectedItem(ServiceSituation.valueOf(order.getStatus()));
-        switch (order.getType()){
+        switch (order.getType()) {
             case 1:
                 rbOrcamento.setSelected(true);
                 break;
@@ -566,16 +607,17 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
                 rbOS.setSelected(true);
         }
     }
-    
+
     private void deleteServiceOrder() {
-        if(txtNumService.getText().toString().isEmpty()){
-           JOptionPane.showMessageDialog(rootPane, "Campo de numero de registro vazio");
-        }else{
+        if (txtNumService.getText().toString().isEmpty()) {
+            JOptionPane.showMessageDialog(rootPane, "Campo de numero de registro vazio");
+        } else {
             var confirmacao = oService.erasingServiceOrder(Integer.parseInt(txtNumService.getText().toString()));
-            
-            if(confirmacao > 0)
+
+            if (confirmacao > 0) {
                 JOptionPane.showMessageDialog(null, "Ordem deletado com sucesso!");
-                cleanFields();
+            }
+            cleanFields();
         }
     }
 
@@ -615,5 +657,4 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
     private javax.swing.ButtonGroup typeServiceGroup;
     // End of variables declaration//GEN-END:variables
 
-    
 }

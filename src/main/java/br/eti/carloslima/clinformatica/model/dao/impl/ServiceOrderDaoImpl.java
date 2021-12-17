@@ -17,6 +17,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -67,10 +68,42 @@ public class ServiceOrderDaoImpl implements ServiceOrderDao{
         
         return row;
     }
-
+    
+    /**
+     *  Atualizar um registro
+     * @param order
+     * @return numero referente ao sucesso ou erro
+     */
     @Override
     public int update(ServiceOrderModel order) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int linhaModificada = 0;
+        String sql = "UPDATE APP.ORDEM_SERVICO SET cliente_idcliente = ?, "
+                + "usuario_idusuario = ?, date_os = ?, tipo_service = ?,"
+                + "equipamento = ?, defeito = ?, servico = ?, valor_total = ?,"
+                + "status = ? WHERE id_servico = ?";
+        
+        PreparedStatement st = null;
+        
+        try {
+            st = conn.prepareStatement(sql);
+            st.setInt(1, order.getCliente().getRegistro());
+            st.setInt(2, order.getTecnico().getRegistro());
+            st.setTimestamp(3, Timestamp.valueOf(order.getDataSerOrder()));
+            st.setInt(4, order.getType());
+            st.setString(5, order.getEquipamento());
+            st.setString(6, order.getDefeito());
+            st.setString(7, order.getServicoRealizado());
+            st.setDouble(8, order.getValor());
+            st.setInt(9, order.getStatus());
+            st.setInt(10, order.getNumSerOrder());
+            
+            linhaModificada = st.executeUpdate();
+        } catch (SQLException ex) {
+            throw new DbException(ex.getMessage());
+        }finally{
+            Db.closeStatement(st);
+        }
+        return linhaModificada;
     }
 
     @Override
