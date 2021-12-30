@@ -4,6 +4,7 @@ package br.eti.carloslima.clinformatica.model.dao;
 import br.eti.carloslima.clinformatica.db.Db;
 import br.eti.carloslima.clinformatica.model.dao.impl.AddresDaoImpl;
 import br.eti.carloslima.clinformatica.model.dao.impl.ClientDaoImpl;
+import br.eti.carloslima.clinformatica.model.dao.impl.GraficoImpl;
 import br.eti.carloslima.clinformatica.model.dao.impl.LoginDaoImpl;
 import br.eti.carloslima.clinformatica.model.dao.impl.ServiceOrderDaoImpl;
 import br.eti.carloslima.clinformatica.model.dao.impl.UsuarioDaoImpl;
@@ -44,4 +45,9 @@ public class DaoFactory {
     public static ServiceOrderDao createServiceOrderDao(){
         return new ServiceOrderDaoImpl(Db.getConnection());
     }
+    
+    public static GraficoDao createGraficoDao(){
+        return new GraficoImpl(Db.getConnection());
+    }
+    
 }

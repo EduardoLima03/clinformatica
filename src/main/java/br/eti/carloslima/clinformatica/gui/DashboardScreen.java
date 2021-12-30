@@ -4,6 +4,12 @@
  */
 package br.eti.carloslima.clinformatica.gui;
 
+import br.eti.carloslima.clinformatica.model.services.GraficoService;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjusters;
+
 /**
  *
  * @author eduar
@@ -15,6 +21,8 @@ public class DashboardScreen extends javax.swing.JInternalFrame {
      */
     public DashboardScreen() {
         initComponents();
+        faturamentoAtual();
+        registroAtualDosAtendimentos();
     }
 
     /**
@@ -26,40 +34,138 @@ public class DashboardScreen extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        lblOrcamentosAtual = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        lblServicosAtual = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        lblFaturamentoAtual = new javax.swing.JLabel();
 
         setClosable(true);
+        setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
         setTitle("Dashboard");
         setPreferredSize(new java.awt.Dimension(1072, 700));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel1.setText("Faturamento Atual:");
+        jPanel1.setBackground(new java.awt.Color(255, 255, 0));
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel2.setText("R$ 0,00");
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel1.setText("Orçamentos");
+
+        lblOrcamentosAtual.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lblOrcamentosAtual.setForeground(new java.awt.Color(0, 0, 0));
+        lblOrcamentosAtual.setText("0");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(50, 50, 50)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jLabel1)
+                    .addComponent(lblOrcamentosAtual, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(59, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblOrcamentosAtual)
+                .addContainerGap(16, Short.MAX_VALUE))
+        );
+
+        jPanel2.setBackground(new java.awt.Color(0, 0, 204));
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Serviços");
+
+        lblServicosAtual.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lblServicosAtual.setForeground(new java.awt.Color(255, 255, 255));
+        lblServicosAtual.setText("0");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(70, 70, 70)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jLabel3)
+                    .addComponent(lblServicosAtual, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(72, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblServicosAtual)
+                .addContainerGap(16, Short.MAX_VALUE))
+        );
+
+        jPanel3.setBackground(new java.awt.Color(0, 204, 0));
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("Faturamento Atual");
+
+        lblFaturamentoAtual.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lblFaturamentoAtual.setForeground(new java.awt.Color(255, 255, 255));
+        lblFaturamentoAtual.setText("R$ 0,00");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblFaturamentoAtual, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(33, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblFaturamentoAtual)
+                .addContainerGap(16, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(731, Short.MAX_VALUE))
+                .addGap(37, 37, 37)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(39, 39, 39)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(315, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(56, 56, 56)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(523, Short.MAX_VALUE))
         );
 
         setBounds(0, 0, 1072, 700);
@@ -68,6 +174,52 @@ public class DashboardScreen extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JLabel lblFaturamentoAtual;
+    private javax.swing.JLabel lblOrcamentosAtual;
+    private javax.swing.JLabel lblServicosAtual;
     // End of variables declaration//GEN-END:variables
+
+    /* Meu Codigo */
+    
+    private final GraficoService graficoService = new GraficoService();
+    
+    
+    /*
+        Automatiza os balanços atual, assim que a tela é criada
+    */
+    int mes = LocalDate.now().getMonth().getValue();
+    
+    private String primeiroDiaDoMes(int mes){
+        return  LocalDateTime.now().withMonth(mes).with(TemporalAdjusters
+                .firstDayOfMonth()).format(DateTimeFormatter
+                        .ofPattern("yyyy-MM-dd HH:mm:ss"));
+    }
+    
+    private String ultimoDiaDoMes(int mes){
+        return  LocalDateTime.now().withMonth(mes).with(TemporalAdjusters
+                .lastDayOfMonth()).format(DateTimeFormatter
+                        .ofPattern("yyyy-MM-dd HH:mm:ss"));
+    }
+    
+    private void faturamentoAtual(){
+        String[] datas = {primeiroDiaDoMes(mes), ultimoDiaDoMes(mes)};
+        var faturamentoAtual = graficoService.currentBilling(datas, 2);
+        
+        lblFaturamentoAtual.setText(String.format("R$ %.2f", faturamentoAtual));
+    }
+    
+    private void registroAtualDosAtendimentos(){
+        String[] dataoOrçamento = {primeiroDiaDoMes(mes), ultimoDiaDoMes(mes), "1"};
+        String[] dataServico = {primeiroDiaDoMes(mes), ultimoDiaDoMes(mes), "2"};
+        int quantidadeDeRegistroOrçamento = graficoService.totalAttendancesOfTheMonth(dataoOrçamento);
+        int quantidadeDeRegistroServico = graficoService.totalAttendancesOfTheMonth(dataoOrçamento);
+        
+        lblOrcamentosAtual.setText(Integer.toString(quantidadeDeRegistroOrçamento));
+        lblServicosAtual.setText(Integer.toString(quantidadeDeRegistroServico));
+    }
 }
