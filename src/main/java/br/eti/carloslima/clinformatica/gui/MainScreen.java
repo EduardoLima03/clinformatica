@@ -31,17 +31,22 @@ public class MainScreen extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenuItem1 = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         lblName = new javax.swing.JLabel();
         lblDate = new javax.swing.JLabel();
         desktop = new javax.swing.JDesktopPane();
+        jButton1 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         mnCadastro = new javax.swing.JMenu();
         mniFuncionarios = new javax.swing.JMenuItem();
         mniCliente = new javax.swing.JMenuItem();
         mmiOrdem = new javax.swing.JMenuItem();
         mnRelatorio = new javax.swing.JMenu();
+        mmiDashboard = new javax.swing.JMenuItem();
+
+        jMenuItem1.setText("jMenuItem1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("CL Informática");
@@ -93,6 +98,8 @@ public class MainScreen extends javax.swing.JFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
+        jButton1.setText("jButton1");
+
         mnCadastro.setText("Cadastro");
 
         mniFuncionarios.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_1, java.awt.event.InputEvent.ALT_DOWN_MASK));
@@ -130,6 +137,16 @@ public class MainScreen extends javax.swing.JFrame {
 
         mnRelatorio.setText("Relatorio");
         mnRelatorio.setEnabled(false);
+
+        mmiDashboard.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
+        mmiDashboard.setText("Dashboard");
+        mmiDashboard.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mmiDashboardActionPerformed(evt);
+            }
+        });
+        mnRelatorio.add(mmiDashboard);
+
         jMenuBar1.add(mnRelatorio);
 
         setJMenuBar(jMenuBar1);
@@ -175,6 +192,12 @@ public class MainScreen extends javax.swing.JFrame {
         desktop.add(os);
     }//GEN-LAST:event_mmiOrdemActionPerformed
 
+    private void mmiDashboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mmiDashboardActionPerformed
+        DashboardScreen dashboard = new DashboardScreen();
+        dashboard.setVisible(true);
+        desktop.add(dashboard);
+    }//GEN-LAST:event_mmiDashboardActionPerformed
+
     
     //Date
     private LocalDate date;
@@ -187,11 +210,14 @@ public class MainScreen extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane desktop;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblDate;
     public javax.swing.JLabel lblName;
+    private javax.swing.JMenuItem mmiDashboard;
     private javax.swing.JMenuItem mmiOrdem;
     private javax.swing.JMenu mnCadastro;
     public javax.swing.JMenu mnRelatorio;
