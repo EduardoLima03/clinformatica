@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
- */
+
 package br.eti.carloslima.clinformatica.gui;
 
 import br.eti.carloslima.clinformatica.model.services.GraficoService;
@@ -33,12 +30,16 @@ public class DashboardScreen extends javax.swing.JInternalFrame {
     public DashboardScreen() {
         initComponents();
         
-        lblMesAtual.setText(mes.getMonth().name());
+        lblMesAtual.setText(mes(dateDoDia.getMonthValue()));
         
         faturamentoAtual();
         registroAtualDosAtendimentos();
-        balancoTrimestral();
+        faturamentoPendente();
         
+        if(dateDoDia.getMonthValue() >= 3)
+            balancoTrimestral();
+        
+        balancoSemanalAtual();
     }
 
     /**
@@ -58,10 +59,13 @@ public class DashboardScreen extends javax.swing.JInternalFrame {
         lblServicosAtual = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        lblFaturamentoAtual = new javax.swing.JLabel();
+        lblFaturamentoPendente = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         lblMesAtual = new javax.swing.JLabel();
         pnBalancoTrimestral = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        lblFaturamentoAtual = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
@@ -86,19 +90,19 @@ public class DashboardScreen extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(50, 50, 50)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel1)
                     .addComponent(lblOrcamentosAtual, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(59, Short.MAX_VALUE))
+                .addContainerGap(60, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblOrcamentosAtual)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         jPanel2.setBackground(new java.awt.Color(0, 0, 204));
@@ -115,32 +119,32 @@ public class DashboardScreen extends javax.swing.JInternalFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(70, 70, 70)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(74, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jLabel3)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblServicosAtual, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(72, Short.MAX_VALUE))
+                .addGap(68, 68, 68))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblServicosAtual)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31))
         );
 
-        jPanel3.setBackground(new java.awt.Color(0, 204, 0));
+        jPanel3.setBackground(new java.awt.Color(255, 0, 255));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Faturamento Atual");
+        jLabel5.setText("Faturamento Pendente");
 
-        lblFaturamentoAtual.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        lblFaturamentoAtual.setForeground(new java.awt.Color(255, 255, 255));
-        lblFaturamentoAtual.setText("R$ 0,00");
+        lblFaturamentoPendente.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lblFaturamentoPendente.setForeground(new java.awt.Color(255, 255, 255));
+        lblFaturamentoPendente.setText("R$ 0,00");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -150,7 +154,7 @@ public class DashboardScreen extends javax.swing.JInternalFrame {
                 .addGap(19, 19, 19)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblFaturamentoAtual, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lblFaturamentoPendente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(33, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -159,7 +163,7 @@ public class DashboardScreen extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblFaturamentoAtual)
+                .addComponent(lblFaturamentoPendente)
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
@@ -181,6 +185,37 @@ public class DashboardScreen extends javax.swing.JInternalFrame {
             .addGap(0, 288, Short.MAX_VALUE)
         );
 
+        jPanel4.setBackground(new java.awt.Color(0, 204, 0));
+
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("Faturamento Atual");
+
+        lblFaturamentoAtual.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lblFaturamentoAtual.setForeground(new java.awt.Color(255, 255, 255));
+        lblFaturamentoAtual.setText("R$ 0,00");
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel6)
+                    .addComponent(lblFaturamentoAtual, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(21, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblFaturamentoAtual)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(16, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -194,12 +229,14 @@ public class DashboardScreen extends javax.swing.JInternalFrame {
                         .addComponent(lblMesAtual))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(33, 33, 33)
+                        .addGap(18, 18, 18)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(39, 39, 39)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(pnBalancoTrimestral, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(313, Short.MAX_VALUE))
+                .addContainerGap(82, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -210,12 +247,13 @@ public class DashboardScreen extends javax.swing.JInternalFrame {
                     .addComponent(lblMesAtual))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(34, 34, 34)
                 .addComponent(pnBalancoTrimestral, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(206, Short.MAX_VALUE))
+                .addContainerGap(187, Short.MAX_VALUE))
         );
 
         setBounds(0, 0, 1072, 700);
@@ -227,10 +265,13 @@ public class DashboardScreen extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JLabel lblFaturamentoAtual;
+    private javax.swing.JLabel lblFaturamentoPendente;
     private javax.swing.JLabel lblMesAtual;
     private javax.swing.JLabel lblOrcamentosAtual;
     private javax.swing.JLabel lblServicosAtual;
@@ -245,7 +286,7 @@ public class DashboardScreen extends javax.swing.JInternalFrame {
     /*
         Automatiza os balanços atual, assim que a tela é criada
     */
-    LocalDate mes = LocalDate.now();
+    LocalDate dateDoDia = LocalDate.now();
     
     private String primeiroDiaDoMes(int mes){
         return  LocalDateTime.now().withMonth(mes).with(TemporalAdjusters
@@ -259,18 +300,77 @@ public class DashboardScreen extends javax.swing.JInternalFrame {
                         .ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
     
+    private void balancoSemanalAtual(){
+        LocalDate primeiroDia = dateDoDia.with(TemporalAdjusters.lastDayOfMonth());
+        
+        Map<String, Integer> valores = new HashMap<>();
+        
+        String[] semana1 = {primeiroDia.atStartOfDay().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), primeiroDia.plusDays(6).atStartOfDay().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))};
+        String[] semana2 = {primeiroDia.plusDays(7).atStartOfDay().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), primeiroDia.plusDays(7 + 6).atStartOfDay().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))};
+        String[] semana3 = {primeiroDia.plusDays(7 + 6).atStartOfDay().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), primeiroDia.plusDays(6 + 7 + 6).atStartOfDay().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))};
+        String[] semana4 = {primeiroDia.plusDays(6 + 7 + 6).atStartOfDay().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), primeiroDia.plusDays(6 + 7 + 6 + 6).atStartOfDay().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))};
+        
+        int quantidade1semana = graficoService.totalAttendancesOfTheMonth(semana1);
+        int quantidade2semana = graficoService.totalAttendancesOfTheMonth(semana2);
+        int quantidade3semana = graficoService.totalAttendancesOfTheMonth(semana3);
+        int quantidade4semana = graficoService.totalAttendancesOfTheMonth(semana4);
+        
+        valores.put("Semana 1", quantidade1semana);
+        valores.put("Semana 2", quantidade2semana);
+        valores.put("Semana 3", quantidade3semana);
+        valores.put("Semana 4", quantidade4semana);
+        
+        Set<String> keys = valores.keySet(); // obtem as chaves
+        
+        //classifica as chaves
+        TreeSet<String> chavesClasificadas = new TreeSet<>(keys);
+                
+        DefaultCategoryDataset dcd = new DefaultCategoryDataset();
+        
+        for(String key : chavesClasificadas){
+            dcd.setValue(valores.get(key), " ", key);
+        }
+        
+        //Gera o grafico
+        JFreeChart jchart = ChartFactory.createBarChart("Balanco Semanal", 
+                null, "Serviços Realizados", dcd, 
+                PlotOrientation.VERTICAL, false, false, false);
+        
+        //Gera um painel de apresentação do grafico
+        ChartPanel chartPanel = new ChartPanel(jchart);
+        //Define o tamanho do painel ou grafico
+        chartPanel.setPreferredSize(new Dimension(490,290));
+        
+        pnBalancoTrimestral.setLayout(new java.awt.BorderLayout());
+        // Adiciona o grafico ao painel criado no seu frame.
+        pnBalancoTrimestral.add(chartPanel, BorderLayout.CENTER);
+        pnBalancoTrimestral.validate();
+    }
+    
     private void faturamentoAtual(){
-        String[] datas = {primeiroDiaDoMes(mes.getMonth().getValue()), ultimoDiaDoMes(mes.getMonth().getValue())};
+        String[] datas = {primeiroDiaDoMes(dateDoDia.getMonth().getValue()), 
+            ultimoDiaDoMes(dateDoDia.getMonth().getValue())};
         var faturamentoAtual = graficoService.currentBilling(datas, 2);
         
         lblFaturamentoAtual.setText(String.format("R$ %.2f", faturamentoAtual));
     }
+    private void faturamentoPendente(){
+        String[] datas = {primeiroDiaDoMes(dateDoDia.getMonth().getValue()), 
+            ultimoDiaDoMes(dateDoDia.getMonth().getValue())};
+        var faturamentoAtual = graficoService.currentBilling(datas, 1);
+        
+        lblFaturamentoPendente.setText(String.format("R$ %.2f", faturamentoAtual));
+    }
     
     private void registroAtualDosAtendimentos(){
-        String[] dataoOrçamento = {primeiroDiaDoMes(mes.getMonth().getValue()), ultimoDiaDoMes(mes.getMonth().getValue()), "1"};
-        String[] dataServico = {primeiroDiaDoMes(mes.getMonth().getValue()), ultimoDiaDoMes(mes.getMonth().getValue()), "2"};
-        int quantidadeDeRegistroOrçamento = graficoService.totalAttendancesOfTheMonth(dataoOrçamento);
-        int quantidadeDeRegistroServico = graficoService.totalAttendancesOfTheMonth(dataoOrçamento);
+        String[] dataoOrçamento = {primeiroDiaDoMes(dateDoDia.getMonth()
+                .getValue()), ultimoDiaDoMes(dateDoDia.getMonth().getValue()), "1"};
+        String[] dataServico = {primeiroDiaDoMes(dateDoDia.getMonth()
+                .getValue()), ultimoDiaDoMes(dateDoDia.getMonth().getValue()), "2"};
+        int quantidadeDeRegistroOrçamento = graficoService
+                .totalAttendancesOfTheMonth(dataoOrçamento);
+        int quantidadeDeRegistroServico = graficoService
+                .totalAttendancesOfTheMonth(dataoOrçamento);
         
         lblOrcamentosAtual.setText(Integer.toString(quantidadeDeRegistroOrçamento));
         lblServicosAtual.setText(Integer.toString(quantidadeDeRegistroServico));
@@ -280,18 +380,21 @@ public class DashboardScreen extends javax.swing.JInternalFrame {
         
         Map<String, Integer> valores = new HashMap<String, Integer>();
         
-        String[] antepenutimo = {primeiroDiaDoMes(mes.getMonth().getValue() - 2), ultimoDiaDoMes(mes.getMonth().getValue() - 2)};
-        String[] penutimo = {primeiroDiaDoMes(mes.getMonth().getValue() - 1), ultimoDiaDoMes(mes.getMonth().getValue() - 1)};
-        String[] atual = {primeiroDiaDoMes(mes.getMonth().getValue()), ultimoDiaDoMes(mes.getMonth().getValue())};
+        String[] antepenutimo = {primeiroDiaDoMes(dateDoDia.getMonth().getValue()
+                - 2), ultimoDiaDoMes(dateDoDia.getMonth().getValue() - 2)};
+        String[] penutimo = {primeiroDiaDoMes(dateDoDia.getMonth().getValue() 
+                - 1), ultimoDiaDoMes(dateDoDia.getMonth().getValue() - 1)};
+        String[] atual = {primeiroDiaDoMes(dateDoDia.getMonth().getValue()), 
+            ultimoDiaDoMes(dateDoDia.getMonth().getValue())};
         int quantidadeAntepenutimo = graficoService.totalAttendancesOfTheMonth(antepenutimo);
         int quantidadePenutimo = graficoService.totalAttendancesOfTheMonth(penutimo);
         int quantidadeAtual = graficoService.totalAttendancesOfTheMonth(atual);
        
         
         
-        valores.put(mes(mes.getMonth().getValue() - 2), quantidadeAntepenutimo);
-        valores.put(mes(mes.getMonth().getValue() - 1), quantidadePenutimo);
-        valores.put(mes(mes.getMonth().getValue()), quantidadeAtual);
+        valores.put(mes(dateDoDia.getMonth().getValue() - 2), quantidadeAntepenutimo);
+        valores.put(mes(dateDoDia.getMonth().getValue() - 1), quantidadePenutimo);
+        valores.put(mes(dateDoDia.getMonth().getValue()), quantidadeAtual);
         
         Set<String> keys = valores.keySet(); // obtem as chaves
         
