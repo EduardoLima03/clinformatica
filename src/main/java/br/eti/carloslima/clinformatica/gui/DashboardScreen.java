@@ -62,10 +62,11 @@ public class DashboardScreen extends javax.swing.JInternalFrame {
         lblFaturamentoPendente = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         lblMesAtual = new javax.swing.JLabel();
-        pnBalancoTrimestral = new javax.swing.JPanel();
+        pnBalancoSemanal = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         lblFaturamentoAtual = new javax.swing.JLabel();
+        pnBalancoTrimestral = new javax.swing.JPanel();
 
         setClosable(true);
         setIconifiable(true);
@@ -74,14 +75,16 @@ public class DashboardScreen extends javax.swing.JInternalFrame {
         setTitle("Dashboard");
         setPreferredSize(new java.awt.Dimension(1072, 700));
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 0));
+        jPanel1.setBackground(new java.awt.Color(51, 51, 255));
 
+        jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Orçamentos");
 
+        lblOrcamentosAtual.setBackground(new java.awt.Color(255, 255, 255));
         lblOrcamentosAtual.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        lblOrcamentosAtual.setForeground(new java.awt.Color(0, 0, 0));
+        lblOrcamentosAtual.setForeground(new java.awt.Color(255, 255, 255));
         lblOrcamentosAtual.setText("0");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -105,7 +108,7 @@ public class DashboardScreen extends javax.swing.JInternalFrame {
                 .addContainerGap(17, Short.MAX_VALUE))
         );
 
-        jPanel2.setBackground(new java.awt.Color(0, 0, 204));
+        jPanel2.setBackground(new java.awt.Color(51, 51, 255));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
@@ -136,7 +139,7 @@ public class DashboardScreen extends javax.swing.JInternalFrame {
                 .addGap(31, 31, 31))
         );
 
-        jPanel3.setBackground(new java.awt.Color(255, 0, 255));
+        jPanel3.setBackground(new java.awt.Color(51, 51, 255));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
@@ -172,20 +175,20 @@ public class DashboardScreen extends javax.swing.JInternalFrame {
 
         lblMesAtual.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
-        pnBalancoTrimestral.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        pnBalancoSemanal.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        javax.swing.GroupLayout pnBalancoTrimestralLayout = new javax.swing.GroupLayout(pnBalancoTrimestral);
-        pnBalancoTrimestral.setLayout(pnBalancoTrimestralLayout);
-        pnBalancoTrimestralLayout.setHorizontalGroup(
-            pnBalancoTrimestralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout pnBalancoSemanalLayout = new javax.swing.GroupLayout(pnBalancoSemanal);
+        pnBalancoSemanal.setLayout(pnBalancoSemanalLayout);
+        pnBalancoSemanalLayout.setHorizontalGroup(
+            pnBalancoSemanalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 488, Short.MAX_VALUE)
         );
-        pnBalancoTrimestralLayout.setVerticalGroup(
-            pnBalancoTrimestralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        pnBalancoSemanalLayout.setVerticalGroup(
+            pnBalancoSemanalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 288, Short.MAX_VALUE)
         );
 
-        jPanel4.setBackground(new java.awt.Color(0, 204, 0));
+        jPanel4.setBackground(new java.awt.Color(51, 51, 255));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
@@ -216,6 +219,19 @@ public class DashboardScreen extends javax.swing.JInternalFrame {
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
+        pnBalancoTrimestral.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        javax.swing.GroupLayout pnBalancoTrimestralLayout = new javax.swing.GroupLayout(pnBalancoTrimestral);
+        pnBalancoTrimestral.setLayout(pnBalancoTrimestralLayout);
+        pnBalancoTrimestralLayout.setHorizontalGroup(
+            pnBalancoTrimestralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 488, Short.MAX_VALUE)
+        );
+        pnBalancoTrimestralLayout.setVerticalGroup(
+            pnBalancoTrimestralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 288, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -235,24 +251,30 @@ public class DashboardScreen extends javax.swing.JInternalFrame {
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(pnBalancoTrimestral, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(82, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(pnBalancoSemanal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(pnBalancoTrimestral, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(22, 22, 22)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(lblMesAtual))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(34, 34, 34)
-                .addComponent(pnBalancoTrimestral, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(pnBalancoTrimestral, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(lblMesAtual))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(34, 34, 34)
+                        .addComponent(pnBalancoSemanal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(187, Short.MAX_VALUE))
         );
 
@@ -275,6 +297,7 @@ public class DashboardScreen extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblMesAtual;
     private javax.swing.JLabel lblOrcamentosAtual;
     private javax.swing.JLabel lblServicosAtual;
+    private javax.swing.JPanel pnBalancoSemanal;
     private javax.swing.JPanel pnBalancoTrimestral;
     // End of variables declaration//GEN-END:variables
 
@@ -341,10 +364,10 @@ public class DashboardScreen extends javax.swing.JInternalFrame {
         //Define o tamanho do painel ou grafico
         chartPanel.setPreferredSize(new Dimension(490,290));
         
-        pnBalancoTrimestral.setLayout(new java.awt.BorderLayout());
+        pnBalancoSemanal.setLayout(new java.awt.BorderLayout());
         // Adiciona o grafico ao painel criado no seu frame.
-        pnBalancoTrimestral.add(chartPanel, BorderLayout.CENTER);
-        pnBalancoTrimestral.validate();
+        pnBalancoSemanal.add(chartPanel, BorderLayout.CENTER);
+        pnBalancoSemanal.validate();
     }
     
     private void faturamentoAtual(){
