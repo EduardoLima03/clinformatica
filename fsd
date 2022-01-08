@@ -1,0 +1,203 @@
+[33mcommit fbfd4ee8b7feff248460be48e957fa1f6bb084c8[m[33m ([m[1;36mHEAD[m[33m, [m[1;33mtag: v0.2.0-beta[m[33m, [m[1;31morigin/main[m[33m, [m[1;32mrelease/dashboard[m[33m, [m[1;32mmain[m[33m)[m
+Author: Carlos Lima <tec.carloslima@gmail.com>
+Date:   Thu Jan 6 12:58:54 2022 -0300
+
+    grafico balanço trimestral com painel
+
+[33mcommit 3a4f1fa775c3c98ca03c384f1222d349c5de86d3[m
+Author: Carlos Lima <tec.carloslima@gmail.com>
+Date:   Wed Jan 5 12:39:56 2022 -0300
+
+    Adicionado o painel de faturamento pendente
+
+[33mcommit 6a3805474086be3389da17b28c454d67ac3c989a[m
+Author: Carlos Lima <tec.carloslima@gmail.com>
+Date:   Thu Dec 30 15:00:59 2021 -0300
+
+    Grafico de balanço trimestral
+
+[33mcommit e105eeaaaf957c7395328d068576f1f1b91464b9[m
+Author: Carlos Lima <tec.carloslima@gmail.com>
+Date:   Thu Dec 30 14:06:41 2021 -0300
+
+    informações atuais recuperada do banco
+
+[33mcommit ee68936f2864ee9cac419e6e678b239466615469[m
+Author: Carlos Lima <tec.carloslima@gmail.com>
+Date:   Thu Dec 30 09:36:29 2021 -0300
+
+    adicioando a tela ao menu
+
+[33mcommit 3decfdbbf6e7885e8570e0fdaaed231968e4812d[m
+Author: Carlos Lima <tec.carloslima@gmail.com>
+Date:   Wed Dec 29 12:35:30 2021 -0300
+
+    instalação de depedencia jfreechart, geração de grafico
+
+[33mcommit acc8fd4139b2000a1509b711e2b714705b3c34a6[m[33m ([m[1;33mtag: v0.1.0[m[33m, [m[1;31morigin/feature/tela-ordem-servico[m[33m, [m[1;31morigin/develop[m[33m)[m
+Author: Carlos Lima <tec.carloslima@gmail.com>
+Date:   Fri Dec 17 11:28:58 2021 -0300
+
+    Função que permite atualizar um registro de serviço
+
+[33mcommit 0c01f9db0de11967425694935f20e87e212cf63b[m
+Author: Carlos Lima <tec.carloslima@gmail.com>
+Date:   Mon Dec 13 15:13:42 2021 -0300
+
+    deletando ordem de serviço
+
+[33mcommit 67e8cc8f14dc759910c1303bfe024c493a9bbb61[m
+Author: Carlos Lima <tec.carloslima@gmail.com>
+Date:   Fri Dec 10 17:30:01 2021 -0300
+
+    pesquisa de ordem de serviço
+
+[33mcommit 1e84d4e1b0274137a70f6bae55f3206bf9ec368f[m
+Author: Carlos Lima <tec.carloslima@gmail.com>
+Date:   Thu Dec 9 15:03:26 2021 -0300
+
+    salvado ordem de serviço
+
+[33mcommit dfe2c1beac74635fba8e157170ff8a589972ecf2[m
+Author: Carlos Lima <tec.carloslima@gmail.com>
+Date:   Thu Dec 9 08:08:51 2021 -0300
+
+    persistência do dados ordem de serviço
+
+[33mcommit 377f8e646498c534c5e311295aea4638f45a481b[m
+Author: Carlos Lima <tec.carloslima@gmail.com>
+Date:   Wed Dec 8 15:40:16 2021 -0300
+
+    vinculando cliente ao servico, formantado as datas
+
+[33mcommit e50d7f875ee2683ffdd93f981dcec3886ecd740e[m
+Author: Carlos Lima <tec.carloslima@gmail.com>
+Date:   Wed Dec 8 11:58:57 2021 -0300
+
+    tala de OS concluida
+
+[33mcommit 8288e93b85859f0af0899ee578d92741a99596e8[m
+Author: Carlos Lima <tec.carloslima@gmail.com>
+Date:   Wed Dec 8 07:38:11 2021 -0300
+
+    modificando o tamanho das telas
+
+[33mcommit 53afc68ee4679a45095ca0f31c30ee64399bc085[m
+Author: Carlos Lima <tec.carloslima@gmail.com>
+Date:   Tue Dec 7 15:23:04 2021 -0300
+
+    inicio da tela de serviço
+
+[33mcommit 9bca8e74b4f420013fed7295486979016862db8b[m[33m ([m[1;31morigin/development[m[33m)[m
+Author: Carlos Lima <tec.carloslima@gmail.com>
+Date:   Tue Dec 7 12:10:26 2021 -0300
+
+    Pesquisa da pagina cliente
+
+[33mcommit f12310d1bbe0726effa174b4aa5a1f46fb43a6f3[m
+Author: Carlos Lima <tec.carloslima@gmail.com>
+Date:   Thu Nov 18 09:17:28 2021 -0300
+
+    refatorando os modo de salva e atualuza cliente
+
+[33mcommit eeb336c22a1b1ec84562ef7340e94bd3ae4bc996[m
+Author: Carlos Lima <tec.carloslima@gmail.com>
+Date:   Thu Nov 18 08:49:41 2021 -0300
+
+    desistência de implementa o método de busca especial
+
+[33mcommit 62433a4c4499b034f620df558a1c297c5a22318c[m
+Author: Carlos Lima <tec.carloslima@gmail.com>
+Date:   Wed Nov 3 16:40:16 2021 -0300
+
+    deletando cliente
+
+[33mcommit 0df6a95f60f7fcae80aa75b0a3a569a83b89b3f7[m
+Author: Carlos Lima <tec.carloslima@gmail.com>
+Date:   Wed Oct 27 09:21:22 2021 -0300
+
+    corrigindo erro de evento e removendo tela nao usada
+
+[33mcommit c18990546ca17b8faf48a72fa23e8ab21c1bb410[m
+Author: Carlos Lima <tec.carloslima@gmail.com>
+Date:   Wed Oct 27 09:17:00 2021 -0300
+
+    tabela cliente bloqueada
+
+[33mcommit e8c0173d91cca2192e9377d1d6a3c76b4085aadb[m
+Author: Carlos Lima <tec.carlos.lima@gmail.com>
+Date:   Mon Oct 25 15:38:16 2021 -0300
+
+    db, service, dao, clientpage, falta consulta, selecionar tupla e deleta
+
+[33mcommit 16b87a97fef74763deb196ba62a7fa68ca369ec3[m
+Author: Carlos Lima <tec.carlos.lima@gmail.com>
+Date:   Thu Oct 21 15:46:53 2021 -0300
+
+    melhoria nas classes
+
+[33mcommit 1ec7df119f5fc146e3ecfdaaf21908b99c914897[m
+Author: Carlos Lima <tec.carlos.lima@gmail.com>
+Date:   Tue Oct 19 09:58:39 2021 -0300
+
+    açao Keybord - 45m
+
+[33mcommit a8e5790b08251b271f661c51fd4d12607b0c511a[m
+Author: Carlos Lima <tec.carlos.lima@gmail.com>
+Date:   Mon Oct 18 18:18:13 2021 -0300
+
+    função atuliza e deleta
+
+[33mcommit 3874a565525b2e50a2e25dd0832ebdd3eec6cc84[m
+Author: Carlos Lima <tec.carlos.lima@gmail.com>
+Date:   Mon Oct 18 15:55:20 2021 -0300
+
+    função salva e lista os usuarios na tabela
+
+[33mcommit 9f973617390c73dcbca5e6a841ef3f2b37abb574[m
+Author: Carlos Lima <tec.carlos.lima@gmail.com>
+Date:   Fri Oct 15 16:41:03 2021 -0300
+
+    funcao para salvar um novo funcionario
+
+[33mcommit 54f1d7755b29a42b1123d5baeb19183e06cf7fda[m
+Author: Carlos Lima <tec.carlos.lima@gmail.com>
+Date:   Wed Oct 13 15:20:23 2021 -0300
+
+    design da tela de funcionarios
+
+[33mcommit ac83a8a6c0124406de34c782adc6672d0d01ab87[m
+Author: Carlos Lima <tec.carlos.lima@gmail.com>
+Date:   Wed Oct 13 14:00:11 2021 -0300
+
+    inicial da tela de cadastro de cliente
+
+[33mcommit 8b91cc152e600c4d75c751df7fbacb2588b714d4[m
+Author: Carlos Lima <tec.carlos.lima@gmail.com>
+Date:   Mon Oct 11 13:00:55 2021 -0300
+
+    realizando login com senha criptografada
+
+[33mcommit a2890c57d4e7e03415b58435bb9d0c87641242c3[m
+Author: Carlos Lima <tec.carlos.lima@gmail.com>
+Date:   Mon Oct 11 10:29:51 2021 -0300
+
+    realiza login sem criptografia
+
+[33mcommit 95e25d1783800c16f1fc5ca774381c873e274e40[m
+Author: Carlos Lima <tec.carlos.lima@gmail.com>
+Date:   Fri Oct 8 11:59:19 2021 -0300
+
+    Configuração do banco de dados para o login
+
+[33mcommit 29bbb773a88f17b297ca99d0015cfbbc3916db84[m
+Author: Carlos Lima <tec.carlos.lima@gmail.com>
+Date:   Thu Oct 7 16:26:25 2021 -0300
+
+    configuracao do db para realiza login
+
+[33mcommit ad6ee9e068a39a502e0c324470f418a51f571302[m
+Author: Carlos Lima <tec.carlos.lima@gmail.com>
+Date:   Thu Oct 7 15:03:11 2021 -0300
+
+    instalação do derbydb

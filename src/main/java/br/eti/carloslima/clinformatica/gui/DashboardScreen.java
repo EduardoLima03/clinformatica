@@ -6,6 +6,8 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
 import java.util.HashMap;
@@ -29,17 +31,14 @@ public class DashboardScreen extends javax.swing.JInternalFrame {
      */
     public DashboardScreen() {
         initComponents();
+        initLabels();
         
         lblMesAtual.setText(mes(dateDoDia.getMonthValue()));
-        
-        faturamentoAtual();
-        registroAtualDosAtendimentos();
-        faturamentoPendente();
         
         if(dateDoDia.getMonthValue() >= 3)
             balancoTrimestral();
         
-        balancoSemanalAtual();
+        faturamentoTrimestral();
     }
 
     /**
@@ -309,22 +308,12 @@ public class DashboardScreen extends javax.swing.JInternalFrame {
     /*
         Automatiza os balanços atual, assim que a tela é criada
     */
-    LocalDate dateDoDia = LocalDate.now();
-    
-    private String primeiroDiaDoMes(int mes){
-        return  LocalDateTime.now().withMonth(mes).with(TemporalAdjusters
-                .firstDayOfMonth()).format(DateTimeFormatter
-                        .ofPattern("yyyy-MM-dd HH:mm:ss"));
-    }
-    
-    private String ultimoDiaDoMes(int mes){
-        return  LocalDateTime.now().withMonth(mes).with(TemporalAdjusters
-                .lastDayOfMonth()).format(DateTimeFormatter
-                        .ofPattern("yyyy-MM-dd HH:mm:ss"));
-    }
-    
+    LocalDateTime dateDoDia = LocalDateTime.of(2021, Month.DECEMBER, 13, 10, 00);
+    /**
+     * 
+     */
     private void balancoSemanalAtual(){
-        LocalDate primeiroDia = dateDoDia.with(TemporalAdjusters.lastDayOfMonth());
+        LocalDate primeiroDia = dateDoDia.with(TemporalAdjusters.lastDayOfMonth()).toLocalDate();
         
         Map<String, Integer> valores = new HashMap<>();
         
@@ -370,26 +359,9 @@ public class DashboardScreen extends javax.swing.JInternalFrame {
         pnBalancoSemanal.validate();
     }
     
-    private void faturamentoAtual(){
-        String[] datas = {primeiroDiaDoMes(dateDoDia.getMonth().getValue()), 
-            ultimoDiaDoMes(dateDoDia.getMonth().getValue())};
-        var faturamentoAtual = graficoService.currentBilling(datas, 2);
-        
-        lblFaturamentoAtual.setText(String.format("R$ %.2f", faturamentoAtual));
-    }
-    private void faturamentoPendente(){
-        String[] datas = {primeiroDiaDoMes(dateDoDia.getMonth().getValue()), 
-            ultimoDiaDoMes(dateDoDia.getMonth().getValue())};
-        var faturamentoAtual = graficoService.currentBilling(datas, 1);
-        
-        lblFaturamentoPendente.setText(String.format("R$ %.2f", faturamentoAtual));
-    }
-    
     private void registroAtualDosAtendimentos(){
-        String[] dataoOrçamento = {primeiroDiaDoMes(dateDoDia.getMonth()
-                .getValue()), ultimoDiaDoMes(dateDoDia.getMonth().getValue()), "1"};
-        String[] dataServico = {primeiroDiaDoMes(dateDoDia.getMonth()
-                .getValue()), ultimoDiaDoMes(dateDoDia.getMonth().getValue()), "2"};
+        String[] dataoOrçamento = {primeiroDiaDoMes(), ultimoDiaDoMes(), "1"};
+        String[] dataServico = {primeiroDiaDoMes(), ultimoDiaDoMes(), "2"};
         int quantidadeDeRegistroOrçamento = graficoService
                 .totalAttendancesOfTheMonth(dataoOrçamento);
         int quantidadeDeRegistroServico = graficoService
@@ -403,12 +375,11 @@ public class DashboardScreen extends javax.swing.JInternalFrame {
         
         Map<String, Integer> valores = new HashMap<String, Integer>();
         
+        String[] atual = {primeiroDiaDoMes(), ultimoDiaDoMes()};
         String[] antepenutimo = {primeiroDiaDoMes(dateDoDia.getMonth().getValue()
                 - 2), ultimoDiaDoMes(dateDoDia.getMonth().getValue() - 2)};
         String[] penutimo = {primeiroDiaDoMes(dateDoDia.getMonth().getValue() 
                 - 1), ultimoDiaDoMes(dateDoDia.getMonth().getValue() - 1)};
-        String[] atual = {primeiroDiaDoMes(dateDoDia.getMonth().getValue()), 
-            ultimoDiaDoMes(dateDoDia.getMonth().getValue())};
         int quantidadeAntepenutimo = graficoService.totalAttendancesOfTheMonth(antepenutimo);
         int quantidadePenutimo = graficoService.totalAttendancesOfTheMonth(penutimo);
         int quantidadeAtual = graficoService.totalAttendancesOfTheMonth(atual);
@@ -444,6 +415,89 @@ public class DashboardScreen extends javax.swing.JInternalFrame {
         // Adiciona o grafico ao painel criado no seu frame.
         pnBalancoTrimestral.add(chartPanel, BorderLayout.CENTER);
         pnBalancoTrimestral.validate();
+    }
+    
+    private String primeiroDiaDoMes(int mes){
+        return  dateDoDia.withMonth(mes).with(TemporalAdjusters
+                .firstDayOfMonth()).format(DateTimeFormatter
+                        .ofPattern("yyyy-MM-dd HH:mm:ss"));
+    }
+    
+    private String ultimoDiaDoMes(int mes){
+        return  dateDoDia.withMonth(mes).with(TemporalAdjusters
+                .lastDayOfMonth()).format(DateTimeFormatter
+                        .ofPattern("yyyy-MM-dd HH:mm:ss"));
+    }
+    
+    private String primeiroDiaDoMes() {
+        return dateDoDia.withMonth(dateDoDia.getMonthValue()).with(TemporalAdjusters.firstDayOfMonth()).format(DateTimeFormatter
+                .ofPattern("yyyy-MM-dd HH:mm:ss"));
+    }
+
+    private String ultimoDiaDoMes() {
+        return dateDoDia.withMonth(dateDoDia.getMonthValue()).with(TemporalAdjusters.lastDayOfMonth()).format(DateTimeFormatter
+                .ofPattern("yyyy-MM-dd HH:mm:ss"));
+    }
+    
+    
+    
+    /**
+     * 
+     * @return Soma em reais do servicoes realizados
+     */
+    private Double faturamentoAtual(){
+        String[] datas = {primeiroDiaDoMes(), ultimoDiaDoMes()};
+        var faturamentoAtual = graficoService.currentBilling(datas, 2);
+        
+        return faturamentoAtual;
+    }
+    private Double faturamentoPendente(){
+        String[] datas = {primeiroDiaDoMes(), ultimoDiaDoMes()};
+        var faturamentoAtual = graficoService.currentBilling(datas, 1);
+        
+        return faturamentoAtual;    
+    }
+    
+    private void faturamentoTrimestral(){
+        DefaultCategoryDataset dcd = new DefaultCategoryDataset();
+        //Colunas é o que fixa no eixo x. para mim será o mes
+        //Row é o objeto comparado, para mim será orçamento e serviços
+        //value é os valores que será apresentado
+        
+        dcd.addValue(faturamentoAtual(), "Ordem de Serviços", mes(12));
+        dcd.addValue(faturamentoPendente(), "Orçamentos", mes(12));
+        
+        String[] antepenutimo = {primeiroDiaDoMes(dateDoDia.getMonthValue() - 2), ultimoDiaDoMes(dateDoDia.getMonthValue() - 2)};
+        String[] penutimo = {primeiroDiaDoMes(dateDoDia.getMonthValue() - 1), ultimoDiaDoMes(dateDoDia.getMonthValue() - 1)};
+        double quantidadeAntepenutimoSe = graficoService.currentBilling(antepenutimo, 2);
+        double quantidadeAntepenutimoOr = graficoService.currentBilling(antepenutimo, 1);
+        double quantidadePenutimoSe = graficoService.currentBilling(penutimo, 2);        
+        double quantidadePenutimoOr = graficoService.currentBilling(penutimo, 1); 
+        dcd.addValue(quantidadePenutimoOr, "Orçamentos", mes(dateDoDia.getMonthValue()-1));
+        dcd.addValue(quantidadePenutimoSe, "Ordem de Serviços", mes(dateDoDia.getMonthValue()-1));
+        dcd.addValue(quantidadeAntepenutimoSe, "Ordem de Serviços", mes(dateDoDia.getMonthValue()-2));
+        dcd.addValue(quantidadeAntepenutimoOr, "Orçamentos", mes(dateDoDia.getMonthValue()-2));
+        
+        //Cria o grafico
+        JFreeChart chart = ChartFactory.createLineChart(
+                "Faturamento Trimestral", "Meses", "Valores (R$)", dcd, PlotOrientation.VERTICAL,
+                true, true, true);
+        
+        ChartPanel cp = new ChartPanel(chart);
+        //Define o tamanho do painel ou grafico
+       cp.setPreferredSize(new Dimension(490,290));
+        
+        pnBalancoSemanal.setLayout(new java.awt.BorderLayout());
+        // Adiciona o grafico ao painel criado no seu frame.
+        pnBalancoSemanal.add(cp, BorderLayout.CENTER);
+        pnBalancoSemanal.validate();
+       
+    }
+    
+    private void initLabels(){
+        lblFaturamentoAtual.setText(String.format("R$ %.2f", faturamentoAtual()));
+        lblFaturamentoPendente.setText(String.format("R$ %.2f", faturamentoPendente()));
+        registroAtualDosAtendimentos();
     }
     
     private String mes(int value){
