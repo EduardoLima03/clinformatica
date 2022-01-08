@@ -6,7 +6,6 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
@@ -402,8 +401,8 @@ public class DashboardScreen extends javax.swing.JInternalFrame {
         }
         
         //Gera o grafico
-        JFreeChart jchart = ChartFactory.createBarChart("Balanco Trimestral", 
-                null, "Serviços Realizados", dcd, 
+        JFreeChart jchart = ChartFactory.createBarChart("Balanço Trimestral", 
+                null, "Atendimentos Realizados", dcd, 
                 PlotOrientation.VERTICAL, false, false, false);
         
         //Gera um painel de apresentação do grafico
@@ -438,8 +437,6 @@ public class DashboardScreen extends javax.swing.JInternalFrame {
         return dateDoDia.withMonth(dateDoDia.getMonthValue()).with(TemporalAdjusters.lastDayOfMonth()).format(DateTimeFormatter
                 .ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
-    
-    
     
     /**
      * 
