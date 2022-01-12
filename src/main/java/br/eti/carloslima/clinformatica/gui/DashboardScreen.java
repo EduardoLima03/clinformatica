@@ -34,10 +34,11 @@ public class DashboardScreen extends javax.swing.JInternalFrame {
         
         lblMesAtual.setText(mes(dateDoDia.getMonthValue()));
         
-        if(dateDoDia.getMonthValue() >= 3)
-            balancoTrimestral();
+        if(dateDoDia.getMonthValue() >= 3){
+           faturamentoTrimestral();
+           balancoTrimestral(); 
+        }
         
-        faturamentoTrimestral();
     }
 
     /**
@@ -307,7 +308,7 @@ public class DashboardScreen extends javax.swing.JInternalFrame {
     /*
         Automatiza os balanços atual, assim que a tela é criada
     */
-    LocalDateTime dateDoDia = LocalDateTime.of(2021, Month.DECEMBER, 13, 10, 00);
+    LocalDateTime dateDoDia = LocalDateTime.now();
     /**
      * 
      */
