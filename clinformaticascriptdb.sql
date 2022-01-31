@@ -1,3 +1,4 @@
+-- CRIAÇÃO
 CREATE TABLE usuario (
   idusuario INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
   name VARCHAR(45) NOT NULL,
@@ -7,11 +8,66 @@ CREATE TABLE usuario (
   PRIMARY KEY(idusuario)
 );
 
+CREATE TABLE endereco(
+    id_endereco INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY(START WITH 1, INCREMENT BY 1),
+    logradouro VARCHAR(25) NOT NULL,
+    numero VARCHAR(5) NOT NULL,
+    complemento VARCHAR(20),
+    bairro VARCHAR(25),
+    cep VARCHAR(10)
+);
+
+CREATE TABLE Cliente (
+  idCliente INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY(START WITH 1, INCREMENT BY 1),
+  endereco_idendereco INTEGER NOT NULL,
+  nome VARCHAR(20) NOT NULL,
+  sobre_nome VARCHAR(20),
+  cpf VARCHAR(15) UNIQUE,
+  fone VARCHAR(15) NOT NULL,
+  CONSTRAINT endereco_id_ref FOREIGN KEY(endereco_idendereco)
+    REFERENCES endereco(id_endereco)
+);
+
+CREATE TABLE ordem_servico (
+  id_servico INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY(START WITH 1, INCREMENT BY 1),
+  cliente_idCliente INTEGER NOT NULL,
+  usuario_idusuario INTEGER NOT NULL,
+  date_os TIMESTAMP default current_timestamp,
+  tipo_service INTEGER(1) NOT NULL,
+  equipamento VARCHAR(150) NOT NULL,
+  defeito VARCHAR(150) NOT NULL,
+  servico VARCHAR(150) NOT NULL,
+  valor_total DECIMAL,
+  status INTEGER NOT NULL,
+  CONSTRAINT cliente_id_ref FOREIGN KEY (cliente_idCliente)
+  	REFERENCES cliente(idcliente),
+  CONSTRAINT user_id_ref FOREIGN KEY (usuario_idusuario)
+	REFERENCES users(id)
+);
+
+CREATE TABLE equipamento (
+  idequipamento INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  Cliente_idCliente INTEGER UNSIGNED NOT NULL,
+  processador VARCHAR(20) NOT NULL,
+  placa_mae VARCHAR(20) NOT NULL,
+  memoria_ram VARCHAR(20) NOT NULL,
+  memoria VARCHAR(20) NOT NULL,
+  gabinete VARCHAR(20) NULL,
+  PRIMARY KEY(idequipamento),
+  INDEX equipamento_FKIndex1(Cliente_idCliente),
+  FOREIGN KEY(Cliente_idCliente)
+    REFERENCES Cliente(idCliente)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION
+);
+
 CREATE TABLE bairro (
   idbairro INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY(Start with 1, Increment by 1),
   nome VARCHAR(20) NOT NULL,
 );
+-- FIM DA CRIAÇÃO
 
+-- ADICIONANDO DADOS
 INSERT INTO APP.BAIRRO (NOME) 
 	VALUES ('Aerolândia')
 INSERT INTO APP.BAIRRO (NOME) 
@@ -254,61 +310,32 @@ INSERT INTO APP.BAIRRO (NOME)
 	VALUES ('Vila União')
 INSERT INTO APP.BAIRRO (NOME) 
 	VALUES ('Vila Velha')
+-- FIM DA ADIÇÃO
 
-CREATE TABLE endereco(
-    id_endereco INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY(START WITH 1, INCREMENT BY 1),
-    logradouro VARCHAR(25) NOT NULL,
-    numero VARCHAR(5) NOT NULL,
-    complemento VARCHAR(20),
-    bairro VARCHAR(25),
-    cep VARCHAR(10)
-);
-
-CREATE TABLE Cliente (
-  idCliente INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY(START WITH 1, INCREMENT BY 1),
-  endereco_idendereco INTEGER NOT NULL,
-  nome VARCHAR(20) NOT NULL,
-  sobre_nome VARCHAR(20),
-  cpf VARCHAR(15) UNIQUE,
-  fone VARCHAR(15) NOT NULL,
-  CONSTRAINT endereco_id_ref FOREIGN KEY(endereco_idendereco)
-    REFERENCES endereco(id_endereco)
-);
-
-CREATE TABLE ordem_servico (
-  id_servico INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY(START WITH 1, INCREMENT BY 1),
-  cliente_idCliente INTEGER NOT NULL,
-  usuario_idusuario INTEGER NOT NULL,
-  date_os TIMESTAMP default current_timestamp,
-  tipo_service INTEGER(1) NOT NULL,
-  equipamento VARCHAR(150) NOT NULL,
-  defeito VARCHAR(150) NOT NULL,
-  servico VARCHAR(150) NOT NULL,
-  valor_total DECIMAL,
-  status INTEGER NOT NULL,
-  CONSTRAINT cliente_id_ref FOREIGN KEY (cliente_idCliente)
-  	REFERENCES cliente(idcliente),
-  CONSTRAINT user_id_ref FOREIGN KEY (usuario_idusuario)
-	REFERENCES users(id)
-);
-
-CREATE TABLE equipamento (
-  idequipamento INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
-  Cliente_idCliente INTEGER UNSIGNED NOT NULL,
-  processador VARCHAR(20) NOT NULL,
-  placa_mae VARCHAR(20) NOT NULL,
-  memoria_ram VARCHAR(20) NOT NULL,
-  memoria VARCHAR(20) NOT NULL,
-  gabinete VARCHAR(20) NULL,
-  PRIMARY KEY(idequipamento),
-  INDEX equipamento_FKIndex1(Cliente_idCliente),
-  FOREIGN KEY(Cliente_idCliente)
-    REFERENCES Cliente(idCliente)
-      ON DELETE NO ACTION
-      ON UPDATE NO ACTION
-);
-
-
-# Consultas
+-- CONSULTAS
 
 SELECT c.IDCLIENTE, c.NOME, c.SOBRE_NOME, c.CPF, c.FONE, e.* FROM cliente as c JOIN endereco as e on e.ID_ENDERECO = c.ENDERECO_IDENDERECO WHERE c.IDCLIENTE = 1;
+
+--pesquisando valores que não foi pagos
+SELECT * FROM APP.ORDER2 WHERE ORDER2.STATUS BETWEEN 1 AND 4;
+
+-- retorna a quantidade de atendimento que nao foram pagos
+SELECT COUNT(*) AS quantidade FROM APP.ORDER2 WHERE ORDER2.STATUS BETWEEN 1 AND 4;
+-- retonas o valor total do faturamento pendente
+SELECT SUM(ORDER2.VALOR) AS total FROM APP.ORDER2 WHERE ORDER2.STATUS BETWEEN 1 AND 4;
+
+-- retorna a quantidade de serviços comcluido 
+SELECT COUNT(*) AS quantidade FROM APP.ORDER2 WHERE ORDER2.STATUS = 5;
+-- retonas o valor total do faturamento des da criaçao
+SELECT SUM(ORDER2.VALOR) AS total FROM APP.ORDER2 WHERE ORDER2.STATUS = 5;
+
+-- retonas o valor total do faturamento pendente do mes
+SELECT SUM(ORDER2.VALOR) AS total FROM APP.ORDER2 WHERE ORDER2.STATUS BETWEEN 1 AND 4 AND DATA_ENTRADA BETWEEN '2022-01-01' AND '2022-01-31';
+-- retonas o valor total do faturamento do mes atual
+SELECT SUM(ORDER2.VALOR) AS total FROM APP.ORDER2 WHERE ORDER2.STATUS = 5 AND DATA_ENTRADA BETWEEN '2022-01-01' AND '2022-01-31';
+-- retorna a quantidade de serviços comcluido no mes
+SELECT COUNT(*) AS quantidade FROM APP.ORDER2 WHERE ORDER2.STATUS = 5 AND DATA_ENTRADA BETWEEN '2022-01-01' AND '2022-01-31';
+-- retorna a quantidade de atendimento que nao foram pagos
+SELECT COUNT(*) AS quantidade FROM APP.ORDER2 WHERE ORDER2.STATUS BETWEEN 1 AND 4 AND DATA_ENTRADA BETWEEN '2022-01-01' AND '2022-01-31';
+
+-- FIM DAS CONSULTAS
