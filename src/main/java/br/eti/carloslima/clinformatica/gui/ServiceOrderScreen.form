@@ -189,22 +189,13 @@
                       <Group type="102" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="txtNumService" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                                      <Component id="txtDateService" min="-2" pref="122" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="rbOrcamento" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="rbOS" min="-2" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtNumService" alignment="0" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtDateService" min="-2" pref="122" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
                       </Group>
@@ -223,12 +214,7 @@
                               <Component id="txtDateService" min="-2" max="-2" attributes="0"/>
                               <Component id="txtNumService" pref="28" max="32767" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="18" max="32767" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="rbOrcamento" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="rbOS" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace pref="44" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -257,22 +243,6 @@
                     <Property name="editable" type="boolean" value="false"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JRadioButton" name="rbOrcamento">
-                  <Properties>
-                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                      <ComponentRef name="typeServiceGroup"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="Or&#xe7;amento"/>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JRadioButton" name="rbOS">
-                  <Properties>
-                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                      <ComponentRef name="typeServiceGroup"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="Ordem de Servi&#xe7;o"/>
-                  </Properties>
-                </Component>
               </SubComponents>
             </Container>
             <Component class="javax.swing.JLabel" name="jLabel3">
@@ -283,11 +253,15 @@
             <Component class="javax.swing.JComboBox" name="cbStatus">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="4">
-                    <StringItem index="0" value="Or&#xe7;amento"/>
-                    <StringItem index="1" value="Aprovado"/>
-                    <StringItem index="2" value="Em_Servi&#xe7;o"/>
-                    <StringItem index="3" value="Concluido"/>
+                  <StringArray count="8">
+                    <StringItem index="0" value="OR&#xc7;AMENTO"/>
+                    <StringItem index="1" value="APROVADO"/>
+                    <StringItem index="2" value="EM_SERVICO"/>
+                    <StringItem index="3" value="AGUARDANDO_PE&#xc7;A"/>
+                    <StringItem index="4" value="OR&#xc7;AMENTO_VENCIDO"/>
+                    <StringItem index="5" value="CANCELADO"/>
+                    <StringItem index="6" value="CONCLUIDO"/>
+                    <StringItem index="7" value="ENTREGUE"/>
                   </StringArray>
                 </Property>
               </Properties>

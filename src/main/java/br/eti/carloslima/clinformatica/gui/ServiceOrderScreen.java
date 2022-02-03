@@ -43,9 +43,7 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
     public ServiceOrderScreen() {
         initComponents();
         getDate();
-        //obrigação de o tipo ja iniciar selecionado
-        rbOrcamento.setSelected(true);
-
+        
         txtNomeTecnico.setText(user.getNome());
     }
 
@@ -66,8 +64,6 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         txtNumService = new javax.swing.JTextField();
         txtDateService = new javax.swing.JTextField();
-        rbOrcamento = new javax.swing.JRadioButton();
-        rbOS = new javax.swing.JRadioButton();
         jLabel3 = new javax.swing.JLabel();
         cbStatus = new javax.swing.JComboBox<>();
         pnRegistroCliente = new javax.swing.JPanel();
@@ -111,12 +107,6 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
 
         txtDateService.setEditable(false);
 
-        typeServiceGroup.add(rbOrcamento);
-        rbOrcamento.setText("Orçamento");
-
-        typeServiceGroup.add(rbOS);
-        rbOS.setText("Ordem de Serviço");
-
         javax.swing.GroupLayout pnRegistroAtendimentoLayout = new javax.swing.GroupLayout(pnRegistroAtendimento);
         pnRegistroAtendimento.setLayout(pnRegistroAtendimentoLayout);
         pnRegistroAtendimentoLayout.setHorizontalGroup(
@@ -124,18 +114,12 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
             .addGroup(pnRegistroAtendimentoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnRegistroAtendimentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnRegistroAtendimentoLayout.createSequentialGroup()
-                        .addGroup(pnRegistroAtendimentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(txtNumService, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(24, 24, 24)
-                        .addGroup(pnRegistroAtendimentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(txtDateService, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(pnRegistroAtendimentoLayout.createSequentialGroup()
-                        .addComponent(rbOrcamento)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(rbOS)))
+                    .addComponent(jLabel1)
+                    .addComponent(txtNumService, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(24, 24, 24)
+                .addGroup(pnRegistroAtendimentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(txtDateService, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnRegistroAtendimentoLayout.setVerticalGroup(
@@ -149,16 +133,12 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
                 .addGroup(pnRegistroAtendimentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtDateService, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtNumService, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
-                .addGroup(pnRegistroAtendimentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rbOrcamento)
-                    .addComponent(rbOS))
-                .addContainerGap())
+                .addContainerGap(44, Short.MAX_VALUE))
         );
 
         jLabel3.setText("Situação:");
 
-        cbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Orçamento", "Aprovado", "Em_Serviço", "Concluido" }));
+        cbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ORÇAMENTO", "APROVADO", "EM_SERVICO", "AGUARDANDO_PEÇA", "ORÇAMENTO_VENCIDO", "CANCELADO", "CONCLUIDO", "ENTREGUE" }));
 
         pnRegistroCliente.setBorder(javax.swing.BorderFactory.createTitledBorder("Cliente"));
 
@@ -566,7 +546,6 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
             this.order.setServicoRealizado(txtServico.getText().toString());
             this.order.setValor(Double.parseDouble(txtValorTotal.getText().toString()));
             this.order.setStatus(statusSelected());
-            this.order.setType(typeSelected());
 
             //criando as depedencia dos outros objetos
             this.order.setCliente(client);
@@ -578,8 +557,6 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
             this.order.setServicoRealizado(txtServico.getText().toString());
             this.order.setValor(Double.parseDouble(txtValorTotal.getText().toString()));
             this.order.setStatus(statusSelected());
-            this.order.setType(typeSelected());
-
         }
 
     }
@@ -599,16 +576,6 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
         }
     }
 
-    private int typeSelected() {
-        var numero = 0;
-        if (rbOrcamento.isSelected()) {
-            numero = 1;
-        }
-        if (rbOS.isSelected()) {
-            numero = 2;
-        }
-        return numero;
-    }
 
     private void pesquisaOrder() {
         var registro = JOptionPane.showInputDialog("Digite o Registro buscado");
@@ -625,13 +592,6 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
         txtValorTotal.setText(order.getValor().toString());
 
         cbStatus.setSelectedItem(ServiceSituation.valueOf(order.getStatus()));
-        switch (order.getType()) {
-            case 1:
-                rbOrcamento.setSelected(true);
-                break;
-            case 2:
-                rbOS.setSelected(true);
-        }
     }
 
     private void deleteServiceOrder() {
@@ -670,8 +630,6 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPanel pnRegistroAtendimento;
     private javax.swing.JPanel pnRegistroCliente;
-    private javax.swing.JRadioButton rbOS;
-    private javax.swing.JRadioButton rbOrcamento;
     private javax.swing.JTable tblCliente;
     private javax.swing.JTextField txtDateService;
     private javax.swing.JTextField txtDefeito;

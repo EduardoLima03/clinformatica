@@ -19,7 +19,6 @@ public class ServiceOrderModel implements Serializable {
 
     private Integer numSerOrder;
     private LocalDateTime dataSerOrder;
-    private TypeOfService type;
     private ServiceSituation status;
     private String equipamento;
     private String defeito;
@@ -36,7 +35,6 @@ public class ServiceOrderModel implements Serializable {
     public ServiceOrderModel(Integer numSerOrder, LocalDateTime dataSerOrder, Integer type, Integer status, String equipamento, String defeito, String servicoRealizado, Double valor, ClientModel cliente, UserModel tecnico) {
         this.numSerOrder = numSerOrder;
         this.dataSerOrder = dataSerOrder;
-        setType(type);
         setStatus(status);
         this.equipamento = equipamento;
         this.defeito = defeito;
@@ -47,7 +45,6 @@ public class ServiceOrderModel implements Serializable {
     }
 
     public ServiceOrderModel(Integer type, Integer status, String equipamento, String defeito, Double valor, ClientModel cliente, UserModel tecnico) {
-        setType(type);
         setStatus(status);
         this.equipamento = equipamento;
         this.defeito = defeito;
@@ -71,15 +68,7 @@ public class ServiceOrderModel implements Serializable {
     public void setDataSerOrder(LocalDateTime dataSerOrder) {
         this.dataSerOrder = dataSerOrder;
     }
-
-    public int getType() {
-        return type.getCode();
-    }
-
-    public void setType(int type) {
-        this.type = TypeOfService.valueOf(type);
-    }
-
+    
     public int getStatus() {
         return status.getCode();
     }
@@ -175,7 +164,7 @@ public class ServiceOrderModel implements Serializable {
 
     @Override
     public String toString() {
-        return "ServiceOrderModel{" + "numSerOrder=" + numSerOrder + ", dataSerOrder=" + dataSerOrder + ", type=" + type + ", status=" + status + ", equipamento=" + equipamento + ", defeito=" + defeito + ", servicoRealizado=" + servicoRealizado + ", valor=" + valor + ", cliente=" + cliente.getNome()+" "+ cliente.getSobreNome() + ", tecnico=" + tecnico.getNome() + '}';
+        return "ServiceOrderModel{" + "numSerOrder=" + numSerOrder + ", dataSerOrder=" + dataSerOrder + ", status=" + status + ", equipamento=" + equipamento + ", defeito=" + defeito + ", servicoRealizado=" + servicoRealizado + ", valor=" + valor + ", cliente=" + cliente.getNome()+" "+ cliente.getSobreNome() + ", tecnico=" + tecnico.getNome() + '}';
     }
 
 }
