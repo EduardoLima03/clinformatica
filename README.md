@@ -1,18 +1,23 @@
-# CLInformática
+# CL Informática
+O programa tem o objetivo de gerenciar serviços de uma empresa especializada em manutenção de computadores. Buscando a facilidade no uso de sistema.
+### Aprendizado
+- Geração de grafico
+- Threads
+- Gerência de usuarios
+- Maven
+- Impresão em pdf
+- Github Flow
 
-O programa tem o objetivo de gerenciar serviços de uma empresa especializada em manutenção de computadores. Buscando a facilidade no uso de sistema.
+### Dependências
+- Apache Derby
+- JFreeChart
 
-### Dependências 
-1. Apache Derby
+## Features
 
-### Script SQL
+### 1.3.1-beta
+- Melhoria no dastboard
 
-#### Criação da tabela Usuários
-`CREATE TABLE users (id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY(Start with 1, Increment by 1), 
-name VARCHAR(32) NOT NULL,
-userName VARCHAR(10) UNIQUE,
-password VARCHAR(32) NOT NULL,
-profile INTEGER NOT NULL);`
-
-#### Consulta específica para realizar o ‘login’
-`SELECT username, password, profile FROM APP.USERS WHERE username = ?`
+### 1.2.2-beta
+- Cadastro de funcionários e seus níveis de acesso.
+- Cadastro de clientes.
+- Criação de ordem de serviços ou orçamentos.
