@@ -17,10 +17,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -37,8 +34,8 @@ public class ServiceOrderDaoImpl implements ServiceOrderDao{
     @Override
     public int insert(ServiceOrderModel order) {
         String sql = "INSERT INTO APP.ORDEM_SERVICO(cliente_idCliente, "
-                + "usuario_idUsuario, tipo_service, equipamento, defeito, "
-                + "servico, valor_total, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                + "usuario_idUsuario, equipamento, defeito, "
+                + "servico, valor_total, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement st = null;
         ResultSet rs = null;
         var row =0;
@@ -47,12 +44,11 @@ public class ServiceOrderDaoImpl implements ServiceOrderDao{
             st = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             st.setInt(1, order.getCliente().getRegistro());
             st.setInt(2, order.getTecnico().getRegistro());
-            st.setInt(3, order.getType());
-            st.setString(4, order.getEquipamento());
-            st.setString(5, order.getDefeito());
-            st.setString(6, order.getServicoRealizado());
-            st.setDouble(7, order.getValor());
-            st.setInt(8, order.getStatus());
+            st.setString(3, order.getEquipamento());
+            st.setString(4, order.getDefeito());
+            st.setString(5, order.getServicoRealizado());
+            st.setDouble(6, order.getValor());
+            st.setInt(7, order.getStatus());
             
             st.executeUpdate();
             
@@ -78,7 +74,7 @@ public class ServiceOrderDaoImpl implements ServiceOrderDao{
     public int update(ServiceOrderModel order) {
         int linhaModificada = 0;
         String sql = "UPDATE APP.ORDEM_SERVICO SET cliente_idcliente = ?, "
-                + "usuario_idusuario = ?, date_os = ?, tipo_service = ?,"
+                + "usuario_idusuario = ?, date_os = ?,"
                 + "equipamento = ?, defeito = ?, servico = ?, valor_total = ?,"
                 + "status = ? WHERE id_servico = ?";
         
@@ -88,14 +84,13 @@ public class ServiceOrderDaoImpl implements ServiceOrderDao{
             st = conn.prepareStatement(sql);
             st.setInt(1, order.getCliente().getRegistro());
             st.setInt(2, order.getTecnico().getRegistro());
-            st.setTimestamp(3, Timestamp.valueOf(order.getDataSerOrder()));
-            st.setInt(4, order.getType());
-            st.setString(5, order.getEquipamento());
-            st.setString(6, order.getDefeito());
-            st.setString(7, order.getServicoRealizado());
-            st.setDouble(8, order.getValor());
-            st.setInt(9, order.getStatus());
-            st.setInt(10, order.getNumSerOrder());
+            st.setDate(3, java.sql.Date.valueOf(order.getDataSerOrder()));
+            st.setString(4, order.getEquipamento());
+            st.setString(5, order.getDefeito());
+            st.setString(6, order.getServicoRealizado());
+            st.setDouble(7, order.getValor());
+            st.setInt(8, order.getStatus());
+            st.setInt(9, order.getNumSerOrder());
             
             linhaModificada = st.executeUpdate();
         } catch (SQLException ex) {
@@ -181,8 +176,7 @@ public class ServiceOrderDaoImpl implements ServiceOrderDao{
                 
                 // CRIANDO o obj para order
                 obj.setNumSerOrder(rs.getInt("ID_SERVICO"));
-                obj.setDataSerOrder(rs.getTimestamp("DATE_OS").toLocalDateTime());
-                obj.setType(rs.getInt("TIPO_SERVICE"));
+                obj.setDataSerOrder(rs.getDate("DATE_OS").toLocalDate());
                 obj.setEquipamento(rs.getString("EQUIPAMENTO"));
                 obj.setDefeito(rs.getString("DEFEITO"));
                 obj.setServicoRealizado(rs.getString("SERVICO"));

@@ -541,6 +541,7 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
 
             this.order = new ServiceOrderModel();
 
+            this.order.setDataSerOrder(LocalDate.now());
             this.order.setEquipamento(txtEquipamento.getText().toString());
             this.order.setDefeito(txtDefeito.getText().toString());
             this.order.setServicoRealizado(txtServico.getText().toString());

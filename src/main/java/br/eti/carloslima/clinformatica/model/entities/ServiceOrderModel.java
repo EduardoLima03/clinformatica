@@ -6,9 +6,8 @@
 package br.eti.carloslima.clinformatica.model.entities;
 
 import br.eti.carloslima.clinformatica.model.entities.enums.ServiceSituation;
-import br.eti.carloslima.clinformatica.model.entities.enums.TypeOfService;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Objects;
 
 /**
@@ -18,7 +17,7 @@ import java.util.Objects;
 public class ServiceOrderModel implements Serializable {
 
     private Integer numSerOrder;
-    private LocalDateTime dataSerOrder;
+    private LocalDate dataSerOrder;
     private ServiceSituation status;
     private String equipamento;
     private String defeito;
@@ -32,7 +31,7 @@ public class ServiceOrderModel implements Serializable {
     public ServiceOrderModel() {
     }
 
-    public ServiceOrderModel(Integer numSerOrder, LocalDateTime dataSerOrder, Integer type, Integer status, String equipamento, String defeito, String servicoRealizado, Double valor, ClientModel cliente, UserModel tecnico) {
+    public ServiceOrderModel(Integer numSerOrder, LocalDate dataSerOrder, Integer type, Integer status, String equipamento, String defeito, String servicoRealizado, Double valor, ClientModel cliente, UserModel tecnico) {
         this.numSerOrder = numSerOrder;
         this.dataSerOrder = dataSerOrder;
         setStatus(status);
@@ -61,11 +60,11 @@ public class ServiceOrderModel implements Serializable {
         this.numSerOrder = numSerOrder;
     }
 
-    public LocalDateTime getDataSerOrder() {
+    public LocalDate getDataSerOrder() {
         return dataSerOrder;
     }
 
-    public void setDataSerOrder(LocalDateTime dataSerOrder) {
+    public void setDataSerOrder(LocalDate dataSerOrder) {
         this.dataSerOrder = dataSerOrder;
     }
     
