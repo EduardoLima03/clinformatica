@@ -33,9 +33,9 @@ public class ServiceOrderDaoImpl implements ServiceOrderDao{
 
     @Override
     public int insert(ServiceOrderModel order) {
-        String sql = "INSERT INTO APP.ORDEM_SERVICO(cliente_idCliente, "
-                + "usuario_idUsuario, equipamento, defeito, "
-                + "servico, valor_total, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO APP.ORDEM_SERVICO2(CLIENTE_ID, "
+                + "TECNICO_ID, equipamento, defeito, "
+                + "servico, valor_total, status, date_os) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement st = null;
         ResultSet rs = null;
         var row =0;
@@ -47,8 +47,9 @@ public class ServiceOrderDaoImpl implements ServiceOrderDao{
             st.setString(3, order.getEquipamento());
             st.setString(4, order.getDefeito());
             st.setString(5, order.getServicoRealizado());
-            st.setDouble(6, order.getValor());
+            st.setBigDecimal(6, order.getValor());
             st.setInt(7, order.getStatus());
+            st.setDate(8, java.sql.Date.valueOf(order.getDataSerOrder()));
             
             st.executeUpdate();
             
@@ -73,8 +74,8 @@ public class ServiceOrderDaoImpl implements ServiceOrderDao{
     @Override
     public int update(ServiceOrderModel order) {
         int linhaModificada = 0;
-        String sql = "UPDATE APP.ORDEM_SERVICO SET cliente_idcliente = ?, "
-                + "usuario_idusuario = ?, date_os = ?,"
+        String sql = "UPDATE APP.ORDEM_SERVICO2 SET CLIENTE_ID = ?, "
+                + "TECNICO_ID = ?, date_os = ?,"
                 + "equipamento = ?, defeito = ?, servico = ?, valor_total = ?,"
                 + "status = ? WHERE id_servico = ?";
         
@@ -88,7 +89,7 @@ public class ServiceOrderDaoImpl implements ServiceOrderDao{
             st.setString(4, order.getEquipamento());
             st.setString(5, order.getDefeito());
             st.setString(6, order.getServicoRealizado());
-            st.setDouble(7, order.getValor());
+            st.setBigDecimal(7, order.getValor());
             st.setInt(8, order.getStatus());
             st.setInt(9, order.getNumSerOrder());
             
@@ -103,7 +104,7 @@ public class ServiceOrderDaoImpl implements ServiceOrderDao{
 
     @Override
     public int delete(int id) {
-        var sql = "DELETE FROM APP.ORDEM_SERVICO WHERE id_servico = ?";
+        var sql = "DELETE FROM APP.ORDEM_SERVICO2 WHERE id_servico = ?";
         int modifiedLines = 0;
         
         PreparedStatement st = null;
@@ -127,10 +128,10 @@ public class ServiceOrderDaoImpl implements ServiceOrderDao{
 
     @Override
     public ServiceOrderModel selectById(int id) {
-        var sql = "SELECT a.*, c.*, u.*, o.* FROM APP.ORDEM_SERVICO AS o "
-                + "JOIN cliente AS c ON c.IDCLIENTE = o.CLIENTE_IDCLIENTE "
+        var sql = "SELECT a.*, c.*, u.*, o.* FROM APP.ORDEM_SERVICO2 AS o "
+                + "JOIN cliente AS c ON c.IDCLIENTE = o.CLIENTE_ID "
                 + "JOIN endereco AS a ON a.ID_ENDERECO = c.ENDERECO_IDENDERECO "
-                + "JOIN users AS u ON u.ID = o.USUARIO_IDUSUARIO "
+                + "JOIN users AS u ON u.ID = o.TECNICO_ID "
                 + "WHERE o.ID_SERVICO = ?";
         ServiceOrderModel obj = null;
         
@@ -157,7 +158,7 @@ public class ServiceOrderDaoImpl implements ServiceOrderDao{
                 addres.setCep(rs.getString("CEP"));
                 
                 //criando o cliente
-                client.setRegistro(rs.getInt("IDCLIENTE"));
+                client.setRegistro(rs.getInt("CLIENTE_ID"));
                 client.setNome(rs.getString("NOME"));
                 client.setSobreNome(rs.getString("SOBRE_NOME"));
                 client.setCpf(rs.getString("CPF"));
@@ -180,7 +181,7 @@ public class ServiceOrderDaoImpl implements ServiceOrderDao{
                 obj.setEquipamento(rs.getString("EQUIPAMENTO"));
                 obj.setDefeito(rs.getString("DEFEITO"));
                 obj.setServicoRealizado(rs.getString("SERVICO"));
-                obj.setValor(rs.getDouble("VALOR_TOTAL"));
+                obj.setValor(Double.toString(rs.getDouble("VALOR_TOTAL")));
                 obj.setStatus(rs.getInt("STATUS"));
                 
                 //Relações entre os objetos

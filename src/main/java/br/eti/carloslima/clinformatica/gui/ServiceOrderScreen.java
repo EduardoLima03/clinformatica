@@ -11,6 +11,7 @@ import br.eti.carloslima.clinformatica.model.entities.UserModel;
 import br.eti.carloslima.clinformatica.model.entities.enums.ServiceSituation;
 import br.eti.carloslima.clinformatica.model.services.ClientService;
 import br.eti.carloslima.clinformatica.model.services.ServiceOrderService;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -545,7 +546,7 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
             this.order.setEquipamento(txtEquipamento.getText().toString());
             this.order.setDefeito(txtDefeito.getText().toString());
             this.order.setServicoRealizado(txtServico.getText().toString());
-            this.order.setValor(Double.parseDouble(txtValorTotal.getText().toString()));
+            this.order.setValor(txtValorTotal.getText().toString());
             this.order.setStatus(statusSelected());
 
             //criando as depedencia dos outros objetos
@@ -556,7 +557,7 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
             this.order.setEquipamento(txtEquipamento.getText().toString());
             this.order.setDefeito(txtDefeito.getText().toString());
             this.order.setServicoRealizado(txtServico.getText().toString());
-            this.order.setValor(Double.parseDouble(txtValorTotal.getText().toString()));
+            this.order.setValor(txtValorTotal.getText().toString());
             this.order.setStatus(statusSelected());
         }
 
@@ -564,14 +565,22 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
 
     private int statusSelected() {
         switch (cbStatus.getSelectedItem().toString()) {
-            case "Orçamento":
+            case "ORÇAMENTO":
                 return 1;
-            case "Aprovado":
+            case "APROVADO":
                 return 2;
-            case "Em_Serviço":
+            case "EM_SERVIÇO":
                 return 3;
-            case "Concluido":
+            case "AGUARDANDO_PEÇA":
                 return 4;
+            case "ORÇAMENTO_VENCIDO":
+                return 5;
+            case "CANCELADO":
+                return 6;
+            case "CONCLUIDO":                
+                return 7;
+            case "ENTREGUE":
+                return 8;
             default:
                 return 1;
         }

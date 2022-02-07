@@ -7,6 +7,7 @@ package br.eti.carloslima.clinformatica.model.entities;
 
 import br.eti.carloslima.clinformatica.model.entities.enums.ServiceSituation;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -22,7 +23,7 @@ public class ServiceOrderModel implements Serializable {
     private String equipamento;
     private String defeito;
     private String servicoRealizado;
-    private Double valor;
+    private BigDecimal valor;
 
     //depedencias
     private ClientModel cliente;
@@ -31,23 +32,23 @@ public class ServiceOrderModel implements Serializable {
     public ServiceOrderModel() {
     }
 
-    public ServiceOrderModel(Integer numSerOrder, LocalDate dataSerOrder, Integer type, Integer status, String equipamento, String defeito, String servicoRealizado, Double valor, ClientModel cliente, UserModel tecnico) {
+    public ServiceOrderModel(Integer numSerOrder, LocalDate dataSerOrder, Integer status, String equipamento, String defeito, String servicoRealizado, String valor, ClientModel cliente, UserModel tecnico) {
         this.numSerOrder = numSerOrder;
         this.dataSerOrder = dataSerOrder;
         setStatus(status);
         this.equipamento = equipamento;
         this.defeito = defeito;
         this.servicoRealizado = servicoRealizado;
-        this.valor = valor;
+        setValor(valor);
         this.cliente = cliente;
         this.tecnico = tecnico;
     }
 
-    public ServiceOrderModel(Integer type, Integer status, String equipamento, String defeito, Double valor, ClientModel cliente, UserModel tecnico) {
+    public ServiceOrderModel(Integer type, Integer status, String equipamento, String defeito, String valor, ClientModel cliente, UserModel tecnico) {
         setStatus(status);
         this.equipamento = equipamento;
         this.defeito = defeito;
-        this.valor = valor;
+        setValor(valor);
         this.cliente = cliente;
         this.tecnico = tecnico;
     }
@@ -100,12 +101,12 @@ public class ServiceOrderModel implements Serializable {
         this.servicoRealizado = servicoRealizado;
     }
 
-    public Double getValor() {
+    public BigDecimal getValor() {
         return valor;
     }
 
-    public void setValor(Double valor) {
-        this.valor = valor;
+    public void setValor(String value) {
+        this.valor = new BigDecimal(value);
     }
 
     public ClientModel getCliente() {
