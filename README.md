@@ -7,12 +7,18 @@ O programa tem o objetivo de gerenciar serviços de uma empresa especializada em
 - Maven
 - Impresão em pdf
 - Github Flow
+- Senhas com criptografia
 
 ### Dependências
 - Apache Derby
 - JFreeChart
 
 ## Features
+
+### 1.3.2-beta
+- Modificações nos botões
+- Substituição do Double por BigDecimal
+- Remoção do tipo de serviço
 
 ### 1.3.1-beta
 - Melhoria no dastboard
