@@ -44,7 +44,7 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
     public ServiceOrderScreen() {
         initComponents();
         getDate();
-        
+
         txtNomeTecnico.setText(user.getNome());
     }
 
@@ -526,14 +526,14 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
         } else {
             populateOrder();
             var confirmação = oService.atualizarOrdemServico(order);
-            
-            if(confirmação == 1){
+
+            if (confirmação == 1) {
                 JOptionPane.showMessageDialog(null, "Atualizado com sucesso!");
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(null, "Não foi possivel atualizar!",
                         null, JOptionPane.ERROR_MESSAGE);
             }
-            
+
         }
     }
 
@@ -546,7 +546,9 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
             this.order.setEquipamento(txtEquipamento.getText().toString());
             this.order.setDefeito(txtDefeito.getText().toString());
             this.order.setServicoRealizado(txtServico.getText().toString());
-            this.order.setValor(txtValorTotal.getText().toString());
+            this.order.setValor(txtValorTotal.getText().contains(",")
+                    ? txtValorTotal.getText().replace(',', '.')
+                    : txtValorTotal.getText());
             this.order.setStatus(statusSelected());
 
             //criando as depedencia dos outros objetos
@@ -577,7 +579,7 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
                 return 5;
             case "CANCELADO":
                 return 6;
-            case "CONCLUIDO":                
+            case "CONCLUIDO":
                 return 7;
             case "ENTREGUE":
                 return 8;
@@ -585,7 +587,6 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
                 return 1;
         }
     }
-
 
     private void pesquisaOrder() {
         var registro = JOptionPane.showInputDialog("Digite o Registro buscado");

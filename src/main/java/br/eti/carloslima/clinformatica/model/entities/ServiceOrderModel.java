@@ -8,6 +8,7 @@ package br.eti.carloslima.clinformatica.model.entities;
 import br.eti.carloslima.clinformatica.model.entities.enums.ServiceSituation;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -106,7 +107,7 @@ public class ServiceOrderModel implements Serializable {
     }
 
     public void setValor(String value) {
-        this.valor = new BigDecimal(value);
+        this.valor = new BigDecimal(value).setScale(4, RoundingMode.HALF_EVEN);
     }
 
     public ClientModel getCliente() {

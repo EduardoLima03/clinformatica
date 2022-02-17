@@ -12,6 +12,7 @@ import br.eti.carloslima.clinformatica.model.entities.AddresModel;
 import br.eti.carloslima.clinformatica.model.entities.ClientModel;
 import br.eti.carloslima.clinformatica.model.entities.ServiceOrderModel;
 import br.eti.carloslima.clinformatica.model.entities.UserModel;
+import java.math.RoundingMode;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -33,7 +34,7 @@ public class ServiceOrderDaoImpl implements ServiceOrderDao{
 
     @Override
     public int insert(ServiceOrderModel order) {
-        String sql = "INSERT INTO APP.ORDEM_SERVICO2(CLIENTE_ID, "
+        String sql = "INSERT INTO APP.ORDEM_SERVICO(CLIENTE_ID, "
                 + "TECNICO_ID, equipamento, defeito, "
                 + "servico, valor_total, status, date_os) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement st = null;
@@ -74,7 +75,7 @@ public class ServiceOrderDaoImpl implements ServiceOrderDao{
     @Override
     public int update(ServiceOrderModel order) {
         int linhaModificada = 0;
-        String sql = "UPDATE APP.ORDEM_SERVICO2 SET CLIENTE_ID = ?, "
+        String sql = "UPDATE APP.ORDEM_SERVICO SET CLIENTE_ID = ?, "
                 + "TECNICO_ID = ?, date_os = ?,"
                 + "equipamento = ?, defeito = ?, servico = ?, valor_total = ?,"
                 + "status = ? WHERE id_servico = ?";
@@ -104,7 +105,7 @@ public class ServiceOrderDaoImpl implements ServiceOrderDao{
 
     @Override
     public int delete(int id) {
-        var sql = "DELETE FROM APP.ORDEM_SERVICO2 WHERE id_servico = ?";
+        var sql = "DELETE FROM APP.ORDEM_SERVICO WHERE id_servico = ?";
         int modifiedLines = 0;
         
         PreparedStatement st = null;
@@ -128,7 +129,7 @@ public class ServiceOrderDaoImpl implements ServiceOrderDao{
 
     @Override
     public ServiceOrderModel selectById(int id) {
-        var sql = "SELECT a.*, c.*, u.*, o.* FROM APP.ORDEM_SERVICO2 AS o "
+        var sql = "SELECT a.*, c.*, u.*, o.* FROM APP.ORDEM_SERVICO AS o "
                 + "JOIN cliente AS c ON c.IDCLIENTE = o.CLIENTE_ID "
                 + "JOIN endereco AS a ON a.ID_ENDERECO = c.ENDERECO_IDENDERECO "
                 + "JOIN users AS u ON u.ID = o.TECNICO_ID "
@@ -181,7 +182,7 @@ public class ServiceOrderDaoImpl implements ServiceOrderDao{
                 obj.setEquipamento(rs.getString("EQUIPAMENTO"));
                 obj.setDefeito(rs.getString("DEFEITO"));
                 obj.setServicoRealizado(rs.getString("SERVICO"));
-                obj.setValor(Double.toString(rs.getDouble("VALOR_TOTAL")));
+                obj.setValor(String.valueOf(rs.getBigDecimal("VALOR_TOTAL").setScale(4, RoundingMode.HALF_EVEN)));
                 obj.setStatus(rs.getInt("STATUS"));
                 
                 //Relações entre os objetos
