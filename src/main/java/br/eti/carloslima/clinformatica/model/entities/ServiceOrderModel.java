@@ -45,7 +45,7 @@ public class ServiceOrderModel implements Serializable {
         this.tecnico = tecnico;
     }
 
-    public ServiceOrderModel(Integer type, Integer status, String equipamento, String defeito, String valor, ClientModel cliente, UserModel tecnico) {
+    public ServiceOrderModel(Integer status, String equipamento, String defeito, String valor, ClientModel cliente, UserModel tecnico) {
         setStatus(status);
         this.equipamento = equipamento;
         this.defeito = defeito;

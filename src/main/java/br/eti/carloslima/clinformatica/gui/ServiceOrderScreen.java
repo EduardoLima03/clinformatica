@@ -85,7 +85,6 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
         jLabel10 = new javax.swing.JLabel();
         btnSave = new javax.swing.JButton();
         btnPesquisa = new javax.swing.JButton();
-        btnEditar = new javax.swing.JButton();
         btnDeletar = new javax.swing.JButton();
         btnImprimir = new javax.swing.JButton();
         txtValorTotal = new javax.swing.JTextField();
@@ -217,7 +216,7 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
 
         jLabel10.setText("*Valor Total:");
 
-        btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/save.png"))); // NOI18N
+        btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/accept_page.png"))); // NOI18N
         btnSave.setText("Salvar");
         btnSave.setToolTipText("Salvar");
         btnSave.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -227,23 +226,13 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
             }
         });
 
-        btnPesquisa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/search2.png"))); // NOI18N
+        btnPesquisa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/search_page.png"))); // NOI18N
         btnPesquisa.setText("Pesquisar");
         btnPesquisa.setToolTipText("pesquisar");
         btnPesquisa.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnPesquisa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPesquisaActionPerformed(evt);
-            }
-        });
-
-        btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit.png"))); // NOI18N
-        btnEditar.setText("Editar");
-        btnEditar.setToolTipText("Editar");
-        btnEditar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnEditar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditarActionPerformed(evt);
             }
         });
 
@@ -257,14 +246,14 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
             }
         });
 
-        btnImprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Print.png"))); // NOI18N
+        btnImprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/print_1.png"))); // NOI18N
         btnImprimir.setText("Imprimir");
         btnImprimir.setToolTipText("Imprimir");
         btnImprimir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         txtValorTotal.setText("0");
 
-        btnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/new_page_document.png"))); // NOI18N
+        btnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/new_page.png"))); // NOI18N
         btnNovo.setText("Novo");
         btnNovo.setToolTipText("Nova Ordem de Serviço");
         btnNovo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -303,8 +292,6 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
                                 .addComponent(btnSave)
                                 .addGap(18, 18, 18)
                                 .addComponent(btnPesquisa)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnEditar)
                                 .addGap(18, 18, 18)
                                 .addComponent(btnDeletar)
                                 .addGap(18, 18, 18)
@@ -358,7 +345,6 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnSave)
                     .addComponent(btnPesquisa)
-                    .addComponent(btnEditar)
                     .addComponent(btnDeletar)
                     .addComponent(btnImprimir)
                     .addComponent(btnNovo))
@@ -389,7 +375,7 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
 
     private void txtPesquisaClienteKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisaClienteKeyReleased
         // Faz a pesquisa assim que é digitada alguma letra.
-        researchTable(txtPesquisaCliente.getText().toString());
+        researchTable(txtPesquisaCliente.getText());
     }//GEN-LAST:event_txtPesquisaClienteKeyReleased
 
     private void tblClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblClienteMouseClicked
@@ -398,7 +384,11 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tblClienteMouseClicked
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        salva();
+        if (txtNumService.getText().isEmpty()) {
+            salva();
+        } else {
+            UpdateOrderService();
+        }
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
@@ -414,11 +404,6 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
     private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
         deleteServiceOrder();
     }//GEN-LAST:event_btnDeletarActionPerformed
-
-    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        // TODO add your handling code here:
-        UpdateOrderService();
-    }//GEN-LAST:event_btnEditarActionPerformed
 
     /**
      * Limpa os campos de texto e os objetos.
@@ -620,7 +605,6 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDeletar;
-    private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnImprimir;
     private javax.swing.JButton btnNovo;
     private javax.swing.JButton btnPesquisa;
