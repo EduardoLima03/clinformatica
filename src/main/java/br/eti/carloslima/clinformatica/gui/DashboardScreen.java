@@ -59,10 +59,10 @@ public class DashboardScreen extends javax.swing.JInternalFrame {
         jPanel3 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         lblFaturamentoPendente = new javax.swing.JLabel();
-        pnBalancoSemanal = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         lblFaturamentoAtual = new javax.swing.JLabel();
+        pnBalancoSemanal = new javax.swing.JPanel();
         pnBalancoTrimestral = new javax.swing.JPanel();
 
         setClosable(true);
@@ -172,19 +172,6 @@ public class DashboardScreen extends javax.swing.JInternalFrame {
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
-        pnBalancoSemanal.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
-        javax.swing.GroupLayout pnBalancoSemanalLayout = new javax.swing.GroupLayout(pnBalancoSemanal);
-        pnBalancoSemanal.setLayout(pnBalancoSemanalLayout);
-        pnBalancoSemanalLayout.setHorizontalGroup(
-            pnBalancoSemanalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 488, Short.MAX_VALUE)
-        );
-        pnBalancoSemanalLayout.setVerticalGroup(
-            pnBalancoSemanalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 288, Short.MAX_VALUE)
-        );
-
         jPanel4.setBackground(new java.awt.Color(51, 51, 255));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -214,6 +201,19 @@ public class DashboardScreen extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(16, Short.MAX_VALUE))
+        );
+
+        pnBalancoSemanal.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        javax.swing.GroupLayout pnBalancoSemanalLayout = new javax.swing.GroupLayout(pnBalancoSemanal);
+        pnBalancoSemanal.setLayout(pnBalancoSemanalLayout);
+        pnBalancoSemanalLayout.setHorizontalGroup(
+            pnBalancoSemanalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 488, Short.MAX_VALUE)
+        );
+        pnBalancoSemanalLayout.setVerticalGroup(
+            pnBalancoSemanalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 288, Short.MAX_VALUE)
         );
 
         pnBalancoTrimestral.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -336,10 +336,23 @@ public class DashboardScreen extends javax.swing.JInternalFrame {
         
         Map<String, Integer> valores = new HashMap<>();
         
-        String[] semana1 = {primeiroDia.atStartOfDay().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), primeiroDia.plusDays(6).atStartOfDay().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))};
-        String[] semana2 = {primeiroDia.plusDays(7).atStartOfDay().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), primeiroDia.plusDays(7 + 6).atStartOfDay().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))};
-        String[] semana3 = {primeiroDia.plusDays(7 + 6).atStartOfDay().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), primeiroDia.plusDays(6 + 7 + 6).atStartOfDay().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))};
-        String[] semana4 = {primeiroDia.plusDays(6 + 7 + 6).atStartOfDay().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), primeiroDia.plusDays(6 + 7 + 6 + 6).atStartOfDay().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))};
+        String[] semana1 = {primeiroDia.atStartOfDay()
+                .format(DateTimeFormatter.ofPattern("yyyy-MM-dd")), 
+            primeiroDia.plusDays(6).atStartOfDay()
+                    .format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))};
+        String[] semana2 = {primeiroDia.plusDays(7)
+                .atStartOfDay()
+                .format(DateTimeFormatter.ofPattern("yyyy-MM-dd")), 
+            primeiroDia.plusDays(7 + 6).atStartOfDay()
+                    .format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))};
+        String[] semana3 = {primeiroDia.plusDays(7 + 6).atStartOfDay()
+                .format(DateTimeFormatter.ofPattern("yyyy-MM-dd")), 
+            primeiroDia.plusDays(6 + 7 + 6).atStartOfDay()
+                    .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))};
+        String[] semana4 = {primeiroDia.plusDays(6 + 7 + 6).atStartOfDay()
+                .format(DateTimeFormatter.ofPattern("yyyy-MM-dd")), 
+            primeiroDia.plusDays(6 + 7 + 6 + 6).atStartOfDay()
+                    .format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))};
         
         int quantidade1semana = graficoService.totalAttendancesOfTheMonth(semana1);
         int quantidade2semana = graficoService.totalAttendancesOfTheMonth(semana2);
@@ -521,6 +534,7 @@ public class DashboardScreen extends javax.swing.JInternalFrame {
            faturamentoTrimestral();
            balancoTrimestral(); 
         }
+        balancoSemanalAtual();
     }
     
     private String mes(int value){
