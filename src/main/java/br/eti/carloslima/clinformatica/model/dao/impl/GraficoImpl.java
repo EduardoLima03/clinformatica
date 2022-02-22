@@ -101,7 +101,7 @@ public class GraficoImpl implements GraficoDao{
      */
     @Override
     public int quantidadeDeRegistroPorTipo(String[] argumentos) {
-        var sql = "SELECT count(TIPO_SERVICE) FROM APP.ORDEM_SERVICO WHERE "
+        var sql = "SELECT count(ORDEM_SERVICO.STATUS) FROM APP.ORDEM_SERVICO WHERE "
                 + "date_os BETWEEN ? AND ? AND tipo_service = ?";
         PreparedStatement st = null;
         ResultSet rs = null;
@@ -139,7 +139,7 @@ public class GraficoImpl implements GraficoDao{
     @Override
     public double faturamentoMensal(String[] datas, int tipoDeServico) {
         var sql = "SELECT SUM(valor_total) FROM ordem_servico WHERE "
-                + "date_os BETWEEN ? AND ? AND tipo_service = ?";
+                + "date_os BETWEEN ? AND ? AND status = ?";
         double faturamento = 0;
        PreparedStatement st = null;
        ResultSet rs = null;

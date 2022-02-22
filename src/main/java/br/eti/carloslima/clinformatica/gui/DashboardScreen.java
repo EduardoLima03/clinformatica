@@ -331,12 +331,12 @@ public class DashboardScreen extends javax.swing.JInternalFrame {
     /*
         Automatiza os balanços atual, assim que a tela é criada
     */
-    LocalDateTime dateDoDia = LocalDateTime.now();
+    LocalDate dateDoDia = LocalDate.now();
     /**
      * 
      */
     private void balancoSemanalAtual(){
-        LocalDate primeiroDia = dateDoDia.with(TemporalAdjusters.lastDayOfMonth()).toLocalDate();
+        LocalDate primeiroDia = dateDoDia.with(TemporalAdjusters.lastDayOfMonth());
         
         Map<String, Integer> valores = new HashMap<>();
         
@@ -443,23 +443,23 @@ public class DashboardScreen extends javax.swing.JInternalFrame {
     private String primeiroDiaDoMes(int mes){
         return  dateDoDia.withMonth(mes).with(TemporalAdjusters
                 .firstDayOfMonth()).format(DateTimeFormatter
-                        .ofPattern("yyyy-MM-dd HH:mm:ss"));
+                        .ofPattern("yyyy-MM-dd"));
     }
     
     private String ultimoDiaDoMes(int mes){
         return  dateDoDia.withMonth(mes).with(TemporalAdjusters
                 .lastDayOfMonth()).format(DateTimeFormatter
-                        .ofPattern("yyyy-MM-dd HH:mm:ss"));
+                        .ofPattern("yyyy-MM-dd"));
     }
     
     private String primeiroDiaDoMes() {
         return dateDoDia.withMonth(dateDoDia.getMonthValue()).with(TemporalAdjusters.firstDayOfMonth()).format(DateTimeFormatter
-                .ofPattern("yyyy-MM-dd HH:mm:ss"));
+                .ofPattern("yyyy-MM-dd"));
     }
 
     private String ultimoDiaDoMes() {
         return dateDoDia.withMonth(dateDoDia.getMonthValue()).with(TemporalAdjusters.lastDayOfMonth()).format(DateTimeFormatter
-                .ofPattern("yyyy-MM-dd HH:mm:ss"));
+                .ofPattern("yyyy-MM-dd"));
     }
     
     /**
@@ -468,7 +468,7 @@ public class DashboardScreen extends javax.swing.JInternalFrame {
      */
     private Double faturamentoAtual(){
         String[] datas = {primeiroDiaDoMes(), ultimoDiaDoMes()};
-        var faturamentoAtual = graficoService.currentBilling(datas, 2);
+        var faturamentoAtual = graficoService.currentBilling(datas, 8);
         
         return faturamentoAtual;
     }
@@ -517,8 +517,8 @@ public class DashboardScreen extends javax.swing.JInternalFrame {
     
     private void initLabels(){
         lblFaturamentoAtual.setText(String.format("R$ %.2f", faturamentoAtual()));
-        lblFaturamentoPendente.setText(String.format("R$ %.2f", faturamentoPendente()));
-        registroAtualDosAtendimentos();
+        //lblFaturamentoPendente.setText(String.format("R$ %.2f", faturamentoPendente()));
+        //registroAtualDosAtendimentos();
     }
     
     private String mes(int value){
