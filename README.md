@@ -15,6 +15,9 @@ O programa tem o objetivo de gerenciar serviços de uma empresa especializada em
 
 ## Features
 
+### 1.3.3-beta
+- Correção na geração dos gráficos e campos informativos
+
 ### 1.3.2-beta
 - Modificações nos botões
 - Substituição do Double por BigDecimal
