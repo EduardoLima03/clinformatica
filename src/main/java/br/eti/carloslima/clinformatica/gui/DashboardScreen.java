@@ -34,10 +34,6 @@ public class DashboardScreen extends javax.swing.JInternalFrame {
         
         lblMesAtual.setText(mes(dateDoDia.getMonthValue()));
         
-        if(dateDoDia.getMonthValue() >= 3){
-           faturamentoTrimestral();
-           balancoTrimestral(); 
-        }
         
     }
 
@@ -386,9 +382,9 @@ public class DashboardScreen extends javax.swing.JInternalFrame {
         String[] dataoOrçamento = {primeiroDiaDoMes(), ultimoDiaDoMes(), "1"};
         String[] dataServico = {primeiroDiaDoMes(), ultimoDiaDoMes(), "2"};
         int quantidadeDeRegistroOrçamento = graficoService
-                .totalAttendancesOfTheMonth(dataoOrçamento);
+                .totalBudget(dataoOrçamento);
         int quantidadeDeRegistroServico = graficoService
-                .totalAttendancesOfTheMonth(dataoOrçamento);
+                .totalServices(dataoOrçamento);
         
         lblOrcamentosAtual.setText(Integer.toString(quantidadeDeRegistroOrçamento));
         lblServicosAtual.setText(Integer.toString(quantidadeDeRegistroServico));
@@ -468,13 +464,13 @@ public class DashboardScreen extends javax.swing.JInternalFrame {
      */
     private Double faturamentoAtual(){
         String[] datas = {primeiroDiaDoMes(), ultimoDiaDoMes()};
-        var faturamentoAtual = graficoService.currentBilling(datas, 8);
+        var faturamentoAtual = graficoService.monthlyInvoicingCompleted(datas);
         
         return faturamentoAtual;
     }
     private Double faturamentoPendente(){
         String[] datas = {primeiroDiaDoMes(), ultimoDiaDoMes()};
-        var faturamentoAtual = graficoService.currentBilling(datas, 1);
+        var faturamentoAtual = graficoService.pendingMonthlyInvoicing(datas);
         
         return faturamentoAtual;    
     }
@@ -490,10 +486,10 @@ public class DashboardScreen extends javax.swing.JInternalFrame {
         
         String[] antepenutimo = {primeiroDiaDoMes(dateDoDia.getMonthValue() - 2), ultimoDiaDoMes(dateDoDia.getMonthValue() - 2)};
         String[] penutimo = {primeiroDiaDoMes(dateDoDia.getMonthValue() - 1), ultimoDiaDoMes(dateDoDia.getMonthValue() - 1)};
-        double quantidadeAntepenutimoSe = graficoService.currentBilling(antepenutimo, 2);
-        double quantidadeAntepenutimoOr = graficoService.currentBilling(antepenutimo, 1);
-        double quantidadePenutimoSe = graficoService.currentBilling(penutimo, 2);        
-        double quantidadePenutimoOr = graficoService.currentBilling(penutimo, 1); 
+        double quantidadeAntepenutimoSe = graficoService.monthlyInvoicingCompleted(antepenutimo);
+        double quantidadeAntepenutimoOr = graficoService.monthlyInvoicingCompleted(antepenutimo);
+        double quantidadePenutimoSe = graficoService.monthlyInvoicingCompleted(penutimo);        
+        double quantidadePenutimoOr = graficoService.monthlyInvoicingCompleted(penutimo); 
         dcd.addValue(quantidadePenutimoOr, "Orçamentos", mes(dateDoDia.getMonthValue()-1));
         dcd.addValue(quantidadePenutimoSe, "Ordem de Serviços", mes(dateDoDia.getMonthValue()-1));
         dcd.addValue(quantidadeAntepenutimoSe, "Ordem de Serviços", mes(dateDoDia.getMonthValue()-2));
@@ -517,8 +513,14 @@ public class DashboardScreen extends javax.swing.JInternalFrame {
     
     private void initLabels(){
         lblFaturamentoAtual.setText(String.format("R$ %.2f", faturamentoAtual()));
-        //lblFaturamentoPendente.setText(String.format("R$ %.2f", faturamentoPendente()));
-        //registroAtualDosAtendimentos();
+        lblFaturamentoPendente.setText(String.format("R$ %.2f", faturamentoPendente()));
+        registroAtualDosAtendimentos();
+        
+        
+        if(dateDoDia.getMonthValue() >= 3){
+           faturamentoTrimestral();
+           balancoTrimestral(); 
+        }
     }
     
     private String mes(int value){

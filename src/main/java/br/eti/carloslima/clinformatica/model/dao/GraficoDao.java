@@ -6,9 +6,23 @@ package br.eti.carloslima.clinformatica.model.dao;
  * @author eduar
  */
 public interface GraficoDao {
-    int quantidadeDeOrdemDeServicoTotal();
-    int quantidadeDeOrdemDeServicoPorMes(String[] argumentos);
+    int totalDeServicos();
+    int totalDeAtendimentosNoMes(String[] argumentos);
     double valorSemTotalDeOrdemDeServicoSemLucroDoMes(String[] argumentos);
-    int quantidadeDeRegistroPorTipo(String[] argumentos);
-    double faturamentoMensal(String[] datas, int tipoDeServico);
+    int totalDeOrcamentoNoMes(String[] argumentos);
+    /**
+     * 
+     * @param argumentos Array de String contendo a data inical do mes e o dia final do mes
+     * @return Total de serviçoes que esta sendo realizado e esperando para iniciar
+     */
+    short totalDeServicosNoMes(String[] data);
+    /**
+     * 
+     * @param argumentos Array de String contendo a data inical do mes e o dia final do mes
+     * @return total de serviçoes concluido na data passada
+     */
+    short totalDeServicosConcluidoNoMes(String[] argumentos);
+    double faturamentoMensalPedente(String[] datas);
+    
+    double faturamentoMensalConcluido(String[] data);
 }

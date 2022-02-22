@@ -14,10 +14,10 @@ public enum ServiceSituation {
     APROVADO(2),
     EM_SERVICO(3),
     AGUARDANDO_PEÇA(4),
-    ORÇAMENTO_VENCIDO(5),
-    CANCELADO(6),
-    CONCLUIDO(7),
-    ENTREGUE(8);
+    CONCLUIDO(5),
+    ENTREGUE(6),
+    ORÇAMENTO_VENCIDO(7),
+    CANCELADO(8);
     
     private int code;
 

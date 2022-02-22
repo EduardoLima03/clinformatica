@@ -1,4 +1,3 @@
-
 package br.eti.carloslima.clinformatica.model.dao.impl;
 
 import br.eti.carloslima.clinformatica.db.Db;
@@ -14,8 +13,8 @@ import java.sql.Statement;
  *
  * @author eduar
  */
-public class GraficoImpl implements GraficoDao{
-    
+public class GraficoImpl implements GraficoDao {
+
     private Connection conn = null;
 
     public GraficoImpl(Connection conn) {
@@ -28,7 +27,7 @@ public class GraficoImpl implements GraficoDao{
      * @return Quantidade de registro em Int
      */
     @Override
-    public int quantidadeDeOrdemDeServicoTotal() {
+    public int totalDeServicos() {
         var sql = "SELECT COUNT(id_servico) FROM APP.ORDEM_SERVICO";
         var quantidadeDeRegistro = 0;
 
@@ -53,13 +52,13 @@ public class GraficoImpl implements GraficoDao{
     }
 
     /**
-     * Modelo de String as ser passada '2021-12-01 00:00:00'
+     * Modelo de String as ser passada '2021-12-01'
      *
      * @param argumentos
      * @return
      */
     @Override
-    public int quantidadeDeOrdemDeServicoPorMes(String[] argumentos) {
+    public int totalDeAtendimentosNoMes(String[] argumentos) {
         var sql = "SELECT count(date_os) FROM APP.ORDEM_SERVICO WHERE date_os BETWEEN ? AND ?";
         var quantidadeDeRegistroNoMes = 0;
 
@@ -87,22 +86,17 @@ public class GraficoImpl implements GraficoDao{
         return quantidadeDeRegistroNoMes;
     }
 
-    @Override
-    public double valorSemTotalDeOrdemDeServicoSemLucroDoMes(String[] argumentos) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
     /**
-     * Pesquica a quantidate de atendimento sobre um tipo especifico
-     * 1 - para orçamentos
-     * 2 - Ordem de Serviço
+     * Pesquica a quantidate de atendimento sobre um tipo especifico 1 - para
+     * orçamentos 2 - Ordem de Serviço
+     *
      * @param argumentos data inicial, data final, tipo de atendimento
      * @return Int 0 para erro ou não ter encontrado nada
      */
     @Override
-    public int quantidadeDeRegistroPorTipo(String[] argumentos) {
+    public int totalDeOrcamentoNoMes(String[] argumentos) {
         var sql = "SELECT count(ORDEM_SERVICO.STATUS) FROM APP.ORDEM_SERVICO WHERE "
-                + "date_os BETWEEN ? AND ? AND tipo_service = ?";
+                + "date_os BETWEEN ? AND ? AND STATUS = 1";
         PreparedStatement st = null;
         ResultSet rs = null;
         int quantidadeDeRegistros = 0;
@@ -111,7 +105,6 @@ public class GraficoImpl implements GraficoDao{
             st = conn.prepareStatement(sql);
             st.setString(1, argumentos[0]);
             st.setString(2, argumentos[1]);
-            st.setInt(3, Integer.parseInt(argumentos[2]));
 
             rs = st.executeQuery();
 
@@ -120,7 +113,7 @@ public class GraficoImpl implements GraficoDao{
             }
 
         } catch (SQLException ex) {
-           
+
         } finally {
             Db.closeStatement(st);
             Db.closeResultSet(rs);
@@ -132,38 +125,130 @@ public class GraficoImpl implements GraficoDao{
 
     /**
      * Realiza a consulta do faturamento atual
+     *
      * @param datas data Inicial e data final do mes
      * @param tipoDeServico tipo Orçamento ou Ordem de Serviço
-     * @return double com o valor da soma de todos os serviços do periodo e o tipo escolhido 
+     * @return double com o valor da soma de todos os serviços do periodo e o
+     * tipo escolhido
      */
     @Override
-    public double faturamentoMensal(String[] datas, int tipoDeServico) {
+    public double faturamentoMensalPedente(String[] datas) {
         var sql = "SELECT SUM(valor_total) FROM ordem_servico WHERE "
-                + "date_os BETWEEN ? AND ? AND status = ?";
+                + "date_os BETWEEN ? AND ? AND status BETWEEN 1 AND 5";
         double faturamento = 0;
-       PreparedStatement st = null;
-       ResultSet rs = null;
-       
+        PreparedStatement st = null;
+        ResultSet rs = null;
+
         try {
             st = conn.prepareStatement(sql);
             st.setString(1, datas[0]);
             st.setString(2, datas[1]);
-            st.setInt(3, tipoDeServico);
-            
+
             rs = st.executeQuery();
-            
-            if(rs.next())
+
+            if (rs.next()) {
                 faturamento = rs.getDouble("1");
-            
+            }
+
         } catch (SQLException ex) {
-           throw new DbException(ex.getMessage());
-        }finally{
+            throw new DbException(ex.getMessage());
+        } finally {
             Db.closeStatement(st);
             Db.closeResultSet(rs);
         }
-       
-       
-       return faturamento;
-       
+
+        return faturamento;
+
     }
+
+    @Override
+    public short totalDeServicosNoMes(String[] argumentos) {
+        var sql = "SELECT COUNT(*) AS quantidade FROM APP.ORDEM_SERVICO WHERE STATUS BETWEEN 2 AND 5 AND DATE_OS ? AND ?";
+        short total = 0;
+        PreparedStatement st = null;
+        ResultSet rs = null;
+
+        try {
+            st = conn.prepareStatement(sql);
+            st.setString(1, argumentos[0]);
+            st.setString(2, argumentos[1]);
+
+            rs = st.executeQuery();
+
+            if (rs.next()) {
+                total = rs.getShort("1");
+            }
+
+        } catch (SQLException ex) {
+            throw new DbException(ex.getMessage());
+        } finally {
+            Db.closeResultSet(rs);
+            Db.closeStatement(st);
+        }
+
+        return total;
+    }
+
+    @Override
+    public short totalDeServicosConcluidoNoMes(String[] argumentos) {
+        var sql = "SELECT COUNT(*) FROM APP.ORDEM_SERVICO WHERE status BETWEEN 5 AND 6 AND date_os BETWEEN ? AND ?";
+        short total = 0;
+        PreparedStatement st = null;
+        ResultSet rs = null;
+
+        try {
+            st = conn.prepareStatement(sql);
+            st.setString(1, argumentos[0]);
+            st.setString(2, argumentos[1]);
+
+            rs = st.executeQuery();
+
+            if (rs.next()) {
+                total = rs.getShort("1");
+            }
+
+        } catch (SQLException ex) {
+            throw new DbException(ex.getMessage());
+        } finally {
+            Db.closeResultSet(rs);
+            Db.closeStatement(st);
+        }
+
+        return total;
+    }
+
+    @Override
+    public double faturamentoMensalConcluido(String[] data) {
+        var sql = "SELECT SUM(valor_total) FROM ordem_servico WHERE "
+                + "date_os BETWEEN ? AND ? AND status = 6";
+        double faturamento = 0;
+        PreparedStatement st = null;
+        ResultSet rs = null;
+
+        try {
+            st = conn.prepareStatement(sql);
+            st.setString(1, data[0]);
+            st.setString(2, data[1]);
+
+            rs = st.executeQuery();
+
+            if (rs.next()) {
+                faturamento = rs.getDouble("1");
+            }
+
+        } catch (SQLException ex) {
+            throw new DbException(ex.getMessage());
+        } finally {
+            Db.closeStatement(st);
+            Db.closeResultSet(rs);
+        }
+
+        return faturamento;
+    }
+
+    @Override
+    public double valorSemTotalDeOrdemDeServicoSemLucroDoMes(String[] argumentos) {
+        throw new UnsupportedOperationException("Not supported yet."); 
+    }
+
 }
