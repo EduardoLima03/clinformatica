@@ -28,10 +28,14 @@ import java.time.format.DateTimeFormatter;
  */
 public class ImpressaoImpl implements Impressao {
 
+    public ImpressaoImpl() {
+    }
+    
+
     @Override
     public void orcamento(ServiceOrderModel obj) {
         final String PATH = "D:\\eduar\\Workspace\\Java\\itextTeste\\pdf\\Invoice.pdf";
-        final String IMG1 = "./src/main/resources/images/login.jpg";
+        final String IMG1 = "./src/main/resources/images/login.png";
         PdfWriter pdfWriter;
         try {
             pdfWriter = new PdfWriter(PATH);

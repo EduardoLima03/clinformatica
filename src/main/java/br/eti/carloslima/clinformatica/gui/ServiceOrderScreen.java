@@ -11,7 +11,8 @@ import br.eti.carloslima.clinformatica.model.entities.UserModel;
 import br.eti.carloslima.clinformatica.model.entities.enums.ServiceSituation;
 import br.eti.carloslima.clinformatica.model.services.ClientService;
 import br.eti.carloslima.clinformatica.model.services.ServiceOrderService;
-import java.math.BigDecimal;
+import br.eti.carloslima.clinformatica.pdf.Impressao;
+import br.eti.carloslima.clinformatica.pdf.ImpressaoImpl;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -41,10 +42,11 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
 
     DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
+    private Impressao impl = new ImpressaoImpl();
+
     public ServiceOrderScreen() {
         initComponents();
         getDate();
-
         txtNomeTecnico.setText(user.getNome());
     }
 
@@ -250,6 +252,11 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
         btnImprimir.setText("Imprimir");
         btnImprimir.setToolTipText("Imprimir");
         btnImprimir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnImprimir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImprimirActionPerformed(evt);
+            }
+        });
 
         txtValorTotal.setText("0");
 
@@ -405,6 +412,19 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
         deleteServiceOrder();
     }//GEN-LAST:event_btnDeletarActionPerformed
 
+    private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
+        if (statusSelected() == 1) {
+            populateOrder();
+            try {
+                impl.orcamento(order);
+
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage(), ex.getLocalizedMessage(), JOptionPane.ERROR_MESSAGE);
+            }
+        }
+
+    }//GEN-LAST:event_btnImprimirActionPerformed
+
     /**
      * Limpa os campos de texto e os objetos.
      */
@@ -528,9 +548,9 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
             this.order = new ServiceOrderModel();
 
             this.order.setDataSerOrder(LocalDate.now());
-            this.order.setEquipamento(txtEquipamento.getText().toString());
-            this.order.setDefeito(txtDefeito.getText().toString());
-            this.order.setServicoRealizado(txtServico.getText().toString());
+            this.order.setEquipamento(txtEquipamento.getText());
+            this.order.setDefeito(txtDefeito.getText());
+            this.order.setServicoRealizado(txtServico.getText());
             this.order.setValor(txtValorTotal.getText().contains(",")
                     ? txtValorTotal.getText().replace(',', '.')
                     : txtValorTotal.getText());
@@ -541,16 +561,16 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
             this.order.setTecnico(user);
 
         } else {
-            this.order.setEquipamento(txtEquipamento.getText().toString());
-            this.order.setDefeito(txtDefeito.getText().toString());
-            this.order.setServicoRealizado(txtServico.getText().toString());
-            this.order.setValor(txtValorTotal.getText().toString());
+            this.order.setEquipamento(txtEquipamento.getText());
+            this.order.setDefeito(txtDefeito.getText());
+            this.order.setServicoRealizado(txtServico.getText());
+            this.order.setValor(txtValorTotal.getText());
             this.order.setStatus(statusSelected());
         }
 
     }
 
-    private int statusSelected() {
+    private short statusSelected() {
         switch (cbStatus.getSelectedItem().toString()) {
             case "ORÇAMENTO":
                 return 1;
@@ -591,10 +611,10 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
     }
 
     private void deleteServiceOrder() {
-        if (txtNumService.getText().toString().isEmpty()) {
+        if (txtNumService.getText().isEmpty()) {
             JOptionPane.showMessageDialog(rootPane, "Campo de numero de registro vazio");
         } else {
-            var confirmacao = oService.erasingServiceOrder(Integer.parseInt(txtNumService.getText().toString()));
+            var confirmacao = oService.erasingServiceOrder(Integer.parseInt(txtNumService.getText()));
 
             if (confirmacao > 0) {
                 JOptionPane.showMessageDialog(null, "Ordem deletado com sucesso!");
