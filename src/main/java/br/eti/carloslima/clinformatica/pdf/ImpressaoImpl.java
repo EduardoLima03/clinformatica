@@ -4,6 +4,7 @@
  */
 package br.eti.carloslima.clinformatica.pdf;
 
+import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.colors.DeviceRgb;
 import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.kernel.pdf.PdfDocument;
@@ -11,13 +12,13 @@ import com.itextpdf.layout.borders.Border;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Cell;
+import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.properties.TextAlignment;
-import com.itextpdf.layout.properties.VerticalAlignment;
+import com.itextpdf.layout.properties.UnitValue;
 import java.io.FileNotFoundException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.net.MalformedURLException;
 
 /**
  *
@@ -27,10 +28,11 @@ public class ImpressaoImpl implements Impressao{
 
     @Override
     public void orcamento() {
-        String path = "D:\\eduar\\Workspace\\Java\\itextTeste\\pdf\\Invoice.pdf";
+        final String PATH = "D:\\eduar\\Workspace\\Java\\itextTeste\\pdf\\Invoice.pdf";
+        final String IMG1 = "./src/main/resources/images/login.jpg";
         PdfWriter pdfWriter;
         try {
-            pdfWriter = new PdfWriter(path);
+            pdfWriter = new PdfWriter(PATH);
             PdfDocument pdfDocument = new PdfDocument(pdfWriter);
         Document document = new Document(pdfDocument);
         //tamanho da folha
@@ -43,19 +45,11 @@ public class ImpressaoImpl implements Impressao{
         float columnWidth[] = {col, col};
 
         Table table = new Table(columnWidth);
-        Paragraph p = new Paragraph("ENVOICE");
 
         table.setBackgroundColor(backgorundColor)
                 .setFontColor(new DeviceRgb(255, 255, 255));
-        table.addCell(new Cell().add(p)
-                .setTextAlignment(TextAlignment.CENTER)
-                .setVerticalAlignment(VerticalAlignment.MIDDLE)
-                .setMarginTop(30f)
-                .setMarginBottom(col)
-                .setFontSize(30f)
-                .setBorder(Border.NO_BORDER)
-        );
-        table.addCell(new Cell().add(new Paragraph("Hospital de Tal\n"
+        table.addCell(createImageCell(IMG1));
+        table.addCell(new Cell().add(new Paragraph("CL Informática\n"
                 + "(00) 90000-0000\nRua sem nome, 01, Bairro - Cidade, estado\n"
                 + "CNPJ: 00.000.000/0000-00"))
                 .setTextAlignment(TextAlignment.LEFT)
@@ -76,6 +70,10 @@ public class ImpressaoImpl implements Impressao{
                 .setBackgroundColor(backgorundColor)
                 .setTextAlignment(TextAlignment.CENTER)
         );
+        
+        /*
+        A data é recebida por palamentro
+        */
         tableCriente.addCell(new Cell().add(new Paragraph(" ____/____/_______")));
 
         //Linha 2
@@ -83,6 +81,7 @@ public class ImpressaoImpl implements Impressao{
                 .setBackgroundColor(backgorundColor)
                 .setTextAlignment(TextAlignment.CENTER)
         );
+        //nome e cpf do cliente
         tableCriente.addCell(new Cell().add(new Paragraph())
         );
 
@@ -194,6 +193,8 @@ public class ImpressaoImpl implements Impressao{
         document.close();
         } catch (FileNotFoundException ex) {
             throw new ImpressaoExeception(ex.getMessage());
+        } catch (MalformedURLException ex) {
+            throw new ImpressaoExeception(ex.getMessage());
         }
         
     }
@@ -208,4 +209,11 @@ public class ImpressaoImpl implements Impressao{
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
+    private Cell createImageCell(String path) throws MalformedURLException{
+        Image img = new Image(ImageDataFactory.create(path));
+        img.setWidth(UnitValue.createPercentValue(100));
+        Cell cell = new Cell().add(img);
+        cell.setBorder(Border.NO_BORDER);
+        return cell;
+    }
 }
