@@ -4,13 +4,15 @@
  */
 package br.eti.carloslima.clinformatica.pdf;
 
+import br.eti.carloslima.clinformatica.model.entities.ServiceOrderModel;
+
 /**
  *
  * @author eduar
  */
 public interface Impressao {
 
-    public void orcamento();
+    public void orcamento(ServiceOrderModel obj);
 
     public void garantia();
 

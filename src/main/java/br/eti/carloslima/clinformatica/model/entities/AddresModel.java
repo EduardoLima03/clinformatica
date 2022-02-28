@@ -136,7 +136,7 @@ public class AddresModel {
 
     @Override
     public String toString() {
-        return "AddresModel{" + "id=" + id + ", logradouro=" + logradouro + ", numero=" + numero + ", complemento=" + complemento + ", bairro=" + bairro + ", cep=" + cep + '}';
+        return logradouro + ", " + numero + " - " + bairro;
     }
 
     
