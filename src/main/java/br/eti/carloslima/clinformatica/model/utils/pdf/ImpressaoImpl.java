@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package br.eti.carloslima.clinformatica.pdf;
+package br.eti.carloslima.clinformatica.model.utils.pdf;
 
 import br.eti.carloslima.clinformatica.model.entities.ServiceOrderModel;
 import com.itextpdf.io.image.ImageDataFactory;
@@ -92,7 +92,7 @@ public class ImpressaoImpl implements Impressao {
             );
             //nome e cpf do cliente
             tableCriente.addCell(new Cell(2, 3).add(new Paragraph(
-                    obj.getCliente().getNome() + "CPF: "
+                    obj.getCliente().getNome() + " CPF: "
                     + obj.getCliente().getCpf()
             )
             )
@@ -213,6 +213,8 @@ public class ImpressaoImpl implements Impressao {
             throw new ImpressaoExeception(ex.getMessage());
         } catch (MalformedURLException ex) {
             throw new ImpressaoExeception(ex.getMessage());
+        }catch(NullPointerException ex){
+            throw new ImpressaoExeception("Ordem de serviço não esta salvo");
         }
 
     }

@@ -5,6 +5,7 @@
  */
 package br.eti.carloslima.clinformatica.model.entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -13,7 +14,7 @@ import java.util.Objects;
  *
  * @author eduar
  */
-public class AddresModel {
+public class AddresModel implements Serializable{
     private Integer id;
     private String logradouro;
     private String numero;

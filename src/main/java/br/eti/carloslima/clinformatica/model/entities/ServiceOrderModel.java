@@ -10,6 +10,8 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -29,8 +31,10 @@ public class ServiceOrderModel implements Serializable {
     //depedencias
     private ClientModel cliente;
     private UserModel tecnico;
+    private List<ItemService> itens;
 
     public ServiceOrderModel() {
+        this.itens = new ArrayList<>();
     }
 
     public ServiceOrderModel(Integer numSerOrder, LocalDate dataSerOrder, Integer status, String equipamento, String defeito, String servicoRealizado, String valor, ClientModel cliente, UserModel tecnico) {
@@ -43,6 +47,7 @@ public class ServiceOrderModel implements Serializable {
         setValor(valor);
         this.cliente = cliente;
         this.tecnico = tecnico;
+        this.itens = new ArrayList<>();
     }
 
     public ServiceOrderModel(Integer status, String equipamento, String defeito, String valor, ClientModel cliente, UserModel tecnico) {
@@ -52,6 +57,7 @@ public class ServiceOrderModel implements Serializable {
         setValor(valor);
         this.cliente = cliente;
         this.tecnico = tecnico;
+        this.itens = new ArrayList<>();
     }
 
     public Integer getNumSerOrder() {
@@ -124,6 +130,13 @@ public class ServiceOrderModel implements Serializable {
 
     public void setTecnico(UserModel tecnico) {
         this.tecnico = tecnico;
+    }
+
+    public void setItens(ItemService item) {
+        this.itens.add(item);
+    }
+    public List<ItemService> getItens(){
+        return this.itens;
     }
 
     @Override
