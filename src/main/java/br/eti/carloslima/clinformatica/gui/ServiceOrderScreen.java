@@ -42,6 +42,7 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
 
     //recupera o cliente para salva na ordem
     private ClientModel client;
+    /** objeto que será usado para popular a tabela de clientes*/
     private List<ClientModel> objs;
 
     DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -106,9 +107,9 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
         txtValor = new javax.swing.JTextField();
         btnAdd = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbProduto = new javax.swing.JTable();
         jLabel15 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        tfQtd = new javax.swing.JTextField();
 
         setClosable(true);
         setIconifiable(true);
@@ -313,7 +314,7 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbProduto.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -324,11 +325,11 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
                 "EAN", "Descrição", "Quantidade", "Valor"
             }
         ));
-        jScrollPane4.setViewportView(jTable1);
+        jScrollPane4.setViewportView(tbProduto);
 
         jLabel15.setText("Qtd:");
 
-        jTextField1.setText("0");
+        tfQtd.setText("0");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -348,7 +349,7 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel15)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(tfQtd, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel12)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -375,7 +376,7 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
                     .addComponent(jLabel13)
                     .addComponent(btnAdd)
                     .addComponent(jLabel15)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfQtd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -535,8 +536,9 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnImprimirActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        addItem();
-        addTextArea();
+        /*addItem();
+        addTextArea();*/
+        setProduto(Integer.parseInt(tfQtd.getText().toString()), txtValor.getText().toString());
     }//GEN-LAST:event_btnAddActionPerformed
 
     /**
@@ -759,23 +761,23 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
         }
 
     }
-    
+
     private void valorTotal() {
 
         BigDecimal valor = new BigDecimal("0");
-        for(ItemService item : list){
+        for (ItemService item : list) {
             valor.add(item.getValorTotal());
             System.out.println("valor na lista: " + item.getValorTotal());
             System.out.println("valor dentro do for: " + valor);
         }
-        System.out.println("Valor total: "+ valor);
+        System.out.println("Valor total: " + valor);
     }
 
     private void addTextArea() {
         /*if (order == null) {
             populateOrder();
         }*/
-      
+
         limparTextAria();
         for (ItemService item : list) {
             txtService.append(item.toString() + "\n");
@@ -788,6 +790,33 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
         txtService.selectAll();
         txtService.replaceSelection("");
     }
+    /***
+     * codigo inicial para popular a Tabela de produtos
+     * o produto ser inserido manualmente nesse priemeiro momento
+     */
+    
+    private List<ProdutosTeste> listProds = new ArrayList<ProdutosTeste>();
+    private ProdutosTeste pro;
+    
+    private void setProduto(int qtd, String valor){
+        pro = new ProdutosTeste(qtd, valor);
+        listProds.add(pro);  
+        intTable();
+    }
+    
+    private void intTable (){
+        DefaultTableModel tbModel = (DefaultTableModel) tbProduto.getModel();
+        tbModel.setNumRows(0);
+        BigDecimal valorTotal = new BigDecimal(0);
+        for(ProdutosTeste p : listProds){
+            tbModel.insertRow(tbModel.getRowCount(), new Object[]{
+                "238987465", "Teste", p.getQuantidade(), p.getValor()
+            });
+            valorTotal = valorTotal.add(p.getValorTotal());
+        }
+        txtValorTotal.setText(valorTotal.toString());
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
@@ -818,11 +847,11 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JPanel pnRegistroAtendimento;
     private javax.swing.JPanel pnRegistroCliente;
+    private javax.swing.JTable tbProduto;
     private javax.swing.JTable tblCliente;
+    private javax.swing.JTextField tfQtd;
     private javax.swing.JTextField txtDateService;
     private javax.swing.JTextField txtDefeito;
     private javax.swing.JTextField txtDescricao;
@@ -837,5 +866,71 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtValorTotal;
     private javax.swing.ButtonGroup typeServiceGroup;
     // End of variables declaration//GEN-END:variables
+
+}
+
+class ProdutosTeste {
+
+    private String eam;
+    private String descricao;
+    private int quantidade;
+    private BigDecimal valor;
+
+    public ProdutosTeste() {
+    }
+
+    public ProdutosTeste(String eam, String descricao, int quantidade, BigDecimal valor) {
+        this.eam = eam;
+        this.descricao = descricao;
+        this.quantidade = quantidade;
+        this.valor = valor;
+    }
+
+    public ProdutosTeste(String descricao, int quantidade, BigDecimal valor) {
+        this.descricao = descricao;
+        this.quantidade = quantidade;
+        this.valor = valor;
+    }
+
+    public ProdutosTeste(int quantidade, String valor) {
+        this.quantidade = quantidade;
+        setValor(valor);
+    }
+    
+    public String getEam() {
+        return eam;
+    }
+
+    public void setEam(String eam) {
+        this.eam = eam;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public int getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
+    }
+
+    public BigDecimal getValor() {
+        return valor;
+    }
+
+    public void setValor(String value) {
+        this.valor = new BigDecimal(value);
+    }
+    
+    public BigDecimal getValorTotal(){
+        return valor.multiply(new BigDecimal(quantidade));
+    }
 
 }
