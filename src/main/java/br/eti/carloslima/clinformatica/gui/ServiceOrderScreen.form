@@ -534,7 +534,7 @@
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="txtQtd" min="-2" pref="100" max="-2" attributes="0"/>
+                                  <Component id="txtEan" min="-2" pref="100" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
@@ -565,7 +565,7 @@
                           <Component id="jLabel14" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="txtQtd" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtEan" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel12" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="txtValor" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel11" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -594,7 +594,7 @@
                     <Property name="text" type="java.lang.String" value="EAN:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txtQtd">
+                <Component class="javax.swing.JTextField" name="txtEan">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="1"/>
                   </Properties>

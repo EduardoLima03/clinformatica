@@ -20,6 +20,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -42,7 +43,9 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
 
     //recupera o cliente para salva na ordem
     private ClientModel client;
-    /** objeto que será usado para popular a tabela de clientes*/
+    /**
+     * objeto que será usado para popular a tabela de clientes
+     */
     private List<ClientModel> objs;
 
     DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -100,7 +103,7 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        txtQtd = new javax.swing.JTextField();
+        txtEan = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         txtDescricao = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
@@ -298,7 +301,7 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
 
         jLabel11.setText("EAN:");
 
-        txtQtd.setText("1");
+        txtEan.setText("1");
 
         jLabel13.setText("Descrição:");
 
@@ -341,7 +344,7 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtQtd, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtEan, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel13)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -368,7 +371,7 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
                 .addComponent(jLabel14)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtQtd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtEan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel12)
                     .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel11)
@@ -538,7 +541,7 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         /*addItem();
         addTextArea();*/
-        setProduto(Integer.parseInt(tfQtd.getText().toString()), txtValor.getText().toString());
+        setProduto(txtEan.getText(), txtDescricao.getText() , Integer.parseInt(tfQtd.getText().toString()), txtValor.getText().toString());
     }//GEN-LAST:event_btnAddActionPerformed
 
     /**
@@ -742,11 +745,11 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
 
     private void addItem() {
         ItemService is = new ItemService();
-        if (txtQtd.getText().isEmpty() || txtDescricao.getText().isEmpty() || txtValor.getText().isEmpty()) {
+        if (txtEan.getText().isEmpty() || txtDescricao.getText().isEmpty() || txtValor.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Os campos de ser preenchidos");
         } else {
             try {
-                is.setQuantidade(Short.parseShort(txtQtd.getText()));
+                is.setQuantidade(Short.parseShort(txtEan.getText()));
                 is.setDescricao(txtDescricao.getText());
                 is.setValor(txtValor.getText().contains(",")
                         ? txtValor.getText().replace(',', '.')
@@ -790,33 +793,46 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
         txtService.selectAll();
         txtService.replaceSelection("");
     }
-    /***
-     * codigo inicial para popular a Tabela de produtos
-     * o produto ser inserido manualmente nesse priemeiro momento
+    /**
+     * *
+     * codigo inicial para popular a Tabela de produtos o produto ser inserido
+     * manualmente nesse priemeiro momento
      */
-    
+
     private List<ProdutosTeste> listProds = new ArrayList<ProdutosTeste>();
     private ProdutosTeste pro;
-    
-    private void setProduto(int qtd, String valor){
-        pro = new ProdutosTeste(qtd, valor);
-        listProds.add(pro);  
+
+    private void setProduto(String ean, String des, int qtd, String valor) {
+        pro = new ProdutosTeste(ean, des, qtd, valor);
+        if (pro.getQuantidade() == 0) {
+            removeItem(pro);
+        } else {
+            listProds.add(pro);
+        }
+
         intTable();
     }
-    
-    private void intTable (){
+
+    /**
+     * Adiciona o item na tabela
+     */
+    private void intTable() {
         DefaultTableModel tbModel = (DefaultTableModel) tbProduto.getModel();
         tbModel.setNumRows(0);
         BigDecimal valorTotal = new BigDecimal(0);
-        for(ProdutosTeste p : listProds){
+        for (ProdutosTeste p : listProds) {
             tbModel.insertRow(tbModel.getRowCount(), new Object[]{
-                "238987465", "Teste", p.getQuantidade(), p.getValor()
+                p.getEam(), p.getDescricao(), p.getQuantidade(), p.getValor()
             });
             valorTotal = valorTotal.add(p.getValorTotal());
         }
         txtValorTotal.setText(valorTotal.toString());
     }
-    
+
+    private void removeItem(ProdutosTeste obj) {
+        listProds.remove(obj);
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
@@ -855,12 +871,12 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtDateService;
     private javax.swing.JTextField txtDefeito;
     private javax.swing.JTextField txtDescricao;
+    private javax.swing.JTextField txtEan;
     private javax.swing.JTextField txtEquipamento;
     private javax.swing.JTextField txtIdCliente;
     private javax.swing.JTextField txtNomeTecnico;
     private javax.swing.JTextField txtNumService;
     private javax.swing.JTextField txtPesquisaCliente;
-    private javax.swing.JTextField txtQtd;
     private javax.swing.JTextArea txtService;
     private javax.swing.JTextField txtValor;
     private javax.swing.JTextField txtValorTotal;
@@ -879,11 +895,11 @@ class ProdutosTeste {
     public ProdutosTeste() {
     }
 
-    public ProdutosTeste(String eam, String descricao, int quantidade, BigDecimal valor) {
+    public ProdutosTeste(String eam, String descricao, int quantidade, String valor) {
         this.eam = eam;
         this.descricao = descricao;
         this.quantidade = quantidade;
-        this.valor = valor;
+        setValor(valor);
     }
 
     public ProdutosTeste(String descricao, int quantidade, BigDecimal valor) {
@@ -896,7 +912,7 @@ class ProdutosTeste {
         this.quantidade = quantidade;
         setValor(valor);
     }
-    
+
     public String getEam() {
         return eam;
     }
@@ -928,9 +944,30 @@ class ProdutosTeste {
     public void setValor(String value) {
         this.valor = new BigDecimal(value);
     }
-    
-    public BigDecimal getValorTotal(){
+
+    public BigDecimal getValorTotal() {
         return valor.multiply(new BigDecimal(quantidade));
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 47 * hash + Objects.hashCode(this.eam);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final ProdutosTeste other = (ProdutosTeste) obj;
+        return Objects.equals(this.eam, other.eam);
+    }
 }
