@@ -7,14 +7,17 @@ package br.eti.carloslima.clinformatica.gui;
 
 import br.eti.carloslima.clinformatica.model.entities.ClientModel;
 import br.eti.carloslima.clinformatica.model.entities.ItemService;
+import br.eti.carloslima.clinformatica.model.entities.Produto;
 import br.eti.carloslima.clinformatica.model.entities.ServiceOrderModel;
 import br.eti.carloslima.clinformatica.model.entities.UserModel;
 import br.eti.carloslima.clinformatica.model.entities.enums.ServiceSituation;
 import br.eti.carloslima.clinformatica.model.services.ClientService;
+import br.eti.carloslima.clinformatica.model.services.ProdutoService;
 import br.eti.carloslima.clinformatica.model.services.ServiceOrderService;
 import br.eti.carloslima.clinformatica.model.utils.pdf.Impressao;
 import br.eti.carloslima.clinformatica.model.utils.pdf.ImpressaoExeception;
 import br.eti.carloslima.clinformatica.model.utils.pdf.ImpressaoImpl;
+import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -35,6 +38,8 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
      */
     private ClientService cService = new ClientService();
     private ServiceOrderService oService = new ServiceOrderService();
+    private ProdutoService pService = new ProdutoService();
+            
 
     private ServiceOrderModel order = null;
 
@@ -302,6 +307,11 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
         jLabel11.setText("EAN:");
 
         txtEan.setText("1");
+        txtEan.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtEanKeyPressed(evt);
+            }
+        });
 
         jLabel13.setText("Descrição:");
 
@@ -361,7 +371,7 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
                         .addComponent(btnAdd))
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 896, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel14))
-                .addContainerGap(10, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -543,6 +553,12 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
         addTextArea();*/
         setProduto(txtEan.getText(), txtDescricao.getText() , Integer.parseInt(tfQtd.getText().toString()), txtValor.getText().toString());
     }//GEN-LAST:event_btnAddActionPerformed
+
+    private void txtEanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEanKeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            pesquisarProduto(Integer.parseInt(txtEan.getText()));
+        }
+    }//GEN-LAST:event_txtEanKeyPressed
 
     /**
      * Limpa os campos de texto e os objetos.
@@ -882,6 +898,14 @@ public class ServiceOrderScreen extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtValorTotal;
     private javax.swing.ButtonGroup typeServiceGroup;
     // End of variables declaration//GEN-END:variables
+
+    private void pesquisarProduto(int value) {
+        Produto obj ;
+        
+        obj = pService.selecionar((short) value);
+        txtDescricao.setText(obj.getDescricao());
+        txtValor.setText(obj.getPreco().toString());
+    }
 
 }
 

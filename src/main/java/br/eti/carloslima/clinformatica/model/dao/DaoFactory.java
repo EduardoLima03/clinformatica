@@ -6,6 +6,7 @@ import br.eti.carloslima.clinformatica.model.dao.impl.AddresDaoImpl;
 import br.eti.carloslima.clinformatica.model.dao.impl.ClientDaoImpl;
 import br.eti.carloslima.clinformatica.model.dao.impl.GraficoImpl;
 import br.eti.carloslima.clinformatica.model.dao.impl.LoginDaoImpl;
+import br.eti.carloslima.clinformatica.model.dao.impl.ProdutoImpl;
 import br.eti.carloslima.clinformatica.model.dao.impl.ServiceOrderDaoImpl;
 import br.eti.carloslima.clinformatica.model.dao.impl.UsuarioDaoImpl;
 
@@ -48,6 +49,10 @@ public class DaoFactory {
     
     public static GraficoDao createGraficoDao(){
         return new GraficoImpl(Db.getConnection());
+    }
+    
+        public static ProdutoDao createProdutoDao(){
+        return new ProdutoImpl(Db.getConnection());
     }
     
 }
